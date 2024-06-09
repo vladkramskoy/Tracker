@@ -31,6 +31,21 @@ final class ViewController: UIViewController {
         return titleLabel
     }()
     
+    private lazy var searchField: UISearchTextField = {
+        let searchField = UISearchTextField()
+        searchField.text = "Поиск"
+        searchField.textColor = UIColor(named: "Gray")
+        searchField.translatesAutoresizingMaskIntoConstraints = false
+        return searchField
+    }()
+    
+    private lazy var stubImage: UIImageView = {
+        let stubImage = UIImageView()
+        stubImage.image = UIImage(named: "stubImage")
+        stubImage.translatesAutoresizingMaskIntoConstraints = false
+        return stubImage
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,6 +58,8 @@ final class ViewController: UIViewController {
         view.addSubview(addTrackerButton)
         view.addSubview(datePickerButton)
         view.addSubview(titleLabel)
+        view.addSubview(searchField)
+        view.addSubview(stubImage)
     }
     
     private func setupConstraints() {
@@ -61,13 +78,27 @@ final class ViewController: UIViewController {
             titleLabel.widthAnchor.constraint(equalToConstant: 254),
             titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 88),
             titleLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
-            titleLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -105)
+            titleLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -105),
             
+            searchField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 7),
+            searchField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
+            searchField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+            
+            stubImage.heightAnchor.constraint(equalToConstant: 80),
+            stubImage.widthAnchor.constraint(equalToConstant: 80),
+            stubImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stubImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 402),
         ])
     }
     
     private func setupAppearance() {
         view.backgroundColor = .white
+        
+        if let iconView = searchField.leftView as? UIImageView {
+            let tintedImage = iconView.image?.withRenderingMode(.alwaysTemplate)
+            iconView.image = tintedImage
+            iconView.tintColor = UIColor(named: "Gray")
+        }
     }
 }
 
