@@ -97,7 +97,7 @@ final class TrackersListViewController: UIViewController {
             stubImage.heightAnchor.constraint(equalToConstant: 80),
             stubImage.widthAnchor.constraint(equalToConstant: 80),
             stubImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stubImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 402),
+            stubImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 44),
             
             stubLabel.heightAnchor.constraint(equalToConstant: 18),
             stubLabel.topAnchor.constraint(equalTo: stubImage.bottomAnchor, constant: 8),
