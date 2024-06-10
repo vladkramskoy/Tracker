@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ViewController: UIViewController {
+final class TrackersListViewController: UIViewController {
     private lazy var addTrackerButton: UIButton = {
         let addTrackerButton = UIButton.systemButton(with: UIImage(named: "plusIcon") ?? UIImage(), target: nil, action: nil)
         addTrackerButton.translatesAutoresizingMaskIntoConstraints = false
@@ -46,6 +46,15 @@ final class ViewController: UIViewController {
         return stubImage
     }()
     
+    private lazy var stubLabel: UILabel = {
+        let stubLabel = UILabel()
+        stubLabel.text = "Что будем отслеживать?"
+        stubLabel.font = UIFont.systemFont(ofSize: 12)
+        stubLabel.textAlignment = .center
+        stubLabel.translatesAutoresizingMaskIntoConstraints = false
+        return stubLabel
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,6 +69,7 @@ final class ViewController: UIViewController {
         view.addSubview(titleLabel)
         view.addSubview(searchField)
         view.addSubview(stubImage)
+        view.addSubview(stubLabel)
     }
     
     private func setupConstraints() {
@@ -88,6 +98,11 @@ final class ViewController: UIViewController {
             stubImage.widthAnchor.constraint(equalToConstant: 80),
             stubImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stubImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 402),
+            
+            stubLabel.heightAnchor.constraint(equalToConstant: 18),
+            stubLabel.topAnchor.constraint(equalTo: stubImage.bottomAnchor, constant: 8),
+            stubLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
+            stubLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
         ])
     }
     

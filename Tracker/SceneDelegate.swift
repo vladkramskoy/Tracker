@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = ViewController()
+        window?.rootViewController = UITabBarController.createConfiguredTabBarController()
         window?.makeKeyAndVisible()
     }
 
@@ -49,3 +49,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 }
 
+extension UITabBarController {
+    static func createConfiguredTabBarController() -> UITabBarController {
+        let tabBarController = UITabBarController()
+        
+        let trackerViewController = TrackersListViewController()
+        trackerViewController.tabBarItem = UITabBarItem(title: "Трекеры", image: UIImage(named: "circleIcon"), tag: 0)
+        
+        let statisticsViewController = UIViewController()
+        statisticsViewController.tabBarItem = UITabBarItem(title: "Статистика", image: UIImage(named: "hareIcon"), tag: 1)
+        
+        tabBarController.viewControllers = [trackerViewController, statisticsViewController]
+        return tabBarController
+    }
+}
