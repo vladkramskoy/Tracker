@@ -60,7 +60,7 @@ final class TrackersViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("TEST TEST")
         setupSubview()
         setupConstraints()
         setupAppearance()
