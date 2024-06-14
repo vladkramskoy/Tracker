@@ -53,7 +53,7 @@ extension UITabBarController {
     static func createConfiguredTabBarController() -> UITabBarController {
         let tabBarController = UITabBarController()
         
-        let trackerViewController = TrackersListViewController()
+        let trackerViewController = TrackersViewController()
         trackerViewController.tabBarItem = UITabBarItem(title: "Трекеры", image: UIImage(named: "circleIcon"), tag: 0)
         
         let statisticsViewController = UIViewController()

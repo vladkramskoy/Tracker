@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class TrackersListViewController: UIViewController {
+final class TrackersViewController: UIViewController {
     private lazy var addTrackerButton: UIButton = {
         let addTrackerButton = UIButton.systemButton(with: UIImage(named: "plusIcon") ?? UIImage(), target: nil, action: nil)
         addTrackerButton.translatesAutoresizingMaskIntoConstraints = false
