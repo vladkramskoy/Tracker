@@ -8,6 +8,9 @@
 import UIKit
 
 final class TrackersViewController: UIViewController {
+    private var categories: [TrackerCategory] = []
+    private var completedTrackers: [TrackerRecord] = []
+    
     private lazy var addTrackerButton: UIButton = {
         let addTrackerButton = UIButton.systemButton(with: UIImage(named: "plusIcon") ?? UIImage(), target: nil, action: nil)
         addTrackerButton.translatesAutoresizingMaskIntoConstraints = false
@@ -114,6 +117,36 @@ final class TrackersViewController: UIViewController {
             iconView.image = tintedImage
             iconView.tintColor = UIColor(named: "Gray")
         }
+    }
+    
+    private func completeTracker() {
+        // TODO: process code
+        let scheduleMock = Schedule(monday: true, tuesday: false, wednesday: false, thursday: false, friday: false, saturday: false, sunday: false)
+        let trackerMock = Tracker(id: UUID(), name: "test", color: .black, emoji: "🍏", schedule: scheduleMock)
+        let trackerRecordMock = TrackerRecord(date: Date(), id: [trackerMock.id])
+        
+        completedTrackers.append(trackerRecordMock)
+    }
+    
+    private func cancelCompletedTracker() {
+        // TODO: process code
+        let scheduleMock = Schedule(monday: true, tuesday: false, wednesday: false, thursday: false, friday: false, saturday: false, sunday: false)
+        let trackerMock = Tracker(id: UUID(), name: "test2", color: .black, emoji: "🍊", schedule: scheduleMock)
+        let trackerRecordMock = TrackerRecord(date: Date(), id: [trackerMock.id])
+        let trackerId = trackerRecordMock.id
+        
+        completedTrackers.append(trackerRecordMock)
+        completedTrackers.removeAll { $0.id == trackerId }
+    }
+    
+    private func addNewCategory() {
+        // TODO: process code
+        let scheduleMock = Schedule(monday: true, tuesday: false, wednesday: false, thursday: false, friday: false, saturday: false, sunday: false)
+        let trackerMock = Tracker(id: UUID(), name: "test", color: .black, emoji: "🍇", schedule: scheduleMock)
+        let categoryMock = TrackerCategory(name: "Тестовая категория", trackers: [trackerMock])
+        let categoriesListMock = [categoryMock]
+        
+        categories = categoriesListMock
     }
 }
 
