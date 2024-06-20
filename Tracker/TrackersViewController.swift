@@ -22,7 +22,7 @@ final class TrackersViewController: UIViewController {
     private lazy var searchField: UISearchTextField = {
         let searchField = UISearchTextField()
         searchField.text = "Поиск"
-        searchField.textColor = UIColor(named: "Gray")
+        searchField.textColor = UIColor(named: "gray")
         searchField.translatesAutoresizingMaskIntoConstraints = false
         return searchField
     }()
@@ -98,7 +98,7 @@ final class TrackersViewController: UIViewController {
         if let iconView = searchField.leftView as? UIImageView {
             let tintedImage = iconView.image?.withRenderingMode(.alwaysTemplate)
             iconView.image = tintedImage
-            iconView.tintColor = UIColor(named: "Gray")
+            iconView.tintColor = UIColor(named: "gray")
         }
     }
     
@@ -109,7 +109,10 @@ final class TrackersViewController: UIViewController {
     }
     
     @objc private func addTrackerButtonTapped() {
-        print("Кнопка addTrackerButton была нажата")
+        let creatingTrackerViewController = CreateTrackerViewController()
+        creatingTrackerViewController.title = "Создание трекера"
+        let navigationController = UINavigationController(rootViewController: creatingTrackerViewController)
+        present(navigationController, animated: true)
     }
     
     @objc private func datePickerValueChanget(_ sender: UIDatePicker) {

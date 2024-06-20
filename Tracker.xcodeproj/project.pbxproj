@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D45F2282C24A71D00A29D0B /* CreateTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D45F2272C24A71D00A29D0B /* CreateTrackerViewController.swift */; };
 		8D68D45D2C1C657E00A01290 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D68D45C2C1C657E00A01290 /* Tracker.swift */; };
 		8D68D45F2C1C6A7C00A01290 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D68D45E2C1C6A7C00A01290 /* Schedule.swift */; };
 		8D68D4612C1C722F00A01290 /* TrackerCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D68D4602C1C722F00A01290 /* TrackerCategory.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8D45F2272C24A71D00A29D0B /* CreateTrackerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTrackerViewController.swift; sourceTree = "<group>"; };
 		8D68D45C2C1C657E00A01290 /* Tracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
 		8D68D45E2C1C6A7C00A01290 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		8D68D4602C1C722F00A01290 /* TrackerCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerCategory.swift; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				8D7BD5132C1393F1007DC35C /* AppDelegate.swift */,
 				8D7BD5152C1393F1007DC35C /* SceneDelegate.swift */,
 				8D7BD5172C1393F1007DC35C /* TrackersViewController.swift */,
+				8D45F2272C24A71D00A29D0B /* CreateTrackerViewController.swift */,
 				8D68D45B2C1C64FF00A01290 /* Models */,
 				8D7BD51C2C1393F3007DC35C /* Assets.xcassets */,
 				8D7BD51E2C1393F3007DC35C /* LaunchScreen.storyboard */,
@@ -160,6 +163,7 @@
 				8D68D4632C1C731400A01290 /* TrackerRecord.swift in Sources */,
 				8D7BD5142C1393F1007DC35C /* AppDelegate.swift in Sources */,
 				8D68D45F2C1C6A7C00A01290 /* Schedule.swift in Sources */,
+				8D45F2282C24A71D00A29D0B /* CreateTrackerViewController.swift in Sources */,
 				8D7BD5162C1393F1007DC35C /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
