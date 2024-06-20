@@ -46,6 +46,7 @@ final class TrackersViewController: UIViewController {
     private lazy var datePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
+        datePicker.addTarget(self, action: #selector(datePickerValueChanget(_:)), for: .valueChanged)
         
         return datePicker
     }()
@@ -110,8 +111,12 @@ final class TrackersViewController: UIViewController {
         print("Кнопка addTrackerButton была нажата")
     }
     
-    @objc private func datePickerButtonTapped() {
-        print("Кнопка datePickerButton была нажата")
+    @objc private func datePickerValueChanget(_ sender: UIDatePicker) {
+        let selectedDate = sender.date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+        let formattedDate = dateFormatter.string(from: selectedDate)
+        print("Выбранная дата: \(formattedDate)")
     }
     
     private func completeTracker() {
