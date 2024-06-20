@@ -43,6 +43,13 @@ final class TrackersViewController: UIViewController {
         return stubLabel
     }()
     
+    private lazy var datePicker: UIDatePicker = {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .date
+        
+        return datePicker
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("TEST TEST")
@@ -96,14 +103,7 @@ final class TrackersViewController: UIViewController {
     private func setupNavigationBar() {
         let addTrackerButton = UIBarButtonItem(image: UIImage(named: "plusIcon"), style: .plain, target: self, action: #selector(addTrackerButtonTapped))
         navigationItem.leftBarButtonItem = addTrackerButton
-        
-        let datePickerButton = UIBarButtonItem(title: "14.12.22", style: .plain, target: self, action: #selector(datePickerButtonTapped))
-        let textAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.black,
-            .font: UIFont.systemFont(ofSize: 17)
-        ]
-        datePickerButton.setTitleTextAttributes(textAttributes, for: .normal)
-        navigationItem.rightBarButtonItem = datePickerButton
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: datePicker)
     }
     
     @objc private func addTrackerButtonTapped() {
