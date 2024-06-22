@@ -9,8 +9,11 @@ import UIKit
 
 final class CreateTrackerViewController: UIViewController {
     private lazy var createHabitButton: UIButton = {
-        let createHabitButton = UIButton()
+        let createHabitButton = UIButton(type: .system)
         createHabitButton.setTitle("Привычка", for: .normal)
+        createHabitButton.tintColor = .white
+        createHabitButton.titleLabel?.font = UIFont(name: "SFProDisplay-Bold", size: 16)
+        createHabitButton.addTarget(self, action: #selector(createHabitButtonTapped), for: .touchUpInside)
         createHabitButton.layer.cornerRadius = 16
         createHabitButton.backgroundColor = UIColor(named: "darkGray")
         createHabitButton.translatesAutoresizingMaskIntoConstraints = false
@@ -18,8 +21,11 @@ final class CreateTrackerViewController: UIViewController {
     }()
     
     private lazy var createIrregularEventButton: UIButton = {
-        let createIrregularEventButton = UIButton()
+        let createIrregularEventButton = UIButton(type: .system)
         createIrregularEventButton.setTitle("Нерегулярное событие", for: .normal)
+        createIrregularEventButton.tintColor = .white
+        createIrregularEventButton.titleLabel?.font = UIFont(name: "SFProDisplay-Bold", size: 16)
+        createIrregularEventButton.addTarget(self, action: #selector(createIrregularEventButtonTapped), for: .touchUpInside)
         createIrregularEventButton.layer.cornerRadius = 16
         createIrregularEventButton.backgroundColor = UIColor(named: "darkGray")
         createIrregularEventButton.translatesAutoresizingMaskIntoConstraints = false
@@ -46,5 +52,19 @@ final class CreateTrackerViewController: UIViewController {
             createIrregularEventButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             createIrregularEventButton.heightAnchor.constraint(equalToConstant: 60)
         ])
+    }
+    
+    @objc private func createHabitButtonTapped() {
+        let newHabitViewController = NewHabitViewController()
+        newHabitViewController.title = "Новая привычка"
+        let navigationController = UINavigationController(rootViewController: newHabitViewController)
+        present(navigationController, animated: true)
+    }
+    
+    @objc private func createIrregularEventButtonTapped() {
+        let newIrregularEventViewController = NewIrregularEventViewController()
+        newIrregularEventViewController.title = "Новое нерегулярное событие"
+        let navigationController = UINavigationController(rootViewController: newIrregularEventViewController)
+        present(navigationController, animated: true)
     }
 }
