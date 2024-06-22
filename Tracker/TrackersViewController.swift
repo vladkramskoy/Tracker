@@ -54,7 +54,7 @@ final class TrackersViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("TEST TEST")
+
         setupSubview()
         setupConstraints()
         setupAppearance()
@@ -79,6 +79,7 @@ final class TrackersViewController: UIViewController {
             searchField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 7),
             searchField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
             searchField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+            searchField.heightAnchor.constraint(equalToConstant: 36),
             
             stubImage.heightAnchor.constraint(equalToConstant: 80),
             stubImage.widthAnchor.constraint(equalToConstant: 80),

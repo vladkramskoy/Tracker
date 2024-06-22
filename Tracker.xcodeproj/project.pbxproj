@@ -13,7 +13,6 @@
 		8D68D4612C1C722F00A01290 /* TrackerCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D68D4602C1C722F00A01290 /* TrackerCategory.swift */; };
 		8D68D4632C1C731400A01290 /* TrackerRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D68D4622C1C731400A01290 /* TrackerRecord.swift */; };
 		8D7BD5142C1393F1007DC35C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7BD5132C1393F1007DC35C /* AppDelegate.swift */; };
-		8D7BD5162C1393F1007DC35C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7BD5152C1393F1007DC35C /* SceneDelegate.swift */; };
 		8D7BD5182C1393F1007DC35C /* TrackersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7BD5172C1393F1007DC35C /* TrackersViewController.swift */; };
 		8D7BD51D2C1393F3007DC35C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D7BD51C2C1393F3007DC35C /* Assets.xcassets */; };
 		8D7BD5202C1393F3007DC35C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D7BD51E2C1393F3007DC35C /* LaunchScreen.storyboard */; };
@@ -27,7 +26,6 @@
 		8D68D4622C1C731400A01290 /* TrackerRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerRecord.swift; sourceTree = "<group>"; };
 		8D7BD5102C1393F1007DC35C /* Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D7BD5132C1393F1007DC35C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8D7BD5152C1393F1007DC35C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8D7BD5172C1393F1007DC35C /* TrackersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersViewController.swift; sourceTree = "<group>"; };
 		8D7BD51C2C1393F3007DC35C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8D7BD51F2C1393F3007DC35C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -76,7 +74,6 @@
 			isa = PBXGroup;
 			children = (
 				8D7BD5132C1393F1007DC35C /* AppDelegate.swift */,
-				8D7BD5152C1393F1007DC35C /* SceneDelegate.swift */,
 				8D7BD5172C1393F1007DC35C /* TrackersViewController.swift */,
 				8D45F2272C24A71D00A29D0B /* CreateTrackerViewController.swift */,
 				8D68D45B2C1C64FF00A01290 /* Models */,
@@ -115,7 +112,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					8D7BD50F2C1393F1007DC35C = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -164,7 +161,6 @@
 				8D7BD5142C1393F1007DC35C /* AppDelegate.swift in Sources */,
 				8D68D45F2C1C6A7C00A01290 /* Schedule.swift in Sources */,
 				8D45F2282C24A71D00A29D0B /* CreateTrackerViewController.swift in Sources */,
-				8D7BD5162C1393F1007DC35C /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +214,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -278,6 +275,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
