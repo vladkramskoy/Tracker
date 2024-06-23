@@ -10,6 +10,7 @@ import UIKit
 final class TrackersViewController: UIViewController {
     private var categories: [TrackerCategory] = []
     private var completedTrackers: [TrackerRecord] = []
+    private let emojiMock = [ "🍇", "🍈", "🍉", "🍊", "🍋", "🍌", "🍍", "🥭", "🍎", "🍏", "🍐", "🍒", "🍓", "🫐", "🥝", "🍅", "🫒", "🥥", "🥑", "🍆", "🥔", "🥕", "🌽", "🌶️", "🫑", "🥒", "🥬", "🥦", "🧄", "🧅", "🍄"] // DEL
     
     private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
@@ -52,13 +53,27 @@ final class TrackersViewController: UIViewController {
         return datePicker
     }()
     
+    private lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(TrackersCollectionViewCell.self, forCellWithReuseIdentifier: TrackersCollectionViewCell.identifier)
+        collectionView.register(TrackersSupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TrackersSupplementaryView.identifier)
+        collectionView.backgroundColor = .darkGray // DEL
+        collectionView.isHidden = true
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupSubview()
         setupConstraints()
         setupAppearance()
         setupNavigationBar()
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        addNewCategory() // DEL
+        updateUI()
     }
     
     private func setupSubview() {
@@ -66,6 +81,7 @@ final class TrackersViewController: UIViewController {
         view.addSubview(searchField)
         view.addSubview(stubImage)
         view.addSubview(stubLabel)
+        view.addSubview(collectionView)
     }
     
     private func setupConstraints() {
@@ -90,6 +106,11 @@ final class TrackersViewController: UIViewController {
             stubLabel.topAnchor.constraint(equalTo: stubImage.bottomAnchor, constant: 8),
             stubLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
             stubLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+            
+            collectionView.topAnchor.constraint(equalTo: searchField.bottomAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
@@ -153,5 +174,61 @@ final class TrackersViewController: UIViewController {
         
         categories = categoriesListMock
     }
+    
+    private func updateUI() {
+        if categories.isEmpty {
+            stubImage.isHidden = false
+            stubLabel.isHidden = false
+        } else {
+            stubImage.isHidden = true
+            stubLabel.isHidden = true
+            collectionView.isHidden = false
+        }
+        collectionView.reloadData()
+    }
 }
 
+extension TrackersViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return emojiMock.count // DEL
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackersCollectionViewCell.identifier, for: indexPath) as? TrackersCollectionViewCell else { return UICollectionViewCell()
+        }
+        cell.label.text = emojiMock[indexPath.row]
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TrackersSupplementaryView.identifier, for: indexPath) as? TrackersSupplementaryView else { return UICollectionReusableView() }
+        view.titleLabel.text = "Домашний уют"
+        return view
+    }
+}
+
+extension TrackersViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // TODO: process code
+        print("didSelectItemAt")
+    }
+}
+
+extension TrackersViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        let indexPath = IndexPath(row: 0, section: section)
+        let headerView = self.collectionView(collectionView, viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader, at: indexPath)
+        return headerView.systemLayoutSizeFitting(CGSize(width: collectionView.frame.width,
+                                                         height: UIView.layoutFittingExpandedSize.height),
+                                                  withHorizontalFittingPriority: .required,
+                                                  verticalFittingPriority: .fittingSizeLevel)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.bounds.width / 2, height: 50)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+}
