@@ -12,7 +12,7 @@ final class CreateTrackerViewController: UIViewController {
         let createHabitButton = UIButton(type: .system)
         createHabitButton.setTitle("Привычка", for: .normal)
         createHabitButton.tintColor = .white
-        createHabitButton.titleLabel?.font = UIFont(name: "SFProDisplay-Bold", size: 16)
+        createHabitButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         createHabitButton.addTarget(self, action: #selector(createHabitButtonTapped), for: .touchUpInside)
         createHabitButton.layer.cornerRadius = 16
         createHabitButton.backgroundColor = UIColor(named: "darkGray")
@@ -24,7 +24,7 @@ final class CreateTrackerViewController: UIViewController {
         let createIrregularEventButton = UIButton(type: .system)
         createIrregularEventButton.setTitle("Нерегулярное событие", for: .normal)
         createIrregularEventButton.tintColor = .white
-        createIrregularEventButton.titleLabel?.font = UIFont(name: "SFProDisplay-Bold", size: 16)
+        createIrregularEventButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         createIrregularEventButton.addTarget(self, action: #selector(createIrregularEventButtonTapped), for: .touchUpInside)
         createIrregularEventButton.layer.cornerRadius = 16
         createIrregularEventButton.backgroundColor = UIColor(named: "darkGray")

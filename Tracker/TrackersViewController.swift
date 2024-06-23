@@ -203,6 +203,7 @@ extension TrackersViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TrackersSupplementaryView.identifier, for: indexPath) as? TrackersSupplementaryView else { return UICollectionReusableView() }
         view.titleLabel.text = "Домашний уют"
+        view.titleLabel.font = UIFont.systemFont(ofSize: 19, weight: .bold)
         return view
     }
 }

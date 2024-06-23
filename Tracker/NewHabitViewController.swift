@@ -33,7 +33,7 @@ final class NewHabitViewController: UIViewController {
         let cancelButton = UIButton(type: .system)
         cancelButton.setTitle("Отмена", for: .normal)
         cancelButton.setTitleColor(UIColor(named: "pink"), for: .normal)
-        createButton.titleLabel?.font = UIFont(name: "SFProDisplay-Bold", size: 16)
+        createButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         cancelButton.layer.borderWidth = 1.0
         cancelButton.layer.borderColor = UIColor(named: "pink")?.cgColor
         cancelButton.layer.cornerRadius = 16
@@ -46,7 +46,7 @@ final class NewHabitViewController: UIViewController {
         let createButton = UIButton(type: .system)
         createButton.setTitle("Создать", for: .normal)
         createButton.tintColor = .white
-        createButton.titleLabel?.font = UIFont(name: "SFProDisplay-Bold", size: 16)
+        createButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         createButton.layer.cornerRadius = 16
         createButton.backgroundColor = UIColor(named: "darkGray")
         createButton.addTarget(self, action: #selector(createButtonTapped), for: .touchUpInside)
