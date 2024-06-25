@@ -24,7 +24,6 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         cardView.addSubview(iconLabel)
         cardView.addSubview(textLabel)
         
-        cardView.backgroundColor = UIColor(named: "green")
         cardView.layer.cornerRadius = 16
         cardView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -34,19 +33,16 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         iconLabel.textAlignment = .center
         iconLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        textLabel.text = "Поливать растения"
         textLabel.numberOfLines = 2
         textLabel.textColor = .white
         textLabel.font = UIFont.systemFont(ofSize: 13)
         textLabel.translatesAutoresizingMaskIntoConstraints = false
         configureTextLabel()
         
-        periodLabel.text = "1 день"
         periodLabel.font = UIFont.systemFont(ofSize: 12)
         periodLabel.translatesAutoresizingMaskIntoConstraints = false
         
         completeButton.setImage(UIImage(systemName: "plus"), for: .normal)
-        completeButton.backgroundColor = cardView.backgroundColor
         completeButton.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
         completeButton.tintColor = .white
         completeButton.layer.cornerRadius = 17

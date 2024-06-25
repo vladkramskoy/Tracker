@@ -10,7 +10,7 @@ import UIKit
 final class TrackersViewController: UIViewController {
     private var categories: [TrackerCategory] = []
     private var completedTrackers: [TrackerRecord] = []
-    private let emojiMock = [ "🍇", "🍈", "🍉", "🍊", "🍋", "🍌", "🍍", "🥭", "🍎", "🍏", "🍐", "🍒", "🍓", "🫐", "🥝", "🍅", "🫒", "🥥", "🥑", "🍆", "🥔", "🥕", "🌽", "🌶️", "🫑", "🥒", "🥬", "🥦", "🧄", "🧅", "🍄"] // DEL
+    private let emoji: [String] = ["🙂", "😻", "🌺", "🐶", "❤️", "😱", "😇", "😡", "🥶", "🤔", "🙌", "🍔", "🥦", "🏓", "🥇", "🎸", "🏝️", "😪"]
     
     private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
@@ -66,13 +66,27 @@ final class TrackersViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // ***
+        
+        let schedule = Schedule(monday: false, tuesday: false, wednesday: false, thursday: false, friday: false, saturday: true, sunday: false)
+        let tracker = Tracker(id: UUID(), name: "Поливать растение", color: UIColor(named: "green")!, emoji: emoji[4], schedule: schedule)
+        let tracker2 = Tracker(id: UUID(), name: "Кошка заслонила камеру на созвоне", color: UIColor(named: "orange")!, emoji: emoji[1], schedule: schedule)
+        let tracker3 = Tracker(id: UUID(), name: "Бабушка прислала открытку в вотсапе", color: UIColor(named: "red")!, emoji: emoji[2], schedule: schedule)
+        let tracker4 = Tracker(id: UUID(), name: "Свидания в апреле", color: UIColor(named: "lightBlue")!, emoji: emoji[4], schedule: schedule)
+        let category = TrackerCategory(name: "Домашний уют", trackers: [tracker])
+        let category2 = TrackerCategory(name: "Радостные мелочи", trackers: [tracker2, tracker3, tracker4])
+        categories.append(category)
+        categories.append(category2)
+        
+        // ***
+        
         setupSubview()
         setupConstraints()
         setupAppearance()
         setupNavigationBar()
         collectionView.delegate = self
         collectionView.dataSource = self
-        addNewCategory() // DEL
         updateUI()
     }
     
@@ -147,32 +161,14 @@ final class TrackersViewController: UIViewController {
     
     private func completeTracker() {
         // TODO: process code
-        let scheduleMock = Schedule(monday: true, tuesday: false, wednesday: false, thursday: false, friday: false, saturday: false, sunday: false)
-        let trackerMock = Tracker(id: UUID(), name: "test", color: .black, emoji: "🍏", schedule: scheduleMock)
-        let trackerRecordMock = TrackerRecord(date: Date(), id: [trackerMock.id])
-        
-        completedTrackers.append(trackerRecordMock)
     }
     
     private func cancelCompletedTracker() {
         // TODO: process code
-        let scheduleMock = Schedule(monday: true, tuesday: false, wednesday: false, thursday: false, friday: false, saturday: false, sunday: false)
-        let trackerMock = Tracker(id: UUID(), name: "test2", color: .black, emoji: "🍊", schedule: scheduleMock)
-        let trackerRecordMock = TrackerRecord(date: Date(), id: [trackerMock.id])
-        let trackerId = trackerRecordMock.id
-        
-        completedTrackers.append(trackerRecordMock)
-        completedTrackers.removeAll { $0.id == trackerId }
     }
     
     private func addNewCategory() {
         // TODO: process code
-        let scheduleMock = Schedule(monday: true, tuesday: false, wednesday: false, thursday: false, friday: false, saturday: false, sunday: false)
-        let trackerMock = Tracker(id: UUID(), name: "test", color: .black, emoji: "🍇", schedule: scheduleMock)
-        let categoryMock = TrackerCategory(name: "Тестовая категория", trackers: [trackerMock])
-        let categoriesListMock = [categoryMock]
-        
-        categories = categoriesListMock
     }
     
     private func updateUI() {
@@ -189,20 +185,28 @@ final class TrackersViewController: UIViewController {
 }
 
 extension TrackersViewController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return categories.count
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return emojiMock.count // DEL
+        return categories[section].trackers.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackersCollectionViewCell.identifier, for: indexPath) as? TrackersCollectionViewCell else { return UICollectionViewCell()
         }
-        cell.iconLabel.text = emojiMock[indexPath.row]
+        cell.iconLabel.text = categories[indexPath.section].trackers[indexPath.item].emoji
+        cell.cardView.backgroundColor = categories[indexPath.section].trackers[indexPath.item].color
+        cell.textLabel.text = categories[indexPath.section].trackers[indexPath.item].name
+        cell.periodLabel.text = "1 день"
+        cell.completeButton.backgroundColor = cell.cardView.backgroundColor
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TrackersSupplementaryView.identifier, for: indexPath) as? TrackersSupplementaryView else { return UICollectionReusableView() }
-        view.titleLabel.text = "Домашний уют"
+        view.titleLabel.text = "\(categories[indexPath.section].name)"
         view.titleLabel.font = UIFont.systemFont(ofSize: 19, weight: .bold)
         return view
     }

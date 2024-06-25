@@ -32,10 +32,10 @@ final class NewIrregularEventViewController: UIViewController {
     private lazy var cancelButton: UIButton = {
         let cancelButton = UIButton(type: .system)
         cancelButton.setTitle("Отмена", for: .normal)
-        cancelButton.setTitleColor(UIColor(named: "pink"), for: .normal)
+        cancelButton.setTitleColor(UIColor(named: "lightRed"), for: .normal)
         createButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         cancelButton.layer.borderWidth = 1.0
-        cancelButton.layer.borderColor = UIColor(named: "pink")?.cgColor
+        cancelButton.layer.borderColor = UIColor(named: "lightRed")?.cgColor
         cancelButton.layer.cornerRadius = 16
         cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
