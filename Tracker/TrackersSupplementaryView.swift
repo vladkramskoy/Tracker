@@ -15,14 +15,13 @@ class TrackersSupplementaryView: UICollectionReusableView {
         super.init(frame: frame)
         
         addSubview(titleLabel)
-        self.backgroundColor = .brown // DEL
-        titleLabel.backgroundColor = .blue // DEL
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            titleLabel.topAnchor.constraint(equalTo: topAnchor),
-            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+            titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 24),
+            titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 28),
+            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -28),
+            titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -12),
         ])
     }
     
