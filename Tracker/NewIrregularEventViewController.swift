@@ -69,8 +69,7 @@ final class NewIrregularEventViewController: UIViewController {
     }
     
     @objc private func cancelButtonTapped() {
-        // TODO: process code
-        print("cancelButtonTapped")
+        self.presentingViewController?.presentingViewController?.dismiss(animated: true)
     }
     
     @objc private func createButtonTapped() {
