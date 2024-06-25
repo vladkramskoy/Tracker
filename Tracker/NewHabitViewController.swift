@@ -127,8 +127,10 @@ extension NewHabitViewController: UITableViewDelegate {
             // TODO: process code
             print("case 0")
         case 1:
-            // TODO: process code
-            print("case 1")
+            let scheduleViewController = ScheduleViewController()
+            scheduleViewController.title = "Расписание"
+            let navigationController = UINavigationController(rootViewController: scheduleViewController)
+            present(navigationController, animated: true)
         default:
             break
         }
