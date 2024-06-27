@@ -69,7 +69,15 @@ final class TrackersViewController: UIViewController {
         
         // ***
         
-        let schedule = Schedule(monday: false, tuesday: false, wednesday: false, thursday: false, friday: false, saturday: true, sunday: false)
+        let schedule: [WeekDay: Bool] = [
+            .monday: true,
+            .tuesday: true,
+            .wednesday: true,
+            .thursday: false,
+            .friday: true,
+            .saturday: false,
+            .sunday: true
+        ]
         let tracker = Tracker(id: UUID(), name: "Поливать растение", color: UIColor(named: "green")!, emoji: emoji[4], schedule: schedule)
         let tracker2 = Tracker(id: UUID(), name: "Кошка заслонила камеру на созвоне", color: UIColor(named: "orange")!, emoji: emoji[1], schedule: schedule)
         let tracker3 = Tracker(id: UUID(), name: "Бабушка прислала открытку в вотсапе", color: UIColor(named: "red")!, emoji: emoji[2], schedule: schedule)

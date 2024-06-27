@@ -7,23 +7,23 @@
 
 import Foundation
 
-// DEL
-//enum WeekDay {
-//    case monday
-//    case tuesday
-//    case wednesday
-//    case thursday
-//    case friday
-//    case saturday
-//    case sunday
-//}
-
-struct Schedule {
-    let monday: Bool
-    let tuesday: Bool
-    let wednesday: Bool
-    let thursday: Bool
-    let friday: Bool
-    let saturday: Bool
-    let sunday: Bool
+enum WeekDay: String, CaseIterable {
+    case monday = "Пн"
+    case tuesday = "Вт"
+    case wednesday = "Ср"
+    case thursday = "Чт"
+    case friday = "Пт"
+    case saturday = "Сб"
+    case sunday = "Вс"
 }
+
+// DEL
+//struct Schedule {
+//    let monday: Bool
+//    let tuesday: Bool
+//    let wednesday: Bool
+//    let thursday: Bool
+//    let friday: Bool
+//    let saturday: Bool
+//    let sunday: Bool
+//}

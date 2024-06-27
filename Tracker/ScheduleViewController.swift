@@ -9,6 +9,7 @@ import UIKit
 
 final class ScheduleViewController: UIViewController {
     private let weekDay = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"]
+    private var schedule: [WeekDay: Bool] = [:]
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -30,6 +31,8 @@ final class ScheduleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        initializingSchedule()
         view.backgroundColor = .white
         doneButton.setContentHuggingPriority(.defaultHigh, for: .vertical)
         view.addSubview(doneButton)
@@ -38,6 +41,12 @@ final class ScheduleViewController: UIViewController {
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         setupConstraints()
+    }
+    
+    private func initializingSchedule() {
+        for day in WeekDay.allCases {
+            schedule[day] = false
+        }
     }
     
     private func setupConstraints() {
@@ -56,11 +65,16 @@ final class ScheduleViewController: UIViewController {
     }
     
     @objc private func doneButtonTapped() {
-        print("doneButtonTapped")
+        self.presentingViewController?.dismiss(animated: true)
+        print("\(schedule)")
     }
     
-    @objc private func switchChanged() {
-        print("switchChanged")
+    @objc private func switchChanged(_ sender: UISwitch) {
+        let weekDay = WeekDay.allCases
+        if sender.tag < weekDay.count {
+            let day = weekDay[sender.tag]
+            schedule[day] = sender.isOn
+        }
     }
 }
 

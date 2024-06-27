@@ -9,6 +9,8 @@ import UIKit
 
 final class NewHabitViewController: UIViewController {
     private let cellTitles = ["Категория", "Расписание"]
+    private let selectCategory: TrackerCategory? = nil
+    private let selectSchedule: WeekDay? = nil
     
     private lazy var textFieldView: UIView = {
         let textFieldView = UIView()
@@ -74,6 +76,7 @@ final class NewHabitViewController: UIViewController {
     
     @objc private func createButtonTapped() {
         // TODO: process code
+        // TODO: Обработать ситуацию когда не указана категория и расписание
         print("createButtonTapped")
     }
     
