@@ -8,9 +8,7 @@
 import UIKit
 
 final class NewHabitViewController: UIViewController {
-    private let cellTitles = ["Категория", "Расписание"]
-    private let selectCategory: TrackerCategory? = nil
-    private let selectSchedule: WeekDay? = nil
+    private var cellTitles: [(String, String?)] = [("Категория", nil), ("Расписание", nil)]
     
     private lazy var textFieldView: UIView = {
         let textFieldView = UIView()
@@ -68,6 +66,7 @@ final class NewHabitViewController: UIViewController {
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         setupConstraints()
+        setupNotificationObserver()
     }
     
     @objc private func cancelButtonTapped() {
@@ -78,6 +77,14 @@ final class NewHabitViewController: UIViewController {
         // TODO: process code
         // TODO: Обработать ситуацию когда не указана категория и расписание
         print("createButtonTapped")
+    }
+    
+    @objc private func updateTableView() {
+        tableView.reloadData()
+    }
+    
+    private func setupNotificationObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateTableView), name: NSNotification.Name("ScheduleDidCreated"), object: nil)
     }
     
     private func setupConstraints() {
@@ -108,6 +115,10 @@ final class NewHabitViewController: UIViewController {
             createButton.widthAnchor.constraint(equalToConstant: 161),
         ])
     }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
 extension NewHabitViewController: UITableViewDataSource {
@@ -116,9 +127,12 @@ extension NewHabitViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = cellTitles[indexPath.row]
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
+        cell.textLabel?.text = cellTitles[indexPath.row].0
+        cell.detailTextLabel?.text = cellTitles[indexPath.row].1
+        cell.detailTextLabel?.textColor = UIColor(named: "gray")
         cell.accessoryType = .disclosureIndicator
+        cellTitles = [("Категория", "Категория тест"), ("Расписание", "\(ScheduleViewController.selectedDays ?? "")")]
         return cell
     }
 }

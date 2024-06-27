@@ -8,6 +8,7 @@
 import UIKit
 
 final class ScheduleViewController: UIViewController {
+    static var selectedDays: String? = nil
     private let weekDay = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"]
     private var schedule: [WeekDay: Bool] = [:]
     
@@ -49,6 +50,10 @@ final class ScheduleViewController: UIViewController {
         }
     }
     
+    private func filteringSelectedDays() {
+        ScheduleViewController.selectedDays = schedule.filter { $0.value }.map { $0.key.rawValue }.joined(separator: ", ")
+    }
+    
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
@@ -65,8 +70,9 @@ final class ScheduleViewController: UIViewController {
     }
     
     @objc private func doneButtonTapped() {
+        filteringSelectedDays()
+        NotificationCenter.default.post(name: NSNotification.Name("ScheduleDidCreated"), object: nil)
         self.presentingViewController?.dismiss(animated: true)
-        print("\(schedule)")
     }
     
     @objc private func switchChanged(_ sender: UISwitch) {
