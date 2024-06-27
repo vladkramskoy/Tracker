@@ -20,7 +20,7 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         
         contentView.addSubview(cardView)
         contentView.addSubview(periodLabel)
-        cardView.addSubview(completeButton)
+        contentView.addSubview(completeButton)
         cardView.addSubview(iconLabel)
         cardView.addSubview(textLabel)
         
