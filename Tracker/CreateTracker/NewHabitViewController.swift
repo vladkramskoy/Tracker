@@ -132,6 +132,7 @@ extension NewHabitViewController: UITableViewDataSource {
         cell.detailTextLabel?.text = cellTitles[indexPath.row].1
         cell.detailTextLabel?.textColor = UIColor(named: "gray")
         cell.accessoryType = .disclosureIndicator
+        // TODO: Обработать ситуацию когда отменено создание трекера, а выбранное расписание не сбросилось
         cellTitles = [("Категория", "Категория тест"), ("Расписание", "\(ScheduleViewController.selectedDays ?? "")")]
         return cell
     }
