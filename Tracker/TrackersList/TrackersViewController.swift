@@ -8,7 +8,7 @@
 import UIKit
 
 final class TrackersViewController: UIViewController {
-    private var categories: [TrackerCategory] = []
+    static var categories: [TrackerCategory] = []
     private var completedTrackers: [TrackerRecord] = []
     private let emoji: [String] = ["🙂", "😻", "🌺", "🐶", "❤️", "😱", "😇", "😡", "🥶", "🤔", "🙌", "🍔", "🥦", "🏓", "🥇", "🎸", "🏝️", "😪"]
     
@@ -84,8 +84,8 @@ final class TrackersViewController: UIViewController {
         let tracker4 = Tracker(id: UUID(), name: "Свидания в апреле", color: UIColor(named: "lightBlue")!, emoji: emoji[4], schedule: schedule)
         let category = TrackerCategory(name: "Домашний уют", trackers: [tracker])
         let category2 = TrackerCategory(name: "Радостные мелочи", trackers: [tracker2, tracker3, tracker4])
-        categories.append(category)
-        categories.append(category2)
+        TrackersViewController.categories.append(category)
+        TrackersViewController.categories.append(category2)
         
         // ***
         
@@ -180,7 +180,7 @@ final class TrackersViewController: UIViewController {
     }
     
     private func updateUI() {
-        if categories.isEmpty {
+        if TrackersViewController.categories.isEmpty {
             stubImage.isHidden = false
             stubLabel.isHidden = false
         } else {
@@ -194,19 +194,19 @@ final class TrackersViewController: UIViewController {
 
 extension TrackersViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return categories.count
+        return TrackersViewController.categories.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return categories[section].trackers.count
+        return TrackersViewController.categories[section].trackers.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackersCollectionViewCell.identifier, for: indexPath) as? TrackersCollectionViewCell else { return UICollectionViewCell()
         }
-        cell.iconLabel.text = categories[indexPath.section].trackers[indexPath.item].emoji
-        cell.cardView.backgroundColor = categories[indexPath.section].trackers[indexPath.item].color
-        cell.textLabel.text = categories[indexPath.section].trackers[indexPath.item].name
+        cell.iconLabel.text = TrackersViewController.categories[indexPath.section].trackers[indexPath.item].emoji
+        cell.cardView.backgroundColor = TrackersViewController.categories[indexPath.section].trackers[indexPath.item].color
+        cell.textLabel.text = TrackersViewController.categories[indexPath.section].trackers[indexPath.item].name
         cell.periodLabel.text = "1 день"
         cell.completeButton.backgroundColor = cell.cardView.backgroundColor
         return cell
@@ -214,7 +214,7 @@ extension TrackersViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TrackersSupplementaryView.identifier, for: indexPath) as? TrackersSupplementaryView else { return UICollectionReusableView() }
-        view.titleLabel.text = "\(categories[indexPath.section].name)"
+        view.titleLabel.text = "\(TrackersViewController.categories[indexPath.section].name)"
         view.titleLabel.font = UIFont.systemFont(ofSize: 19, weight: .bold)
         return view
     }

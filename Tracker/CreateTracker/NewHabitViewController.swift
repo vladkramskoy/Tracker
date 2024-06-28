@@ -51,6 +51,7 @@ final class NewHabitViewController: UIViewController {
         createButton.backgroundColor = UIColor(named: "darkGray")
         createButton.addTarget(self, action: #selector(createButtonTapped), for: .touchUpInside)
         createButton.translatesAutoresizingMaskIntoConstraints = false
+        createButton.isEnabled = false // DEL
         return createButton
     }()
     
@@ -80,11 +81,15 @@ final class NewHabitViewController: UIViewController {
     }
     
     @objc private func updateTableView() {
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.cellTitles = [("Категория", "\(CategoryViewController.selectedCategory ?? "")"), ("Расписание", "\(ScheduleViewController.selectedDays ?? "")")]
+            self.tableView.reloadData()
+        }
     }
     
     private func setupNotificationObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(updateTableView), name: NSNotification.Name("ScheduleDidCreated"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateTableView), name: NSNotification.Name("CategoryDidSelected"), object: nil)
     }
     
     private func setupConstraints() {
@@ -133,7 +138,6 @@ extension NewHabitViewController: UITableViewDataSource {
         cell.detailTextLabel?.textColor = UIColor(named: "gray")
         cell.accessoryType = .disclosureIndicator
         // TODO: Обработать ситуацию когда отменено создание трекера, а выбранное расписание не сбросилось
-        cellTitles = [("Категория", "Категория тест"), ("Расписание", "\(ScheduleViewController.selectedDays ?? "")")]
         return cell
     }
 }
@@ -142,8 +146,10 @@ extension NewHabitViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-            // TODO: process code
-            print("case 0")
+            let categoryViewController = CategoryViewController()
+            categoryViewController.title = "Категория"
+            let navigationController = UINavigationController(rootViewController: categoryViewController)
+            present(navigationController, animated: true)
         case 1:
             let scheduleViewController = ScheduleViewController()
             scheduleViewController.title = "Расписание"

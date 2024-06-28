@@ -19,6 +19,7 @@
 		8D7BD5182C1393F1007DC35C /* TrackersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7BD5172C1393F1007DC35C /* TrackersViewController.swift */; };
 		8D7BD51D2C1393F3007DC35C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D7BD51C2C1393F3007DC35C /* Assets.xcassets */; };
 		8D7BD5202C1393F3007DC35C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D7BD51E2C1393F3007DC35C /* LaunchScreen.storyboard */; };
+		8DA39F2A2C2EC39800B58473 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA39F292C2EC39800B58473 /* CategoryViewController.swift */; };
 		8DC387102C2732D800B9136E /* NewHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC3870F2C2732D800B9136E /* NewHabitViewController.swift */; };
 		8DC387122C2735AA00B9136E /* NewIrregularEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC387112C2735AA00B9136E /* NewIrregularEventViewController.swift */; };
 /* End PBXBuildFile section */
@@ -38,6 +39,7 @@
 		8D7BD51C2C1393F3007DC35C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8D7BD51F2C1393F3007DC35C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8D7BD5212C1393F3007DC35C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8DA39F292C2EC39800B58473 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		8DC3870F2C2732D800B9136E /* NewHabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHabitViewController.swift; sourceTree = "<group>"; };
 		8DC387112C2735AA00B9136E /* NewIrregularEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewIrregularEventViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,6 +113,7 @@
 				8DC3870F2C2732D800B9136E /* NewHabitViewController.swift */,
 				8DC387112C2735AA00B9136E /* NewIrregularEventViewController.swift */,
 				8D37BC8E2C2B0BD400B2E66F /* ScheduleViewController.swift */,
+				8DA39F292C2EC39800B58473 /* CategoryViewController.swift */,
 			);
 			path = CreateTracker;
 			sourceTree = "<group>";
@@ -195,6 +198,7 @@
 				8D592D4C2C2879B600F2C5FB /* TrackersSupplementaryView.swift in Sources */,
 				8D7BD5142C1393F1007DC35C /* AppDelegate.swift in Sources */,
 				8D68D45F2C1C6A7C00A01290 /* Schedule.swift in Sources */,
+				8DA39F2A2C2EC39800B58473 /* CategoryViewController.swift in Sources */,
 				8D592D4A2C28669300F2C5FB /* TrackersCollectionViewCell.swift in Sources */,
 				8D45F2282C24A71D00A29D0B /* CreateTrackerViewController.swift in Sources */,
 			);

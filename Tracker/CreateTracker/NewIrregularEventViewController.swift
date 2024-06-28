@@ -51,6 +51,7 @@ final class NewIrregularEventViewController: UIViewController {
         createButton.backgroundColor = UIColor(named: "darkGray")
         createButton.addTarget(self, action: #selector(createButtonTapped), for: .touchUpInside)
         createButton.translatesAutoresizingMaskIntoConstraints = false
+        createButton.isEnabled = false
         return createButton
     }()
     
