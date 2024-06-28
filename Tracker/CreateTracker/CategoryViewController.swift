@@ -60,6 +60,7 @@ final class CategoryViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         updateUI()
+        setupNotification()
     }
     
     private func setupConstraints() {
@@ -98,12 +99,27 @@ final class CategoryViewController: UIViewController {
         tableView.reloadData()
     }
     
+    private func setupNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateData), name: Notification.Name("NewCategoryAdded"), object: nil)
+    }
+    
     private func cellDidTapped() {
         NotificationCenter.default.post(name: NSNotification.Name("CategoryDidSelected"), object: nil)
     }
     
     @objc private func addCategoryButtonTapped() {
-        print("addCategoryButtonTapped")
+        let newCategoryViewController = NewCategoryViewController()
+        newCategoryViewController.title = "Новая привычка"
+        let navigationController = UINavigationController(rootViewController: newCategoryViewController)
+        present(navigationController, animated: true)
+    }
+    
+    @objc private func updateData() {
+        tableView.reloadData()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
