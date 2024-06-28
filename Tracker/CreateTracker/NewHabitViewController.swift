@@ -8,7 +8,11 @@
 import UIKit
 
 final class NewHabitViewController: UIViewController {
-    private var cellTitles: [(String, String?)] = [("Категория", nil), ("Расписание", nil)]
+    private var cellTitles: [(String, String?)] = [("Категория", nil), ("Расписание", nil)] {
+        didSet {
+            checkAndUpdateCreateButton()
+        }
+    }
     
     private lazy var textFieldView: UIView = {
         let textFieldView = UIView()
@@ -19,6 +23,7 @@ final class NewHabitViewController: UIViewController {
     private lazy var trackerNameTextField: UITextField = {
         let trackerNameTextField = UITextField()
         trackerNameTextField.placeholder = "Введите название трекера"
+        trackerNameTextField.addTarget(self, action: #selector(textFieldDidChange(_ :)), for: .editingChanged)
         trackerNameTextField.translatesAutoresizingMaskIntoConstraints = false
         return trackerNameTextField
     }()
@@ -48,10 +53,10 @@ final class NewHabitViewController: UIViewController {
         createButton.tintColor = .white
         createButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         createButton.layer.cornerRadius = 16
-        createButton.backgroundColor = UIColor(named: "darkGray")
+        createButton.backgroundColor = UIColor(named: "gray")
         createButton.addTarget(self, action: #selector(createButtonTapped), for: .touchUpInside)
         createButton.translatesAutoresizingMaskIntoConstraints = false
-        createButton.isEnabled = false // DEL
+        createButton.isEnabled = false
         return createButton
     }()
     
@@ -65,6 +70,7 @@ final class NewHabitViewController: UIViewController {
         view.addSubview(createButton)
         tableView.delegate = self
         tableView.dataSource = self
+        trackerNameTextField.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         setupConstraints()
         setupNotificationObserver()
@@ -75,15 +81,34 @@ final class NewHabitViewController: UIViewController {
     }
     
     @objc private func createButtonTapped() {
-        // TODO: process code
-        // TODO: Обработать ситуацию когда не указана категория и расписание
-        print("createButtonTapped")
+        guard let text = trackerNameTextField.text, !text.isEmpty else { return }
+        if let selectedCategory = CategoryViewController.selectedCategory {
+            let newTracker = Tracker(id: UUID(), name: text, color: .black, emoji: "😱", schedule: ScheduleViewController.schedule)
+            let updateCategory = selectedCategory.addingTracker(newTracker)
+            TrackersViewController.categories.append(updateCategory)
+            NotificationCenter.default.post(name: NSNotification.Name("TrackerCreated"), object: nil)
+        }
+        self.presentingViewController?.presentingViewController?.dismiss(animated: true)
     }
     
     @objc private func updateTableView() {
         DispatchQueue.main.async {
-            self.cellTitles = [("Категория", "\(CategoryViewController.selectedCategory ?? "")"), ("Расписание", "\(ScheduleViewController.selectedDays ?? "")")]
+            self.cellTitles = [("Категория", "\(CategoryViewController.selectedCategoryString ?? "")"), ("Расписание", "\(ScheduleViewController.selectedDays ?? "")")]
             self.tableView.reloadData()
+        }
+    }
+    
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        checkAndUpdateCreateButton()
+    }
+    
+    private func checkAndUpdateCreateButton() {
+        if let text = trackerNameTextField.text, !text.isEmpty, cellTitles[0].1 != nil, cellTitles[1].1 != nil {
+            createButton.isEnabled = true
+            createButton.backgroundColor = UIColor(named: "darkGray")
+        } else {
+            createButton.isEnabled = false
+            createButton.backgroundColor = UIColor(named: "gray")
         }
     }
     
@@ -171,5 +196,14 @@ extension NewHabitViewController: UITableViewDelegate {
         } else {
             cell.separatorInset = .zero
         }
+    }
+}
+
+extension NewHabitViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let maxLenght = 38
+        let currentString: NSString = trackerNameTextField.text as NSString? ?? ""
+        let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
+        return newString.length <= maxLenght
     }
 }

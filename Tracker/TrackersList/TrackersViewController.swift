@@ -96,6 +96,7 @@ final class TrackersViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         updateUI()
+        setupNotificationObserver()
     }
     
     private func setupSubview() {
@@ -167,16 +168,12 @@ final class TrackersViewController: UIViewController {
         print("Выбранная дата: \(formattedDate)")
     }
     
-    private func completeTracker() {
-        // TODO: process code
+    @objc private func updateTrackers() {
+        collectionView.reloadData()
     }
     
-    private func cancelCompletedTracker() {
-        // TODO: process code
-    }
-    
-    private func addNewCategory() {
-        // TODO: process code
+    private func setupNotificationObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateTrackers), name: NSNotification.Name("TrackerCreated"), object: nil)
     }
     
     private func updateUI() {
@@ -189,6 +186,10 @@ final class TrackersViewController: UIViewController {
             collectionView.isHidden = false
         }
         collectionView.reloadData()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 

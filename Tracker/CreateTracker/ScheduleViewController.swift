@@ -9,8 +9,8 @@ import UIKit
 
 final class ScheduleViewController: UIViewController {
     static var selectedDays: String? = nil
+    static var schedule: [WeekDay: Bool] = [:]
     private let weekDay = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"]
-    private var schedule: [WeekDay: Bool] = [:]
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -46,12 +46,12 @@ final class ScheduleViewController: UIViewController {
     
     private func initializingSchedule() {
         for day in WeekDay.allCases {
-            schedule[day] = false
+            ScheduleViewController.schedule[day] = false
         }
     }
     
     private func filteringSelectedDays() {
-        ScheduleViewController.selectedDays = schedule.filter { $0.value }.map { $0.key.rawValue }.joined(separator: ", ")
+        ScheduleViewController.selectedDays = ScheduleViewController.schedule.filter { $0.value }.map { $0.key.rawValue }.joined(separator: ", ")
     }
     
     private func setupConstraints() {
@@ -79,7 +79,7 @@ final class ScheduleViewController: UIViewController {
         let weekDay = WeekDay.allCases
         if sender.tag < weekDay.count {
             let day = weekDay[sender.tag]
-            schedule[day] = sender.isOn
+            ScheduleViewController.schedule[day] = sender.isOn
         }
     }
 }

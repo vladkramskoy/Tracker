@@ -9,7 +9,8 @@ import UIKit
 
 final class CategoryViewController: UIViewController {
     private var selectedIndexPath: IndexPath?
-    static var selectedCategory: String? = nil
+    static var selectedCategory: TrackerCategory? = nil
+    static var selectedCategoryString: String? = nil
 
     private lazy var stubImage: UIImageView = {
         let stubImage = UIImageView()
@@ -151,7 +152,8 @@ extension CategoryViewController: UITableViewDelegate {
         cell?.accessoryType = .checkmark
         tableView.deselectRow(at: indexPath, animated: true)
         selectedIndexPath = indexPath
-        CategoryViewController.selectedCategory = TrackersViewController.categories[indexPath.row].name
+        CategoryViewController.selectedCategoryString = TrackersViewController.categories[indexPath.row].name
+        CategoryViewController.selectedCategory = TrackersViewController.categories[indexPath.row]
         
         cellDidTapped()
         // TODO: Реализовать логику удаления категорий
