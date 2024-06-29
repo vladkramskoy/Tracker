@@ -10,7 +10,8 @@ import UIKit
 final class TrackersViewController: UIViewController {
     static var categories: [TrackerCategory] = []
     private var completedTrackers: [TrackerRecord] = []
-    private let emoji: [String] = ["🙂", "😻", "🌺", "🐶", "❤️", "😱", "😇", "😡", "🥶", "🤔", "🙌", "🍔", "🥦", "🏓", "🥇", "🎸", "🏝️", "😪"]
+    private var filteredTrackerCategories: [TrackerCategory] = []
+    private let emoji: [String] = ["🙂", "😻", "🌺", "🐶", "❤️", "😱", "😇", "😡", "🥶", "🤔", "🙌", "🍔", "🥦", "🏓", "🥇", "🎸", "🏝️", "😪"] // DEL
     
     private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
@@ -69,26 +70,38 @@ final class TrackersViewController: UIViewController {
         
         // ***
         
-        let schedule: [WeekDay: Bool] = [
+        let schedule: [WeekDay: Bool] = [ // DEL
             .monday: true,
             .tuesday: true,
             .wednesday: true,
+            .thursday: true,
+            .friday: false,
+            .saturday: false,
+            .sunday: false
+        ]
+        
+        let schedule2: [WeekDay: Bool] = [ // DEL
+            .monday: false,
+            .tuesday: false,
+            .wednesday: false,
             .thursday: false,
             .friday: true,
-            .saturday: false,
+            .saturday: true,
             .sunday: true
         ]
-        let tracker = Tracker(id: UUID(), name: "Поливать растение", color: UIColor(named: "green")!, emoji: emoji[4], schedule: schedule)
+
+        let tracker = Tracker(id: UUID(), name: "Поливать растение", color: UIColor(named: "green")!, emoji: emoji[4], schedule: schedule) // DEL
         let tracker2 = Tracker(id: UUID(), name: "Кошка заслонила камеру на созвоне", color: UIColor(named: "orange")!, emoji: emoji[1], schedule: schedule)
-        let tracker3 = Tracker(id: UUID(), name: "Бабушка прислала открытку в вотсапе", color: UIColor(named: "red")!, emoji: emoji[2], schedule: schedule)
-        let tracker4 = Tracker(id: UUID(), name: "Свидания в апреле", color: UIColor(named: "lightBlue")!, emoji: emoji[4], schedule: schedule)
-        let category = TrackerCategory(name: "Домашний уют", trackers: [tracker])
-        let category2 = TrackerCategory(name: "Радостные мелочи", trackers: [tracker2, tracker3, tracker4])
+        let tracker3 = Tracker(id: UUID(), name: "Бабушка прислала открытку в вотсапе", color: UIColor(named: "red")!, emoji: emoji[2], schedule: schedule2)
+        let tracker4 = Tracker(id: UUID(), name: "Свидания в апреле", color: UIColor(named: "lightBlue")!, emoji: emoji[4], schedule: schedule2)
+        let category = TrackerCategory(name: "Домашний уют", trackers: [tracker, tracker4])
+        let category2 = TrackerCategory(name: "Радостные мелочи", trackers: [tracker2, tracker3])
         TrackersViewController.categories.append(category)
         TrackersViewController.categories.append(category2)
         
         // ***
         
+        filterTrackers(for: datePicker.date)
         setupSubview()
         setupConstraints()
         setupAppearance()
@@ -153,6 +166,43 @@ final class TrackersViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: datePicker)
     }
     
+    private func filterTrackers(for date: Date) {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.weekday], from: date)
+        guard let weekDayIndex = components.weekday else { return }
+        guard let weekday = convertWeekDay(from: weekDayIndex) else { return }
+        
+        filteredTrackerCategories = TrackersViewController.categories.map { category in
+            let filteredTrackers = category.trackers.filter { tracker in
+                return tracker.schedule[weekday] == true
+            }
+            return TrackerCategory(name: category.name, trackers: filteredTrackers)
+        }.filter { !$0.trackers.isEmpty }
+        collectionView.reloadData()
+        updateUI()
+    }
+    
+    private func convertWeekDay(from calendarWeekDay: Int) -> WeekDay? {
+        switch calendarWeekDay {
+        case 1:
+            return.sunday
+        case 2:
+            return.monday
+        case 3:
+            return.tuesday
+        case 4:
+            return.wednesday
+        case 5:
+            return.thursday
+        case 6:
+            return.friday
+        case 7:
+            return.saturday
+        default:
+            return nil
+        }
+    }
+    
     @objc private func addTrackerButtonTapped() {
         let creatingTrackerViewController = CreateTrackerViewController()
         creatingTrackerViewController.title = "Создание трекера"
@@ -161,14 +211,11 @@ final class TrackersViewController: UIViewController {
     }
     
     @objc private func datePickerValueChanget(_ sender: UIDatePicker) {
-        let selectedDate = sender.date
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy"
-        let formattedDate = dateFormatter.string(from: selectedDate)
-        print("Выбранная дата: \(formattedDate)")
+        filterTrackers(for: sender.date)
     }
     
     @objc private func updateTrackers() {
+        filterTrackers(for: datePicker.date)
         collectionView.reloadData()
     }
     
@@ -177,15 +224,17 @@ final class TrackersViewController: UIViewController {
     }
     
     private func updateUI() {
-        if TrackersViewController.categories.isEmpty {
-            stubImage.isHidden = false
-            stubLabel.isHidden = false
-        } else {
-            stubImage.isHidden = true
-            stubLabel.isHidden = true
-            collectionView.isHidden = false
+        DispatchQueue.main.async {
+            if self.filteredTrackerCategories.isEmpty {
+                self.stubImage.isHidden = false
+                self.stubLabel.isHidden = false
+            } else {
+                self.stubImage.isHidden = true
+                self.stubLabel.isHidden = true
+                self.collectionView.isHidden = false
+            }
+            self.collectionView.reloadData()
         }
-        collectionView.reloadData()
     }
     
     deinit {
@@ -195,19 +244,19 @@ final class TrackersViewController: UIViewController {
 
 extension TrackersViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return TrackersViewController.categories.count
+        return filteredTrackerCategories.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return TrackersViewController.categories[section].trackers.count
+        return filteredTrackerCategories[section].trackers.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackersCollectionViewCell.identifier, for: indexPath) as? TrackersCollectionViewCell else { return UICollectionViewCell()
         }
-        cell.iconLabel.text = TrackersViewController.categories[indexPath.section].trackers[indexPath.item].emoji
-        cell.cardView.backgroundColor = TrackersViewController.categories[indexPath.section].trackers[indexPath.item].color
-        cell.textLabel.text = TrackersViewController.categories[indexPath.section].trackers[indexPath.item].name
+        cell.iconLabel.text = filteredTrackerCategories[indexPath.section].trackers[indexPath.item].emoji
+        cell.cardView.backgroundColor = filteredTrackerCategories[indexPath.section].trackers[indexPath.item].color
+        cell.textLabel.text = filteredTrackerCategories[indexPath.section].trackers[indexPath.item].name
         cell.periodLabel.text = "1 день"
         cell.completeButton.backgroundColor = cell.cardView.backgroundColor
         return cell
@@ -215,7 +264,7 @@ extension TrackersViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TrackersSupplementaryView.identifier, for: indexPath) as? TrackersSupplementaryView else { return UICollectionReusableView() }
-        view.titleLabel.text = "\(TrackersViewController.categories[indexPath.section].name)"
+        view.titleLabel.text = "\(filteredTrackerCategories[indexPath.section].name)"
         view.titleLabel.font = UIFont.systemFont(ofSize: 19, weight: .bold)
         return view
     }
@@ -254,3 +303,7 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
 }
+
+/*
+ После добавления логики UIDatePicker, коллекция формируется из отфильтрованных данных (filteredTrackerCategories). Чтобы сформировать коллекцию из общих данных нужно подменить 6 ссылок на категории в методах протокола DataSource и 1 ссылку в методе updateUI.
+ */
