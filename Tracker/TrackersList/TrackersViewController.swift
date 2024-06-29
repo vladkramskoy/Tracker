@@ -9,6 +9,11 @@ import UIKit
 
 final class TrackersViewController: UIViewController {
     static var categories: [TrackerCategory] = []
+    private var currentDate: Date = Date() {
+        didSet {
+            filterTrackers(for: currentDate)
+        }
+    }
     private var completedTrackers: [TrackerRecord] = []
     private var filteredTrackerCategories: [TrackerCategory] = []
     private let emoji: [String] = ["🙂", "😻", "🌺", "🐶", "❤️", "😱", "😇", "😡", "🥶", "🤔", "🙌", "🍔", "🥦", "🏓", "🥇", "🎸", "🏝️", "😪"] // DEL
@@ -101,7 +106,7 @@ final class TrackersViewController: UIViewController {
         
         // ***
         
-        filterTrackers(for: datePicker.date)
+        filterTrackers(for: currentDate)
         setupSubview()
         setupConstraints()
         setupAppearance()
@@ -211,11 +216,11 @@ final class TrackersViewController: UIViewController {
     }
     
     @objc private func datePickerValueChanget(_ sender: UIDatePicker) {
-        filterTrackers(for: sender.date)
+        currentDate = sender.date
     }
     
     @objc private func updateTrackers() {
-        filterTrackers(for: datePicker.date)
+        filterTrackers(for: currentDate)
         collectionView.reloadData()
     }
     
