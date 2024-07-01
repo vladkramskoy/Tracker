@@ -72,6 +72,11 @@ final class TrackersViewController: UIViewController {
         return collectionView
     }()
     
+    private lazy var tapGesture: UITapGestureRecognizer = {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        return tapGesture
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -118,6 +123,7 @@ final class TrackersViewController: UIViewController {
         searchField.delegate = self
         updateUI()
         setupNotificationObserver()
+        view.addGestureRecognizer(tapGesture)
     }
     
     private func setupSubview() {
@@ -264,6 +270,10 @@ final class TrackersViewController: UIViewController {
         filterContentForSearchText(searchText)
     }
     
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -343,6 +353,11 @@ extension TrackersViewController: UISearchTextFieldDelegate {
         let currentString: NSString = searchField.text as NSString? ?? ""
         let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
         return newString.length <= maxLenght
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchField.resignFirstResponder()
+        return true
     }
 }
 

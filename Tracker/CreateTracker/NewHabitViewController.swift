@@ -60,6 +60,11 @@ final class NewHabitViewController: UIViewController {
         return createButton
     }()
     
+    private lazy var tapGesture: UITapGestureRecognizer = {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        return tapGesture
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -74,6 +79,7 @@ final class NewHabitViewController: UIViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         setupConstraints()
         setupNotificationObserver()
+        view.addGestureRecognizer(tapGesture)
     }
     
     @objc private func cancelButtonTapped() {
@@ -100,6 +106,10 @@ final class NewHabitViewController: UIViewController {
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
         checkAndUpdateCreateButton()
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     private func checkAndUpdateCreateButton() {
@@ -205,5 +215,10 @@ extension NewHabitViewController: UITextFieldDelegate {
         let currentString: NSString = trackerNameTextField.text as NSString? ?? ""
         let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
         return newString.length <= maxLenght
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        trackerNameTextField.resignFirstResponder()
+        return true
     }
 }
