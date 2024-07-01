@@ -92,5 +92,10 @@ extension NewCategoryViewController: UITextFieldDelegate {
         let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
         return newString.length <= maxLenght
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        categoryNameTextField.resignFirstResponder()
+        return true
+    }
 }
 

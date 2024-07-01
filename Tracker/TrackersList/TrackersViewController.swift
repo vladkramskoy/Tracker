@@ -72,11 +72,6 @@ final class TrackersViewController: UIViewController {
         return collectionView
     }()
     
-    private lazy var tapGesture: UITapGestureRecognizer = {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        return tapGesture
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -121,10 +116,8 @@ final class TrackersViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         searchField.delegate = self
-        tapGesture.delegate = self
         updateUI()
         setupNotificationObserver()
-        view.addGestureRecognizer(tapGesture)
     }
     
     private func setupSubview() {
@@ -359,15 +352,6 @@ extension TrackersViewController: UISearchTextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searchField.resignFirstResponder()
-        return true
-    }
-}
-
-extension TrackersViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        if let view = touch.view, view.isDescendant(of: collectionView) {
-            return false
-        }
         return true
     }
 }
