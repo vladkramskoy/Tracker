@@ -8,7 +8,11 @@
 import UIKit
 
 final class NewIrregularEventViewController: UIViewController {
-    private let cellTitles = ["Категория"]
+    private var cellTitles: [(String, String?)] = [("Категория", nil)] {
+        didSet {
+            checkAndUpdateCreateButton()
+        }
+    }
     
     private lazy var textFieldView: UIView = {
         let textFieldView = UIView()
@@ -19,6 +23,7 @@ final class NewIrregularEventViewController: UIViewController {
     private lazy var trackerNameTextField: UITextField = {
         let trackerNameTextField = UITextField()
         trackerNameTextField.placeholder = "Введите название трекера"
+        trackerNameTextField.addTarget(self, action: #selector(textFieldDidChange(_ :)), for: .editingChanged)
         trackerNameTextField.translatesAutoresizingMaskIntoConstraints = false
         return trackerNameTextField
     }()
@@ -48,7 +53,7 @@ final class NewIrregularEventViewController: UIViewController {
         createButton.tintColor = .white
         createButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         createButton.layer.cornerRadius = 16
-        createButton.backgroundColor = UIColor(named: "darkGray")
+        createButton.backgroundColor = UIColor(named: "gray")
         createButton.addTarget(self, action: #selector(createButtonTapped), for: .touchUpInside)
         createButton.translatesAutoresizingMaskIntoConstraints = false
         createButton.isEnabled = false
@@ -65,8 +70,10 @@ final class NewIrregularEventViewController: UIViewController {
         view.addSubview(createButton)
         tableView.delegate = self
         tableView.dataSource = self
+        trackerNameTextField.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         setupConstraints()
+        setupNotificationObserver()
     }
     
     @objc private func cancelButtonTapped() {
@@ -74,8 +81,48 @@ final class NewIrregularEventViewController: UIViewController {
     }
     
     @objc private func createButtonTapped() {
-        // TODO: process code
-        print("createButtonTapped")
+        guard let text = trackerNameTextField.text, !text.isEmpty else { return }
+        if let selectedCategory = CategoryViewController.selectedCategory {
+            let schedule: [WeekDay: Bool] = [
+                .monday: true,
+                .tuesday: true,
+                .wednesday: true,
+                .thursday: true,
+                .friday: true,
+                .saturday: true,
+                .sunday: true
+            ]
+            let newTracker = Tracker(id: UUID(), name: text, color: .black, emoji: "😱", schedule: schedule)
+            let updateCategory = selectedCategory.addingTracker(newTracker)
+            TrackersViewController.categories.append(updateCategory)
+            NotificationCenter.default.post(name: NSNotification.Name("TrackerCreated"), object: nil)
+        }
+        self.presentingViewController?.presentingViewController?.dismiss(animated: true)
+    }
+    
+    @objc private func updateTableView() {
+        DispatchQueue.main.async {
+            self.cellTitles = [("Категория", "\(CategoryViewController.selectedCategoryString ?? "")")]
+            self.tableView.reloadData()
+        }
+    }
+    
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        checkAndUpdateCreateButton()
+    }
+    
+    private func checkAndUpdateCreateButton() {
+        if let text = trackerNameTextField.text, !text.isEmpty, cellTitles[0].1 != nil {
+            createButton.isEnabled = true
+            createButton.backgroundColor = UIColor(named: "darkGray")
+        } else {
+            createButton.isEnabled = false
+            createButton.backgroundColor = UIColor(named: "gray")
+        }
+    }
+    
+    private func setupNotificationObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateTableView), name: NSNotification.Name("CategoryDidSelected"), object: nil)
     }
     
     private func setupConstraints() {
@@ -114,8 +161,10 @@ extension NewIrregularEventViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = cellTitles[indexPath.row]
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
+        cell.textLabel?.text = cellTitles[indexPath.row].0
+        cell.detailTextLabel?.text = cellTitles[indexPath.row].1
+        cell.detailTextLabel?.textColor = UIColor(named: "gray")
         cell.accessoryType = .disclosureIndicator
         return cell
     }
@@ -125,8 +174,10 @@ extension NewIrregularEventViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-            // TODO: process code
-            print("case 0")
+            let categoryViewController = CategoryViewController()
+            categoryViewController.title = "Категория"
+            let navigationController = UINavigationController(rootViewController: categoryViewController)
+            present(navigationController, animated: true)
         default:
             break
         }
@@ -143,5 +194,14 @@ extension NewIrregularEventViewController: UITableViewDelegate {
         } else {
             cell.separatorInset = .zero
         }
+    }
+}
+
+extension NewIrregularEventViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let maxLenght = 38
+        let currentString: NSString = trackerNameTextField.text as NSString? ?? ""
+        let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
+        return newString.length <= maxLenght
     }
 }
