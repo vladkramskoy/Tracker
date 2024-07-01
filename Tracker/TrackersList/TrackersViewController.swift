@@ -350,6 +350,11 @@ extension TrackersViewController: UISearchTextFieldDelegate {
         return newString.length <= maxLenght
     }
     
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        searchField.text = ""
+        filterContentForSearchText(searchField.text ?? "")
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searchField.resignFirstResponder()
         return true
