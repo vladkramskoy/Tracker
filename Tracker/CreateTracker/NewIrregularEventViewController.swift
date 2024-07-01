@@ -76,6 +76,7 @@ final class NewIrregularEventViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         trackerNameTextField.delegate = self
+        tapGesture.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         setupConstraints()
         setupNotificationObserver()
@@ -217,6 +218,15 @@ extension NewIrregularEventViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         trackerNameTextField.resignFirstResponder()
+        return true
+    }
+}
+
+extension NewIrregularEventViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if let view = touch.view, view.isDescendant(of: tableView) {
+            return false
+        }
         return true
     }
 }
