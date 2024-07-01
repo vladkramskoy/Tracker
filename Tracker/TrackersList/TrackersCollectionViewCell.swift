@@ -94,6 +94,10 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
     }
     
     @objc private func completeButtonTapped() {
-        print("completeButtonTapped")
+        if let color = cardView.backgroundColor {
+            completeButton.backgroundColor = color.withAlphaComponent(0.3)
+            let newIcon = UIImage(named: "checkmark")
+            completeButton.setImage(newIcon, for: .normal)
+        }
     }
 }
