@@ -220,6 +220,7 @@ final class TrackersViewController: UIViewController {
             if self.filteredTrackerCategories.isEmpty {
                 self.stubImage.isHidden = false
                 self.stubLabel.isHidden = false
+                self.collectionView.isHidden = true
             } else {
                 self.stubImage.isHidden = true
                 self.stubLabel.isHidden = true

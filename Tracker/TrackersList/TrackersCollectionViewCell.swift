@@ -98,6 +98,11 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
             completeButton.backgroundColor = color.withAlphaComponent(0.3)
             let newIcon = UIImage(named: "checkmark")
             completeButton.setImage(newIcon, for: .normal)
+            
+            /*
+             По нажатию кнопки нужно работать с массивом, и к значению нужно привязывать статус кнопки (по другому никак).
+             Лучше создать готовый цвет с прозрачностью, так как этот багует
+             */
         }
     }
 }
