@@ -16,6 +16,7 @@ final class TrackersViewController: UIViewController {
     }
     private var completedTrackers: [TrackerRecord] = []
     private var filteredTrackerCategories: [TrackerCategory] = []
+    private var dateFilteredTrackerCategories: [TrackerCategory] = []
     private let emoji: [String] = ["🙂", "😻", "🌺", "🐶", "❤️", "😱", "😇", "😡", "🥶", "🤔", "🙌", "🍔", "🥦", "🏓", "🥇", "🎸", "🏝️", "😪"] // DEL
     
     private lazy var titleLabel: UILabel = {
@@ -28,8 +29,9 @@ final class TrackersViewController: UIViewController {
     
     private lazy var searchField: UISearchTextField = {
         let searchField = UISearchTextField()
-        searchField.text = "Поиск"
+        searchField.placeholder = "Поиск"
         searchField.textColor = UIColor(named: "gray")
+        searchField.addTarget(self, action: #selector(searchTextChanged(_:)), for: .editingChanged)
         searchField.translatesAutoresizingMaskIntoConstraints = false
         return searchField
     }()
@@ -113,6 +115,7 @@ final class TrackersViewController: UIViewController {
         setupNavigationBar()
         collectionView.delegate = self
         collectionView.dataSource = self
+        searchField.delegate = self
         updateUI()
         setupNotificationObserver()
     }
@@ -177,13 +180,29 @@ final class TrackersViewController: UIViewController {
         guard let weekDayIndex = components.weekday else { return }
         guard let weekday = convertWeekDay(from: weekDayIndex) else { return }
         
-        filteredTrackerCategories = TrackersViewController.categories.map { category in
+        dateFilteredTrackerCategories = TrackersViewController.categories.map { category in
             let filteredTrackers = category.trackers.filter { tracker in
                 return tracker.schedule[weekday] == true
             }
             return TrackerCategory(name: category.name, trackers: filteredTrackers)
         }.filter { !$0.trackers.isEmpty }
-        collectionView.reloadData()
+//        collectionView.reloadData()
+        updateUI()
+        filterContentForSearchText(searchField.text ?? "")
+    }
+    
+    func filterContentForSearchText(_ searchText: String) {
+        if searchText.isEmpty {
+            filteredTrackerCategories = dateFilteredTrackerCategories
+        } else {
+            filteredTrackerCategories = dateFilteredTrackerCategories.map { category in
+                let filteredTrackers = category.trackers.filter { tracker in
+                    tracker.name.lowercased().contains(searchText.lowercased())
+                }
+                return filteredTrackers.isEmpty ? nil : TrackerCategory(name: category.name, trackers: filteredTrackers)
+            }.compactMap { $0 }
+        }
+//        collectionView.reloadData()
         updateUI()
     }
     
@@ -222,6 +241,11 @@ final class TrackersViewController: UIViewController {
     @objc private func updateTrackers() {
         filterTrackers(for: currentDate)
         collectionView.reloadData()
+    }
+    
+    @objc func searchTextChanged(_ textField: UISearchTextField) {
+        guard let searchText = textField.text else { return }
+        filterContentForSearchText(searchText)
     }
     
     private func setupNotificationObserver() {
@@ -306,6 +330,21 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+    }
+}
+
+extension TrackersViewController: UISearchTextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField == searchField {
+            searchField.text = ""
+        }
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let maxLenght = 38
+        let currentString: NSString = searchField.text as NSString? ?? ""
+        let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
+        return newString.length <= maxLenght
     }
 }
 
