@@ -186,12 +186,11 @@ final class TrackersViewController: UIViewController {
             }
             return TrackerCategory(name: category.name, trackers: filteredTrackers)
         }.filter { !$0.trackers.isEmpty }
-//        collectionView.reloadData()
         updateUI()
         filterContentForSearchText(searchField.text ?? "")
     }
     
-    func filterContentForSearchText(_ searchText: String) {
+    private func filterContentForSearchText(_ searchText: String) {
         if searchText.isEmpty {
             filteredTrackerCategories = dateFilteredTrackerCategories
         } else {
@@ -202,8 +201,25 @@ final class TrackersViewController: UIViewController {
                 return filteredTrackers.isEmpty ? nil : TrackerCategory(name: category.name, trackers: filteredTrackers)
             }.compactMap { $0 }
         }
-//        collectionView.reloadData()
         updateUI()
+    }
+    
+    private func setupNotificationObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateTrackers), name: NSNotification.Name("TrackerCreated"), object: nil)
+    }
+    
+    private func updateUI() {
+        DispatchQueue.main.async {
+            if self.filteredTrackerCategories.isEmpty {
+                self.stubImage.isHidden = false
+                self.stubLabel.isHidden = false
+            } else {
+                self.stubImage.isHidden = true
+                self.stubLabel.isHidden = true
+                self.collectionView.isHidden = false
+            }
+            self.collectionView.reloadData()
+        }
     }
     
     private func convertWeekDay(from calendarWeekDay: Int) -> WeekDay? {
@@ -246,24 +262,6 @@ final class TrackersViewController: UIViewController {
     @objc func searchTextChanged(_ textField: UISearchTextField) {
         guard let searchText = textField.text else { return }
         filterContentForSearchText(searchText)
-    }
-    
-    private func setupNotificationObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(updateTrackers), name: NSNotification.Name("TrackerCreated"), object: nil)
-    }
-    
-    private func updateUI() {
-        DispatchQueue.main.async {
-            if self.filteredTrackerCategories.isEmpty {
-                self.stubImage.isHidden = false
-                self.stubLabel.isHidden = false
-            } else {
-                self.stubImage.isHidden = true
-                self.stubLabel.isHidden = true
-                self.collectionView.isHidden = false
-            }
-            self.collectionView.reloadData()
-        }
     }
     
     deinit {
