@@ -14,6 +14,7 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
     let textLabel = UILabel()
     let periodLabel = UILabel()
     let completeButton = UIButton(type: .system)
+    var buttonAction: (() -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -93,16 +94,14 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         textLabel.attributedText = attributedString
     }
     
+    func trackerCompleted(_ completed: Bool) {
+        let newIcon = UIImage(named: "checkmark")
+        let oldIcon = UIImage(systemName: "plus")
+        completeButton.backgroundColor = completed ? cardView.backgroundColor?.withAlphaComponent(0.3) : cardView.backgroundColor
+        completeButton.setImage(completed ? newIcon : oldIcon, for: .normal)
+    }
+    
     @objc private func completeButtonTapped() {
-        if let color = cardView.backgroundColor {
-            completeButton.backgroundColor = color.withAlphaComponent(0.3)
-            let newIcon = UIImage(named: "checkmark")
-            completeButton.setImage(newIcon, for: .normal)
-            
-            /*
-             По нажатию кнопки нужно работать с массивом, и к значению нужно привязывать статус кнопки (по другому никак).
-             Лучше создать готовый цвет с прозрачностью, так как этот багует
-             */
-        }
+        buttonAction?()
     }
 }

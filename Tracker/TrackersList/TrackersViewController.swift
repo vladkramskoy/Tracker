@@ -208,6 +208,10 @@ final class TrackersViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(updateTrackers), name: NSNotification.Name("TrackerCreated"), object: nil)
     }
     
+    private func countCompletedTrackers(for trackerID: UUID) -> Int {
+        return completedTrackers.filter { $0.id == trackerID }.count
+    }
+    
     private func updateUI() {
         DispatchQueue.main.async {
             if self.filteredTrackerCategories.isEmpty {
@@ -242,6 +246,23 @@ final class TrackersViewController: UIViewController {
         default:
             return nil
         }
+    }
+    
+    private func handleButtonTap(for tracker: Tracker) {
+        guard Calendar.current.isDateInToday(currentDate) else {
+            // TODO: Уведомить пользователя, что отметка возможна только для текущего дня
+            print("Отметка трекера возможна только для текущего дня")
+            return
+        }
+        
+        if let index = completedTrackers.firstIndex(where: { $0.id == tracker.id && Calendar.current.isDate($0.date, inSameDayAs: currentDate) }) {
+            completedTrackers.remove(at: index)
+        } else {
+            let record = TrackerRecord(date: currentDate, id: tracker.id)
+            completedTrackers.append(record)
+        }
+        print("\(completedTrackers.count)") // DEL
+        collectionView.reloadData()
     }
     
     @objc private func addTrackerButtonTapped() {
@@ -289,8 +310,22 @@ extension TrackersViewController: UICollectionViewDataSource {
         cell.iconLabel.text = filteredTrackerCategories[indexPath.section].trackers[indexPath.item].emoji
         cell.cardView.backgroundColor = filteredTrackerCategories[indexPath.section].trackers[indexPath.item].color
         cell.textLabel.text = filteredTrackerCategories[indexPath.section].trackers[indexPath.item].name
-        cell.periodLabel.text = "1 день"
         cell.completeButton.backgroundColor = cell.cardView.backgroundColor
+        
+        let tracker = filteredTrackerCategories[indexPath.section].trackers[indexPath.item]
+        let completedCount = countCompletedTrackers(for: tracker.id)
+        if completedCount == 0 {
+            cell.periodLabel.text = "\(completedCount) дней"
+        } else {
+            cell.periodLabel.text = "\(completedCount) день"
+        }
+        
+        let isCompleted = completedTrackers.contains(where: { $0.id == tracker.id && Calendar.current.isDate($0.date, inSameDayAs: currentDate) })
+        print("\(isCompleted)") // DEL
+        cell.trackerCompleted(isCompleted)
+        cell.buttonAction = { [weak self] in
+            self?.handleButtonTap(for: tracker)
+        }
         return cell
     }
     
