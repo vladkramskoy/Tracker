@@ -16,6 +16,9 @@ final class NewIrregularEventViewController: UIViewController {
     
     private lazy var textFieldView: UIView = {
         let textFieldView = UIView()
+        textFieldView.backgroundColor = UIColor(named: "superLightGray")
+        textFieldView.layer.cornerRadius = 16
+        textFieldView.layer.masksToBounds = true
         textFieldView.translatesAutoresizingMaskIntoConstraints = false
         return textFieldView
     }()
@@ -53,7 +56,7 @@ final class NewIrregularEventViewController: UIViewController {
         createButton.tintColor = .white
         createButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         createButton.layer.cornerRadius = 16
-        createButton.backgroundColor = UIColor(named: "gray")
+        createButton.backgroundColor = UIColor(named: "customGray")
         createButton.addTarget(self, action: #selector(createButtonTapped), for: .touchUpInside)
         createButton.translatesAutoresizingMaskIntoConstraints = false
         createButton.isEnabled = false
@@ -121,7 +124,7 @@ final class NewIrregularEventViewController: UIViewController {
             createButton.backgroundColor = UIColor(named: "darkGray")
         } else {
             createButton.isEnabled = false
-            createButton.backgroundColor = UIColor(named: "gray")
+            createButton.backgroundColor = UIColor(named: "customGray")
         }
     }
     
@@ -168,7 +171,10 @@ extension NewIrregularEventViewController: UITableViewDataSource {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
         cell.textLabel?.text = cellTitles[indexPath.row].0
         cell.detailTextLabel?.text = cellTitles[indexPath.row].1
-        cell.detailTextLabel?.textColor = UIColor(named: "gray")
+        cell.detailTextLabel?.textColor = UIColor(named: "customGray")
+        cell.backgroundColor = UIColor(named: "superLightGray")
+        cell.layer.cornerRadius = 16
+        cell.layer.masksToBounds = true
         cell.accessoryType = .disclosureIndicator
         return cell
     }

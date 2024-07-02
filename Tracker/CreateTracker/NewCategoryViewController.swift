@@ -10,6 +10,9 @@ import UIKit
 final class NewCategoryViewController: UIViewController {
     private lazy var textFieldView: UIView = {
         let textFieldView = UIView()
+        textFieldView.backgroundColor = UIColor(named: "superLightGray")
+        textFieldView.layer.cornerRadius = 16
+        textFieldView.layer.masksToBounds = true
         textFieldView.translatesAutoresizingMaskIntoConstraints = false
         return textFieldView
     }()
@@ -29,7 +32,7 @@ final class NewCategoryViewController: UIViewController {
         doneButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
         doneButton.layer.cornerRadius = 16
-        doneButton.backgroundColor = UIColor(named: "gray")
+        doneButton.backgroundColor = UIColor(named: "customGray")
         doneButton.translatesAutoresizingMaskIntoConstraints = false
         doneButton.isEnabled = false
         return doneButton
@@ -72,7 +75,7 @@ final class NewCategoryViewController: UIViewController {
             doneButton.backgroundColor = UIColor(named: "darkGray")
         } else {
             doneButton.isEnabled = false
-            doneButton.backgroundColor = UIColor(named: "gray")
+            doneButton.backgroundColor = UIColor(named: "customGray")
         }
     }
     

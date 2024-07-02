@@ -43,6 +43,8 @@ final class CategoryViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
+        tableView.layer.cornerRadius = 16
+        tableView.layer.masksToBounds = true
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.isHidden = true
         return tableView
@@ -75,7 +77,7 @@ final class CategoryViewController: UIViewController {
             stubLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
             stubLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
             
-            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 24),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             tableView.heightAnchor.constraint(equalToConstant: 525),
@@ -110,7 +112,7 @@ final class CategoryViewController: UIViewController {
     
     @objc private func addCategoryButtonTapped() {
         let newCategoryViewController = NewCategoryViewController()
-        newCategoryViewController.title = "Новая привычка"
+        newCategoryViewController.title = "Новая категория"
         let navigationController = UINavigationController(rootViewController: newCategoryViewController)
         present(navigationController, animated: true)
     }
@@ -132,6 +134,17 @@ extension CategoryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = TrackersViewController.categories[indexPath.row].name
+        cell.backgroundColor = UIColor(named: "superLightGray")
+        
+        cell.layer.cornerRadius = 16
+        cell.layer.masksToBounds = true
+        if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
+            cell.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        } else {
+            cell.layer.maskedCorners = []
+        }
+
+        
         if let selectedIndexPath = selectedIndexPath, selectedIndexPath == indexPath {
             cell.accessoryType = .checkmark
         } else {

@@ -16,6 +16,9 @@ final class NewHabitViewController: UIViewController {
     
     private lazy var textFieldView: UIView = {
         let textFieldView = UIView()
+        textFieldView.backgroundColor = UIColor(named: "superLightGray")
+        textFieldView.layer.cornerRadius = 16
+        textFieldView.layer.masksToBounds = true
         textFieldView.translatesAutoresizingMaskIntoConstraints = false
         return textFieldView
     }()
@@ -30,6 +33,8 @@ final class NewHabitViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
+        tableView.layer.cornerRadius = 16
+        tableView.layer.masksToBounds = true
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -53,7 +58,7 @@ final class NewHabitViewController: UIViewController {
         createButton.tintColor = .white
         createButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         createButton.layer.cornerRadius = 16
-        createButton.backgroundColor = UIColor(named: "gray")
+        createButton.backgroundColor = UIColor(named: "customGray")
         createButton.addTarget(self, action: #selector(createButtonTapped), for: .touchUpInside)
         createButton.translatesAutoresizingMaskIntoConstraints = false
         createButton.isEnabled = false
@@ -112,7 +117,7 @@ final class NewHabitViewController: UIViewController {
             createButton.backgroundColor = UIColor(named: "darkGray")
         } else {
             createButton.isEnabled = false
-            createButton.backgroundColor = UIColor(named: "gray")
+            createButton.backgroundColor = UIColor(named: "customGray")
         }
     }
     
@@ -164,7 +169,8 @@ extension NewHabitViewController: UITableViewDataSource {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
         cell.textLabel?.text = cellTitles[indexPath.row].0
         cell.detailTextLabel?.text = cellTitles[indexPath.row].1
-        cell.detailTextLabel?.textColor = UIColor(named: "gray")
+        cell.detailTextLabel?.textColor = UIColor(named: "customGray")
+        cell.backgroundColor = UIColor(named: "superLightGray")
         cell.accessoryType = .disclosureIndicator
         // TODO: Обработать ситуацию когда отменено создание трекера, а выбранное расписание не сбросилось
         return cell

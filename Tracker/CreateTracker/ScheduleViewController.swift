@@ -14,6 +14,8 @@ final class ScheduleViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
+        tableView.layer.cornerRadius = 16
+        tableView.layer.masksToBounds = true
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -91,6 +93,7 @@ extension ScheduleViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.backgroundColor = UIColor(named: "superLightGray")
         
         let switchView = UISwitch(frame: .zero)
         switchView.setOn(false, animated: true)

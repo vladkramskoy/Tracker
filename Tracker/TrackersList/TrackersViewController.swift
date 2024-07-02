@@ -19,18 +19,10 @@ final class TrackersViewController: UIViewController {
     private var dateFilteredTrackerCategories: [TrackerCategory] = []
     private let emoji: [String] = ["🙂", "😻", "🌺", "🐶", "❤️", "😱", "😇", "😡", "🥶", "🤔", "🙌", "🍔", "🥦", "🏓", "🥇", "🎸", "🏝️", "😪"] // DEL
     
-    private lazy var titleLabel: UILabel = {
-        let titleLabel = UILabel()
-        titleLabel.text = "Трекеры"
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 34)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        return titleLabel
-    }()
-    
     private lazy var searchField: UISearchTextField = {
         let searchField = UISearchTextField()
         searchField.placeholder = "Поиск"
-        searchField.textColor = UIColor(named: "gray")
+        searchField.textColor = UIColor(named: "customGray")
         searchField.addTarget(self, action: #selector(searchTextChanged(_:)), for: .editingChanged)
         searchField.translatesAutoresizingMaskIntoConstraints = false
         return searchField
@@ -74,6 +66,8 @@ final class TrackersViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Трекеры"
+        navigationController?.navigationBar.prefersLargeTitles = true
         
         // ***
         
@@ -121,7 +115,6 @@ final class TrackersViewController: UIViewController {
     }
     
     private func setupSubview() {
-        view.addSubview(titleLabel)
         view.addSubview(searchField)
         view.addSubview(stubImage)
         view.addSubview(stubLabel)
@@ -130,13 +123,7 @@ final class TrackersViewController: UIViewController {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            titleLabel.heightAnchor.constraint(equalToConstant: 41),
-            titleLabel.widthAnchor.constraint(equalToConstant: 254),
-            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 88),
-            titleLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
-            titleLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -105),
-            
-            searchField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 7),
+            searchField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             searchField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
             searchField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
             searchField.heightAnchor.constraint(equalToConstant: 36),
@@ -164,7 +151,7 @@ final class TrackersViewController: UIViewController {
         if let iconView = searchField.leftView as? UIImageView {
             let tintedImage = iconView.image?.withRenderingMode(.alwaysTemplate)
             iconView.image = tintedImage
-            iconView.tintColor = UIColor(named: "gray")
+            iconView.tintColor = UIColor(named: "customGray")
         }
     }
     
@@ -261,7 +248,6 @@ final class TrackersViewController: UIViewController {
             let record = TrackerRecord(date: currentDate, id: tracker.id)
             completedTrackers.append(record)
         }
-        print("\(completedTrackers.count)") // DEL
         collectionView.reloadData()
     }
     
@@ -321,7 +307,6 @@ extension TrackersViewController: UICollectionViewDataSource {
         }
         
         let isCompleted = completedTrackers.contains(where: { $0.id == tracker.id && Calendar.current.isDate($0.date, inSameDayAs: currentDate) })
-        print("\(isCompleted)") // DEL
         cell.trackerCompleted(isCompleted)
         cell.buttonAction = { [weak self] in
             self?.handleButtonTap(for: tracker)
