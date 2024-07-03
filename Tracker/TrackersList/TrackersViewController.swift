@@ -28,6 +28,12 @@ final class TrackersViewController: UIViewController {
         return searchField
     }()
     
+    private lazy var stubView: UIView = {
+        let stubView = UIView()
+        stubView.translatesAutoresizingMaskIntoConstraints = false
+        return stubView
+    }()
+    
     private lazy var stubImage: UIImageView = {
         let stubImage = UIImageView()
         stubImage.image = UIImage(named: "stubImage")
@@ -64,11 +70,19 @@ final class TrackersViewController: UIViewController {
         return collectionView
     }()
     
+    private lazy var stubDefault: Stub = {
+        return Stub(image: UIImage(named: "stubImage") ?? UIImage(), textLabel: "Что будем отслеживать?")
+    }()
+    
+    private lazy var stubSearch: Stub = {
+        return Stub(image: UIImage(named: "stubImageSearch") ?? UIImage(), textLabel: "Ничего не найдено")
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Трекеры"
         navigationController?.navigationBar.prefersLargeTitles = true
-        
+
         // ***
         
         let schedule: [WeekDay: Bool] = [ // DEL
@@ -110,14 +124,15 @@ final class TrackersViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         searchField.delegate = self
-        updateUI()
+        updateUI(with: stubDefault)
         setupNotificationObserver()
     }
     
     private func setupSubview() {
         view.addSubview(searchField)
-        view.addSubview(stubImage)
-        view.addSubview(stubLabel)
+        view.addSubview(stubView)
+        stubView.addSubview(stubImage)
+        stubView.addSubview(stubLabel)
         view.addSubview(collectionView)
     }
     
@@ -128,10 +143,15 @@ final class TrackersViewController: UIViewController {
             searchField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
             searchField.heightAnchor.constraint(equalToConstant: 36),
             
+            stubView.heightAnchor.constraint(equalToConstant: 106),
+            stubView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
+            stubView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+            stubView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 44),
+            
             stubImage.heightAnchor.constraint(equalToConstant: 80),
             stubImage.widthAnchor.constraint(equalToConstant: 80),
+            stubImage.topAnchor.constraint(equalTo: stubView.topAnchor),
             stubImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stubImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 44),
             
             stubLabel.heightAnchor.constraint(equalToConstant: 18),
             stubLabel.topAnchor.constraint(equalTo: stubImage.bottomAnchor, constant: 8),
@@ -173,13 +193,14 @@ final class TrackersViewController: UIViewController {
             }
             return TrackerCategory(name: category.name, trackers: filteredTrackers)
         }.filter { !$0.trackers.isEmpty }
-        updateUI()
+        updateUI(with: stubDefault)
         filterContentForSearchText(searchField.text ?? "")
     }
     
     private func filterContentForSearchText(_ searchText: String) {
         if searchText.isEmpty {
             filteredTrackerCategories = dateFilteredTrackerCategories
+            updateUI(with: stubDefault)
         } else {
             filteredTrackerCategories = dateFilteredTrackerCategories.map { category in
                 let filteredTrackers = category.trackers.filter { tracker in
@@ -187,8 +208,8 @@ final class TrackersViewController: UIViewController {
                 }
                 return filteredTrackers.isEmpty ? nil : TrackerCategory(name: category.name, trackers: filteredTrackers)
             }.compactMap { $0 }
+            updateUI(with: stubSearch)
         }
-        updateUI()
     }
     
     private func setupNotificationObserver() {
@@ -199,15 +220,16 @@ final class TrackersViewController: UIViewController {
         return completedTrackers.filter { $0.id == trackerID }.count
     }
     
-    private func updateUI() {
+    private func updateUI(with stub: Stub) {
         DispatchQueue.main.async {
             if self.filteredTrackerCategories.isEmpty {
-                self.stubImage.isHidden = false
-                self.stubLabel.isHidden = false
+                self.stubView.isHidden = false
                 self.collectionView.isHidden = true
+                
+                self.stubImage.image = stub.image
+                self.stubLabel.text = stub.textLabel
             } else {
-                self.stubImage.isHidden = true
-                self.stubLabel.isHidden = true
+                self.stubView.isHidden = true
                 self.collectionView.isHidden = false
             }
             self.collectionView.reloadData()
@@ -236,7 +258,7 @@ final class TrackersViewController: UIViewController {
     }
     
     private func handleButtonTap(for tracker: Tracker) {
-        guard Calendar.current.isDateInToday(currentDate) else {
+        guard currentDate <= Date() else {
             // TODO: Уведомить пользователя, что отметка возможна только для текущего дня
             print("Отметка трекера возможна только для текущего дня")
             return

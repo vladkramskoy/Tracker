@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D2EC4892C35697C0030C199 /* Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2EC4882C35697C0030C199 /* Stub.swift */; };
 		8D37BC8F2C2B0BD400B2E66F /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D37BC8E2C2B0BD400B2E66F /* ScheduleViewController.swift */; };
 		8D45F2282C24A71D00A29D0B /* CreateTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D45F2272C24A71D00A29D0B /* CreateTrackerViewController.swift */; };
 		8D592D4A2C28669300F2C5FB /* TrackersCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D592D492C28669300F2C5FB /* TrackersCollectionViewCell.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8D2EC4882C35697C0030C199 /* Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stub.swift; sourceTree = "<group>"; };
 		8D37BC8E2C2B0BD400B2E66F /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		8D45F2272C24A71D00A29D0B /* CreateTrackerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTrackerViewController.swift; sourceTree = "<group>"; };
 		8D592D492C28669300F2C5FB /* TrackersCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 				8D68D4602C1C722F00A01290 /* TrackerCategory.swift */,
 				8D68D4622C1C731400A01290 /* TrackerRecord.swift */,
 				8D68D45E2C1C6A7C00A01290 /* Schedule.swift */,
+				8D2EC4882C35697C0030C199 /* Stub.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -192,6 +195,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8DC387102C2732D800B9136E /* NewHabitViewController.swift in Sources */,
+				8D2EC4892C35697C0030C199 /* Stub.swift in Sources */,
 				8DC387122C2735AA00B9136E /* NewIrregularEventViewController.swift in Sources */,
 				8D68D4612C1C722F00A01290 /* TrackerCategory.swift in Sources */,
 				8D37BC8F2C2B0BD400B2E66F /* ScheduleViewController.swift in Sources */,
