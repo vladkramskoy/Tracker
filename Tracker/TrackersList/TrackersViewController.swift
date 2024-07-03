@@ -17,7 +17,6 @@ final class TrackersViewController: UIViewController {
     private var completedTrackers: [TrackerRecord] = []
     private var filteredTrackerCategories: [TrackerCategory] = []
     private var dateFilteredTrackerCategories: [TrackerCategory] = []
-    private let emoji: [String] = ["🙂", "😻", "🌺", "🐶", "❤️", "😱", "😇", "😡", "🥶", "🤔", "🙌", "🍔", "🥦", "🏓", "🥇", "🎸", "🏝️", "😪"] // DEL
     
     private lazy var searchField: UISearchTextField = {
         let searchField = UISearchTextField()
@@ -78,43 +77,16 @@ final class TrackersViewController: UIViewController {
         return Stub(image: UIImage(named: "stubImageSearch") ?? UIImage(), textLabel: "Ничего не найдено")
     }()
     
+    private lazy var tapGesture: UITapGestureRecognizer = {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        return tapGesture
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Трекеры"
         navigationController?.navigationBar.prefersLargeTitles = true
-
-        // ***
-        
-        let schedule: [WeekDay: Bool] = [ // DEL
-            .monday: true,
-            .tuesday: true,
-            .wednesday: true,
-            .thursday: true,
-            .friday: false,
-            .saturday: false,
-            .sunday: false
-        ]
-        
-        let schedule2: [WeekDay: Bool] = [ // DEL
-            .monday: false,
-            .tuesday: false,
-            .wednesday: false,
-            .thursday: false,
-            .friday: true,
-            .saturday: true,
-            .sunday: true
-        ]
-
-        let tracker = Tracker(id: UUID(), name: "Поливать растение", color: UIColor(named: "green")!, emoji: emoji[4], schedule: schedule) // DEL
-        let tracker2 = Tracker(id: UUID(), name: "Кошка заслонила камеру на созвоне", color: UIColor(named: "orange")!, emoji: emoji[1], schedule: schedule)
-        let tracker3 = Tracker(id: UUID(), name: "Бабушка прислала открытку в вотсапе", color: UIColor(named: "red")!, emoji: emoji[2], schedule: schedule2)
-        let tracker4 = Tracker(id: UUID(), name: "Свидания в апреле", color: UIColor(named: "lightBlue")!, emoji: emoji[4], schedule: schedule2)
-        let category = TrackerCategory(name: "Домашний уют", trackers: [tracker, tracker4])
-        let category2 = TrackerCategory(name: "Радостные мелочи", trackers: [tracker2, tracker3])
-        TrackersViewController.categories.append(category)
-        TrackersViewController.categories.append(category2)
-        
-        // ***
         
         filterTrackers(for: currentDate)
         setupSubview()
@@ -126,6 +98,7 @@ final class TrackersViewController: UIViewController {
         searchField.delegate = self
         updateUI(with: stubDefault)
         setupNotificationObserver()
+        view.addGestureRecognizer(tapGesture)
     }
     
     private func setupSubview() {

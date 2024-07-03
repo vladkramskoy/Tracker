@@ -38,6 +38,12 @@ final class NewCategoryViewController: UIViewController {
         return doneButton
     }()
     
+    private lazy var tapGesture: UITapGestureRecognizer = {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        return tapGesture
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -47,6 +53,7 @@ final class NewCategoryViewController: UIViewController {
         setupConstraints()
         doneButton.setContentHuggingPriority(.defaultHigh, for: .vertical)
         categoryNameTextField.delegate = self
+        view.addGestureRecognizer(tapGesture)
     }
     
     private func setupConstraints() {
@@ -85,6 +92,10 @@ final class NewCategoryViewController: UIViewController {
         TrackersViewController.categories.append(newCategory)
         NotificationCenter.default.post(name: NSNotification.Name("NewCategoryAdded"), object: nil)
         presentingViewController?.dismiss(animated: true)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
 

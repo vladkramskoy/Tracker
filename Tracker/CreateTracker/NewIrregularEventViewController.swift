@@ -63,6 +63,12 @@ final class NewIrregularEventViewController: UIViewController {
         return createButton
     }()
     
+    private lazy var tapGesture: UITapGestureRecognizer = {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        return tapGesture
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -77,6 +83,7 @@ final class NewIrregularEventViewController: UIViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         setupConstraints()
         setupNotificationObserver()
+        view.addGestureRecognizer(tapGesture)
     }
     
     @objc private func cancelButtonTapped() {

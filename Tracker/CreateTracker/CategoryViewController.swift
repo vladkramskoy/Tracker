@@ -108,6 +108,7 @@ final class CategoryViewController: UIViewController {
     
     private func cellDidTapped() {
         NotificationCenter.default.post(name: NSNotification.Name("CategoryDidSelected"), object: nil)
+        presentingViewController?.dismiss(animated: true)
     }
     
     @objc private func addCategoryButtonTapped() {
@@ -118,7 +119,8 @@ final class CategoryViewController: UIViewController {
     }
     
     @objc private func updateData() {
-        tableView.reloadData()
+//        tableView.reloadData()
+        updateUI()
     }
     
     deinit {
