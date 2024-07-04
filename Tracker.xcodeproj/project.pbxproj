@@ -26,6 +26,7 @@
 		8DC387102C2732D800B9136E /* NewHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC3870F2C2732D800B9136E /* NewHabitViewController.swift */; };
 		8DC387122C2735AA00B9136E /* NewIrregularEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC387112C2735AA00B9136E /* NewIrregularEventViewController.swift */; };
 		8DE147122C36AA5B00F271F3 /* SupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE147112C36AA5B00F271F3 /* SupplementaryView.swift */; };
+		8DE147162C36F27E00F271F3 /* ColorsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE147152C36F27E00F271F3 /* ColorsCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		8DC3870F2C2732D800B9136E /* NewHabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHabitViewController.swift; sourceTree = "<group>"; };
 		8DC387112C2735AA00B9136E /* NewIrregularEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewIrregularEventViewController.swift; sourceTree = "<group>"; };
 		8DE147112C36AA5B00F271F3 /* SupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplementaryView.swift; sourceTree = "<group>"; };
+		8DE147152C36F27E00F271F3 /* ColorsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorsCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 				8DA39F292C2EC39800B58473 /* CategoryViewController.swift */,
 				8D970F372C2F1ED00052BC64 /* NewCategoryViewController.swift */,
 				8D0454D62C35BB9E00D455F0 /* EmojiCollectionViewCell.swift */,
+				8DE147152C36F27E00F271F3 /* ColorsCollectionViewCell.swift */,
 				8DE147112C36AA5B00F271F3 /* SupplementaryView.swift */,
 			);
 			path = CreateTracker;
@@ -216,6 +219,7 @@
 				8DA39F2A2C2EC39800B58473 /* CategoryViewController.swift in Sources */,
 				8D970F382C2F1ED00052BC64 /* NewCategoryViewController.swift in Sources */,
 				8D592D4A2C28669300F2C5FB /* TrackersCollectionViewCell.swift in Sources */,
+				8DE147162C36F27E00F271F3 /* ColorsCollectionViewCell.swift in Sources */,
 				8D45F2282C24A71D00A29D0B /* CreateTrackerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
