@@ -9,6 +9,7 @@ import UIKit
 
 final class CategoryViewController: UIViewController {
     private var selectedIndexPath: IndexPath?
+    let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     static var selectedCategory: TrackerCategory? = nil
     static var selectedCategoryString: String? = nil
 
@@ -64,6 +65,7 @@ final class CategoryViewController: UIViewController {
         tableView.dataSource = self
         updateUI()
         setupNotification()
+        feedbackGenerator.prepare()
     }
     
     private func setupConstraints() {
@@ -112,6 +114,7 @@ final class CategoryViewController: UIViewController {
     }
     
     @objc private func addCategoryButtonTapped() {
+        feedbackGenerator.impactOccurred()
         let newCategoryViewController = NewCategoryViewController()
         newCategoryViewController.title = "Новая категория"
         let navigationController = UINavigationController(rootViewController: newCategoryViewController)
@@ -119,7 +122,6 @@ final class CategoryViewController: UIViewController {
     }
     
     @objc private func updateData() {
-//        tableView.reloadData()
         updateUI()
     }
     

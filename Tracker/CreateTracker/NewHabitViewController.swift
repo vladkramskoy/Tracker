@@ -17,6 +17,7 @@ final class NewHabitViewController: UIViewController {
     private var selectEmoji = ""
     private let colors = [UIColor(named: "color1"), UIColor(named: "color2"), UIColor(named: "color3"), UIColor(named: "color4"), UIColor(named: "color5"), UIColor(named: "color6"), UIColor(named: "color7"), UIColor(named: "color8"), UIColor(named: "color9"), UIColor(named: "color10"), UIColor(named: "color11"), UIColor(named: "color12"), UIColor(named: "color13"), UIColor(named: "color14"), UIColor(named: "color15"), UIColor(named: "color16"), UIColor(named: "color17"), UIColor(named: "color18")]
     private var selectColor = UIColor.black
+    let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     
     private lazy var textFieldView: UIView = {
         let textFieldView = UIView()
@@ -121,6 +122,7 @@ final class NewHabitViewController: UIViewController {
         setupConstraints()
         setupNotificationObserver()
         view.addGestureRecognizer(tapGesture)
+        feedbackGenerator.prepare()
     }
     
     override func viewDidLayoutSubviews() {
@@ -130,10 +132,12 @@ final class NewHabitViewController: UIViewController {
     }
     
     @objc private func cancelButtonTapped() {
+        feedbackGenerator.impactOccurred()
         self.presentingViewController?.presentingViewController?.dismiss(animated: true)
     }
     
     @objc private func createButtonTapped() {
+        feedbackGenerator.impactOccurred()
         guard let text = trackerNameTextField.text, !text.isEmpty else { return }
         if let selectedCategory = CategoryViewController.selectedCategory {
             let newTracker = Tracker(id: UUID(), name: text, color: selectColor, emoji: selectEmoji, schedule: ScheduleViewController.schedule)

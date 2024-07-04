@@ -8,6 +8,8 @@
 import UIKit
 
 final class NewCategoryViewController: UIViewController {
+    let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
+    
     private lazy var textFieldView: UIView = {
         let textFieldView = UIView()
         textFieldView.backgroundColor = UIColor(named: "superLightGray")
@@ -54,6 +56,7 @@ final class NewCategoryViewController: UIViewController {
         doneButton.setContentHuggingPriority(.defaultHigh, for: .vertical)
         categoryNameTextField.delegate = self
         view.addGestureRecognizer(tapGesture)
+        feedbackGenerator.prepare()
     }
     
     private func setupConstraints() {
@@ -87,6 +90,7 @@ final class NewCategoryViewController: UIViewController {
     }
     
     @objc private func doneButtonTapped() {
+        feedbackGenerator.impactOccurred()
         guard let text = categoryNameTextField.text, !text.isEmpty else { return }
         let newCategory = TrackerCategory(name: text, trackers: [])
         TrackersViewController.categories.append(newCategory)

@@ -11,6 +11,7 @@ final class ScheduleViewController: UIViewController {
     static var selectedDays: String? = nil
     static var schedule: [WeekDay: Bool] = [:]
     private let weekDay = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"]
+    let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -44,6 +45,7 @@ final class ScheduleViewController: UIViewController {
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         setupConstraints()
+        feedbackGenerator.prepare()
     }
     
     private func initializingSchedule() {
@@ -72,6 +74,7 @@ final class ScheduleViewController: UIViewController {
     }
     
     @objc private func doneButtonTapped() {
+        feedbackGenerator.impactOccurred()
         filteringSelectedDays()
         NotificationCenter.default.post(name: NSNotification.Name("ScheduleDidCreated"), object: nil)
         self.presentingViewController?.dismiss(animated: true)

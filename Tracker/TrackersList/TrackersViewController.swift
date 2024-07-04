@@ -17,6 +17,7 @@ final class TrackersViewController: UIViewController {
     private var completedTrackers: [TrackerRecord] = []
     private var filteredTrackerCategories: [TrackerCategory] = []
     private var dateFilteredTrackerCategories: [TrackerCategory] = []
+    private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     
     private lazy var searchField: UISearchTextField = {
         let searchField = UISearchTextField()
@@ -99,6 +100,7 @@ final class TrackersViewController: UIViewController {
         updateUI(with: stubDefault)
         setupNotificationObserver()
         view.addGestureRecognizer(tapGesture)
+        feedbackGenerator.prepare()
     }
     
     private func setupSubview() {
@@ -247,6 +249,7 @@ final class TrackersViewController: UIViewController {
     }
     
     @objc private func addTrackerButtonTapped() {
+        feedbackGenerator.impactOccurred()
         let creatingTrackerViewController = CreateTrackerViewController()
         creatingTrackerViewController.title = "Создание трекера"
         let navigationController = UINavigationController(rootViewController: creatingTrackerViewController)
