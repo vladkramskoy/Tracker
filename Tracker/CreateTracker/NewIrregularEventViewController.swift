@@ -16,7 +16,7 @@ final class NewIrregularEventViewController: UIViewController {
     private let emoji: [String] = ["🙂", "😻", "🌺", "🐶", "❤️", "😱", "😇", "😡", "🥶", "🤔", "🙌", "🍔", "🥦", "🏓", "🥇", "🎸", "🏝️", "😪"]
     private var selectEmoji = ""
     private let colors = [UIColor(named: "color1"), UIColor(named: "color2"), UIColor(named: "color3"), UIColor(named: "color4"), UIColor(named: "color5"), UIColor(named: "color6"), UIColor(named: "color7"), UIColor(named: "color8"), UIColor(named: "color9"), UIColor(named: "color10"), UIColor(named: "color11"), UIColor(named: "color12"), UIColor(named: "color13"), UIColor(named: "color14"), UIColor(named: "color15"), UIColor(named: "color16"), UIColor(named: "color17"), UIColor(named: "color18")]
-    private var selectColor = UIColor()
+    private var selectColor = UIColor.black
     
     private lazy var textFieldView: UIView = {
         let textFieldView = UIView()
@@ -167,7 +167,7 @@ final class NewIrregularEventViewController: UIViewController {
     }
     
     private func checkAndUpdateCreateButton() {
-        if let text = trackerNameTextField.text, !text.isEmpty, cellTitles[0].1 != nil {
+        if let text = trackerNameTextField.text, !text.isEmpty, cellTitles[0].1 != "", selectEmoji != "", selectColor != UIColor.black {
             createButton.isEnabled = true
             createButton.backgroundColor = UIColor(named: "darkGray")
         } else {
@@ -324,11 +324,13 @@ extension NewIrregularEventViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == emojiCollectionView {
             selectEmoji = emoji[indexPath.row]
+            checkAndUpdateCreateButton()
             if let cell = collectionView.cellForItem(at: indexPath) {
                 cell.backgroundColor = .lightGray
             }
         } else if collectionView == сolorsCollectionView {
             selectColor = colors[indexPath.row] ?? UIColor()
+            checkAndUpdateCreateButton()
             if let cell = collectionView.cellForItem(at: indexPath) {
                 cell.backgroundColor = .lightGray
             }
