@@ -9,10 +9,24 @@ import UIKit
 
 final class ColorsCollectionViewCell: UICollectionViewCell {
     static let identifier = "colorCell"
+    var cellView = UIView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.layer.cornerRadius = 8
+        cellView.layer.cornerRadius = 8
+        cellView.layer.masksToBounds = true
+        cellView.translatesAutoresizingMaskIntoConstraints = false
+        
+        contentView.addSubview(cellView)
+        
+        NSLayoutConstraint.activate([
+            cellView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            cellView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            cellView.widthAnchor.constraint(equalToConstant: 40),
+            cellView.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        
+        self.layer.cornerRadius = 4
         self.layer.masksToBounds = true
     }
     

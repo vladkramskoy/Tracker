@@ -296,7 +296,7 @@ extension NewHabitViewController: UICollectionViewDataSource {
             guard let cell = сolorsCollectionView.dequeueReusableCell(withReuseIdentifier: ColorsCollectionViewCell.identifier, for: indexPath) as? ColorsCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            cell.backgroundColor = colors[indexPath.row]
+            cell.cellView.backgroundColor = colors[indexPath.row]
             return cell
         }
         return UICollectionViewCell()
@@ -326,8 +326,20 @@ extension NewHabitViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == emojiCollectionView {
             selectEmoji = emoji[indexPath.row]
+            if let cell = collectionView.cellForItem(at: indexPath) {
+                cell.backgroundColor = .lightGray
+            }
         } else if collectionView == сolorsCollectionView {
             selectColor = colors[indexPath.row] ?? UIColor()
+            if let cell = collectionView.cellForItem(at: indexPath) {
+                cell.backgroundColor = .lightGray
+            }
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            cell.backgroundColor = .white
         }
     }
 }
@@ -337,7 +349,7 @@ extension NewHabitViewController: UICollectionViewDelegateFlowLayout {
         if collectionView == emojiCollectionView {
             return CGSize(width: 52, height: 52)
         } else if collectionView == сolorsCollectionView {
-            return CGSize(width: 40, height: 40)
+            return CGSize(width: 52, height: 52)
         }
         return CGSize()
     }
@@ -346,7 +358,7 @@ extension NewHabitViewController: UICollectionViewDelegateFlowLayout {
         if collectionView == emojiCollectionView {
             return 5
         } else if collectionView == сolorsCollectionView {
-            return 17
+            return 5
         }
         return CGFloat()
     }
@@ -355,7 +367,7 @@ extension NewHabitViewController: UICollectionViewDelegateFlowLayout {
         if collectionView == emojiCollectionView {
             return 0
         } else if collectionView == сolorsCollectionView {
-            return 12
+            return 0
         }
         return CGFloat()
     }
@@ -364,7 +376,7 @@ extension NewHabitViewController: UICollectionViewDelegateFlowLayout {
         if collectionView == emojiCollectionView {
             return UIEdgeInsets(top: 24, left: 18, bottom: 24, right: 18)
         } else if collectionView == сolorsCollectionView {
-            return UIEdgeInsets(top: 30, left: 24, bottom: 30, right: 24)
+            return UIEdgeInsets(top: 24, left: 18, bottom: 24, right: 18)
         }
         return UIEdgeInsets()
     }
