@@ -13,6 +13,8 @@ final class NewIrregularEventViewController: UIViewController {
             checkAndUpdateCreateButton()
         }
     }
+    private let emoji: [String] = ["🙂", "😻", "🌺", "🐶", "❤️", "😱", "😇", "😡", "🥶", "🤔", "🙌", "🍔", "🥦", "🏓", "🥇", "🎸", "🏝️", "😪"]
+    private var selectEmoji = ""
     
     private lazy var textFieldView: UIView = {
         let textFieldView = UIView()
@@ -35,6 +37,15 @@ final class NewIrregularEventViewController: UIViewController {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
+    }()
+    
+    private lazy var emojiCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        let emojiCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        emojiCollectionView.register(EmojiCollectionViewCell.self, forCellWithReuseIdentifier: EmojiCollectionViewCell.identifier)
+        emojiCollectionView.register(SupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
+        emojiCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        return emojiCollectionView
     }()
     
     private lazy var cancelButton: UIButton = {
@@ -75,10 +86,13 @@ final class NewIrregularEventViewController: UIViewController {
         view.addSubview(textFieldView)
         view.addSubview(trackerNameTextField)
         view.addSubview(tableView)
+        view.addSubview(emojiCollectionView)
         view.addSubview(cancelButton)
         view.addSubview(createButton)
         tableView.delegate = self
         tableView.dataSource = self
+        emojiCollectionView.delegate = self
+        emojiCollectionView.dataSource = self
         trackerNameTextField.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         setupConstraints()
@@ -102,7 +116,7 @@ final class NewIrregularEventViewController: UIViewController {
                 .saturday: true,
                 .sunday: true
             ]
-            let newTracker = Tracker(id: UUID(), name: text, color: .black, emoji: "😱", schedule: schedule)
+            let newTracker = Tracker(id: UUID(), name: text, color: .black, emoji: selectEmoji, schedule: schedule)
             let updateCategory = selectedCategory.addingTracker(newTracker)
             TrackersViewController.categories.append(updateCategory)
             NotificationCenter.default.post(name: NSNotification.Name("TrackerCreated"), object: nil)
@@ -154,7 +168,12 @@ final class NewIrregularEventViewController: UIViewController {
             tableView.topAnchor.constraint(equalTo: trackerNameTextField.bottomAnchor, constant: 24),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            tableView.heightAnchor.constraint(equalToConstant: 150),
+            tableView.heightAnchor.constraint(equalToConstant: 75),
+            
+            emojiCollectionView.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 32),
+            emojiCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            emojiCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            emojiCollectionView.heightAnchor.constraint(equalToConstant: 222),
             
             cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             cancelButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -211,6 +230,67 @@ extension NewIrregularEventViewController: UITableViewDelegate {
         } else {
             cell.separatorInset = .zero
         }
+    }
+}
+
+extension NewIrregularEventViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        emoji.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = emojiCollectionView.dequeueReusableCell(withReuseIdentifier: EmojiCollectionViewCell.identifier, for: indexPath) as? EmojiCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        cell.emojiLabel.font = UIFont.systemFont(ofSize: 32)
+        cell.emojiLabel.text = emoji[indexPath.row]
+        if emojiCollectionView.indexPathsForSelectedItems?.contains(indexPath) == true {
+            cell.contentView.backgroundColor = .lightGray
+        }
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as? SupplementaryView else {
+            return UICollectionReusableView()
+        }
+        view.titleLabel.text = "Emoji"
+        view.titleLabel.font = UIFont.boldSystemFont(ofSize: 19)
+        return view
+    }
+}
+
+extension NewIrregularEventViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        emojiCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredVertically)
+        selectEmoji = emoji[indexPath.row]
+        print("Test \(indexPath.row)")
+    }
+}
+
+extension NewIrregularEventViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 52, height: 52)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 24, left: 18, bottom: 24, right: 18)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        let indexPath = IndexPath(row: 0, section: section)
+        let headerView = self.collectionView(emojiCollectionView, viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader, at: indexPath)
+        return headerView.systemLayoutSizeFitting(CGSize(width: collectionView.frame.width, height: UIView.layoutFittingExpandedSize.height),
+                                                  withHorizontalFittingPriority: .required,
+                                                  verticalFittingPriority: .fittingSizeLevel)
     }
 }
 

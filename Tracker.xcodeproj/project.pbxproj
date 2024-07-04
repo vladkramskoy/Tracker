@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D0454D72C35BB9E00D455F0 /* EmojiCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0454D62C35BB9E00D455F0 /* EmojiCollectionViewCell.swift */; };
 		8D2EC4892C35697C0030C199 /* Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2EC4882C35697C0030C199 /* Stub.swift */; };
 		8D37BC8F2C2B0BD400B2E66F /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D37BC8E2C2B0BD400B2E66F /* ScheduleViewController.swift */; };
 		8D45F2282C24A71D00A29D0B /* CreateTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D45F2272C24A71D00A29D0B /* CreateTrackerViewController.swift */; };
@@ -24,9 +25,11 @@
 		8DA39F2A2C2EC39800B58473 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA39F292C2EC39800B58473 /* CategoryViewController.swift */; };
 		8DC387102C2732D800B9136E /* NewHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC3870F2C2732D800B9136E /* NewHabitViewController.swift */; };
 		8DC387122C2735AA00B9136E /* NewIrregularEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC387112C2735AA00B9136E /* NewIrregularEventViewController.swift */; };
+		8DE147122C36AA5B00F271F3 /* SupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE147112C36AA5B00F271F3 /* SupplementaryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8D0454D62C35BB9E00D455F0 /* EmojiCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCollectionViewCell.swift; sourceTree = "<group>"; };
 		8D2EC4882C35697C0030C199 /* Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stub.swift; sourceTree = "<group>"; };
 		8D37BC8E2C2B0BD400B2E66F /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		8D45F2272C24A71D00A29D0B /* CreateTrackerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTrackerViewController.swift; sourceTree = "<group>"; };
@@ -46,6 +49,7 @@
 		8DA39F292C2EC39800B58473 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		8DC3870F2C2732D800B9136E /* NewHabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHabitViewController.swift; sourceTree = "<group>"; };
 		8DC387112C2735AA00B9136E /* NewIrregularEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewIrregularEventViewController.swift; sourceTree = "<group>"; };
+		8DE147112C36AA5B00F271F3 /* SupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplementaryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +124,8 @@
 				8D37BC8E2C2B0BD400B2E66F /* ScheduleViewController.swift */,
 				8DA39F292C2EC39800B58473 /* CategoryViewController.swift */,
 				8D970F372C2F1ED00052BC64 /* NewCategoryViewController.swift */,
+				8D0454D62C35BB9E00D455F0 /* EmojiCollectionViewCell.swift */,
+				8DE147112C36AA5B00F271F3 /* SupplementaryView.swift */,
 			);
 			path = CreateTracker;
 			sourceTree = "<group>";
@@ -194,9 +200,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DE147122C36AA5B00F271F3 /* SupplementaryView.swift in Sources */,
 				8DC387102C2732D800B9136E /* NewHabitViewController.swift in Sources */,
 				8D2EC4892C35697C0030C199 /* Stub.swift in Sources */,
 				8DC387122C2735AA00B9136E /* NewIrregularEventViewController.swift in Sources */,
+				8D0454D72C35BB9E00D455F0 /* EmojiCollectionViewCell.swift in Sources */,
 				8D68D4612C1C722F00A01290 /* TrackerCategory.swift in Sources */,
 				8D37BC8F2C2B0BD400B2E66F /* ScheduleViewController.swift in Sources */,
 				8D68D45D2C1C657E00A01290 /* Tracker.swift in Sources */,
