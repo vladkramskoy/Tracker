@@ -8,7 +8,7 @@
 import UIKit
 
 final class CreateTrackerViewController: UIViewController {
-    let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
+    private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     
     private lazy var createHabitButton: UIButton = {
         let createHabitButton = UIButton(type: .system)

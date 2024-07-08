@@ -11,7 +11,7 @@ final class ScheduleViewController: UIViewController {
     static var selectedDays: String? = nil
     static var schedule: [WeekDay: Bool] = [:]
     private let weekDay = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"]
-    let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
+    private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()

@@ -9,7 +9,7 @@ import UIKit
 
 final class CategoryViewController: UIViewController {
     private var selectedIndexPath: IndexPath?
-    let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
+    private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     static var selectedCategory: TrackerCategory? = nil
     static var selectedCategoryString: String? = nil
 

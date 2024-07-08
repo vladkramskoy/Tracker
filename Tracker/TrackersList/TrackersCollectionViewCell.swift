@@ -9,13 +9,13 @@ import UIKit
 
 final class TrackersCollectionViewCell: UICollectionViewCell {
     static let identifier = "cell"
+    private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     let cardView = UIView()
     let iconLabel = UILabel()
     let textLabel = UILabel()
     let periodLabel = UILabel()
     let completeButton = UIButton(type: .system)
     var buttonAction: (() -> Void)?
-    let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
 
     
     override init(frame: CGRect) {

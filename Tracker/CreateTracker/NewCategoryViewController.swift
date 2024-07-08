@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import CoreData
 
 final class NewCategoryViewController: UIViewController {
-    let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
+    private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
+    private var managedObjectContext: NSManagedObjectContext?
     
     private lazy var textFieldView: UIView = {
         let textFieldView = UIView()
@@ -48,6 +50,7 @@ final class NewCategoryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        managedObjectContext = UIApplication.shared.managedObjectContext
         view.backgroundColor = .white
         view.addSubview(textFieldView)
         view.addSubview(categoryNameTextField)
