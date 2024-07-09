@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import CoreData
 
 final class NewHabitViewController: UIViewController {
     private var cellTitles: [(String, String?)] = [("Категория", nil), ("Расписание", nil)] {
@@ -19,7 +18,6 @@ final class NewHabitViewController: UIViewController {
     private let colors = [UIColor(named: "color1"), UIColor(named: "color2"), UIColor(named: "color3"), UIColor(named: "color4"), UIColor(named: "color5"), UIColor(named: "color6"), UIColor(named: "color7"), UIColor(named: "color8"), UIColor(named: "color9"), UIColor(named: "color10"), UIColor(named: "color11"), UIColor(named: "color12"), UIColor(named: "color13"), UIColor(named: "color14"), UIColor(named: "color15"), UIColor(named: "color16"), UIColor(named: "color17"), UIColor(named: "color18")]
     private var selectColor = UIColor.black
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
-    private var managedObjectContext: NSManagedObjectContext?
     
     private lazy var textFieldView: UIView = {
         let textFieldView = UIView()
@@ -104,7 +102,6 @@ final class NewHabitViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        managedObjectContext = UIApplication.shared.managedObjectContext
         view.backgroundColor = .white
         view.addSubview(textFieldView)
         view.addSubview(trackerNameTextField)

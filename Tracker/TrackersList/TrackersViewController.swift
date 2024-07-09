@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import CoreData
 
 final class TrackersViewController: UIViewController {
     static var categories: [TrackerCategory] = []
@@ -19,7 +18,6 @@ final class TrackersViewController: UIViewController {
     private var filteredTrackerCategories: [TrackerCategory] = []
     private var dateFilteredTrackerCategories: [TrackerCategory] = []
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
-    private var managedObjectContext: NSManagedObjectContext?
     
     private lazy var searchField: UISearchTextField = {
         let searchField = UISearchTextField()
@@ -90,7 +88,6 @@ final class TrackersViewController: UIViewController {
         super.viewDidLoad()
         title = "Трекеры"
         navigationController?.navigationBar.prefersLargeTitles = true
-        managedObjectContext = UIApplication.shared.managedObjectContext
         filterTrackers(for: currentDate)
         setupSubview()
         setupConstraints()
