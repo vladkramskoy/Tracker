@@ -18,6 +18,7 @@ final class TrackersViewController: UIViewController {
     private var filteredTrackerCategories: [TrackerCategory] = []
     private var dateFilteredTrackerCategories: [TrackerCategory] = []
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
+    private let trackerCategoryStore = TrackerCategoryStore()
     
     private lazy var searchField: UISearchTextField = {
         let searchField = UISearchTextField()
@@ -88,6 +89,7 @@ final class TrackersViewController: UIViewController {
         super.viewDidLoad()
         title = "Трекеры"
         navigationController?.navigationBar.prefersLargeTitles = true
+        TrackersViewController.categories = trackerCategoryStore.fetchCategories() ?? []
         filterTrackers(for: currentDate)
         setupSubview()
         setupConstraints()

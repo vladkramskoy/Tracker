@@ -12,6 +12,7 @@ final class CategoryViewController: UIViewController {
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     static var selectedCategory: TrackerCategory? = nil
     static var selectedCategoryString: String? = nil
+    private let trackerCategoryStore = TrackerCategoryStore()
 
     private lazy var stubImage: UIImageView = {
         let stubImage = UIImageView()
@@ -93,6 +94,7 @@ final class CategoryViewController: UIViewController {
     }
     
     private func updateUI() {
+        TrackersViewController.categories = trackerCategoryStore.fetchCategories() ?? []
         if TrackersViewController.categories.isEmpty {
             stubImage.isHidden = false
             stubLabel.isHidden = false
@@ -148,7 +150,6 @@ extension CategoryViewController: UITableViewDataSource {
             cell.layer.maskedCorners = []
         }
 
-        
         if let selectedIndexPath = selectedIndexPath, selectedIndexPath == indexPath {
             cell.accessoryType = .checkmark
         } else {

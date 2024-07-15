@@ -12,6 +12,6 @@ struct TrackerCategory {
     let trackers: [Tracker]
     
     func addingTracker(_ tracker: Tracker) -> TrackerCategory {
-        return TrackerCategory(name: name, trackers: trackers + [tracker])
+        return TrackerCategory(name: name, trackers: trackers + [tracker]) // DEL
     }
 }
