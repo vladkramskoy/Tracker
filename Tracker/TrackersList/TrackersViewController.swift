@@ -19,6 +19,7 @@ final class TrackersViewController: UIViewController {
     private var dateFilteredTrackerCategories: [TrackerCategory] = []
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     private let trackerCategoryStore = TrackerCategoryStore()
+    private let trackerRecordStore = TrackerRecordStore()
     
     private lazy var searchField: UISearchTextField = {
         let searchField = UISearchTextField()
@@ -90,6 +91,7 @@ final class TrackersViewController: UIViewController {
         title = "Трекеры"
         navigationController?.navigationBar.prefersLargeTitles = true
         TrackersViewController.categories = trackerCategoryStore.fetchCategories() ?? []
+        completedTrackers = trackerRecordStore.fetchTrackerRecords()
         filterTrackers(for: currentDate)
         setupSubview()
         setupConstraints()
@@ -242,9 +244,12 @@ final class TrackersViewController: UIViewController {
         
         if let index = completedTrackers.firstIndex(where: { $0.id == tracker.id && Calendar.current.isDate($0.date, inSameDayAs: currentDate) }) {
             completedTrackers.remove(at: index)
+            let record = completedTrackers[index]
+            try? trackerRecordStore.deleteTrackerRecord(by: record.id, on: record.date)
         } else {
             let record = TrackerRecord(date: currentDate, id: tracker.id)
             completedTrackers.append(record)
+            try? trackerRecordStore.addTrackerRecord(record)
         }
         collectionView.reloadData()
     }
