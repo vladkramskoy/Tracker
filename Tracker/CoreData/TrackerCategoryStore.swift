@@ -23,7 +23,29 @@ final class TrackerCategoryStore {
             var trackerCategories: [TrackerCategory] = []
             
             for categoryCoreData in trackerCategoriesCoreData {
-                let trackers = categoryCoreData.trackers?.allObjects as? [Tracker] ?? []
+                guard let trackersCoreData = categoryCoreData.trackers?.allObjects as? [TrackerCoreData] else {
+                    continue
+                }
+                
+                let trackers = trackersCoreData.compactMap { coreDataTracker -> Tracker? in
+                    guard let name = coreDataTracker.name,
+                          let emoji = coreDataTracker.emoji,
+                          let idString = coreDataTracker.id,
+                          let id = UUID(uuidString: idString),
+                          let colorData = coreDataTracker.color,
+                          let color = try? NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: colorData),
+                          let scheduleData = coreDataTracker.schedule else {
+                        return nil
+                    }
+                    
+                    let decoder = JSONDecoder()
+                    guard let schedule = try? decoder.decode([WeekDay: Bool].self, from: scheduleData) else {
+                        return nil
+                    }
+                    
+                    return Tracker(id: id, name: name, color: color, emoji: emoji, schedule: schedule)
+                }
+                
                 let category = TrackerCategory(name: categoryCoreData.name!, trackers: trackers)
                 trackerCategories.append(category)
             }

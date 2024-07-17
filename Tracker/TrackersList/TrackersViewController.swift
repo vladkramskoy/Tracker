@@ -262,6 +262,7 @@ final class TrackersViewController: UIViewController {
     }
     
     @objc private func updateTrackers() {
+        TrackersViewController.categories = trackerCategoryStore.fetchCategories() ?? []
         filterTrackers(for: currentDate)
         collectionView.reloadData()
     }

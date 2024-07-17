@@ -8,6 +8,7 @@
 import UIKit
 
 final class NewHabitViewController: UIViewController {
+    private let trackerStore = TrackerStore()
     private var cellTitles: [(String, String?)] = [("Категория", nil), ("Расписание", nil)] {
         didSet {
             checkAndUpdateCreateButton()
@@ -141,8 +142,20 @@ final class NewHabitViewController: UIViewController {
         guard let text = trackerNameTextField.text, !text.isEmpty else { return }
         if let selectedCategory = CategoryViewController.selectedCategory {
             let newTracker = Tracker(id: UUID(), name: text, color: selectColor, emoji: selectEmoji, schedule: ScheduleViewController.schedule)
-            let updateCategory = selectedCategory.addingTracker(newTracker)
-            TrackersViewController.categories.append(updateCategory)
+            
+            trackerStore.addNewTrackerToCategory(newTracker, categoryName: selectedCategory.name)
+            
+//            do {
+//                try trackerStore.addNewTracker(newTracker)
+//
+//            } catch {
+//                print("Failed to add a category: \(error)")
+//            }
+            
+            
+//            let updateCategory = selectedCategory.addingTracker(newTracker)
+//            TrackersViewController.categories.append(updateCategory)
+            
             NotificationCenter.default.post(name: NSNotification.Name("TrackerCreated"), object: nil)
         }
         self.presentingViewController?.presentingViewController?.dismiss(animated: true)
