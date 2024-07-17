@@ -8,6 +8,7 @@
 import UIKit
 
 final class NewIrregularEventViewController: UIViewController {
+    private let trackerStore = TrackerStore()
     private var cellTitles: [(String, String?)] = [("Категория", nil)] {
         didSet {
             checkAndUpdateCreateButton()
@@ -148,8 +149,7 @@ final class NewIrregularEventViewController: UIViewController {
                 .sunday: true
             ]
             let newTracker = Tracker(id: UUID(), name: text, color: selectColor, emoji: selectEmoji, schedule: schedule)
-            let updateCategory = selectedCategory.addingTracker(newTracker)
-            TrackersViewController.categories.append(updateCategory)
+            trackerStore.addNewTrackerToCategory(newTracker, categoryName: selectedCategory.name)
             NotificationCenter.default.post(name: NSNotification.Name("TrackerCreated"), object: nil)
         }
         self.presentingViewController?.presentingViewController?.dismiss(animated: true)
