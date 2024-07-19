@@ -26,7 +26,7 @@ final class ColorsCollectionViewCell: UICollectionViewCell {
             cellView.heightAnchor.constraint(equalToConstant: 40)
         ])
         
-        self.layer.cornerRadius = 4
+        self.layer.cornerRadius = 8
         self.layer.masksToBounds = true
     }
     

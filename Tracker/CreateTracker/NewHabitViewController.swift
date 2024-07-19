@@ -332,13 +332,14 @@ extension NewHabitViewController: UICollectionViewDelegate {
             selectEmoji = emoji[indexPath.row]
             checkAndUpdateCreateButton()
             if let cell = collectionView.cellForItem(at: indexPath) {
-                cell.backgroundColor = .lightGray
+                cell.backgroundColor = UIColor(named: "superLightGray2")
             }
         } else if collectionView == сolorsCollectionView {
             selectColor = colors[indexPath.row] ?? UIColor()
             checkAndUpdateCreateButton()
             if let cell = collectionView.cellForItem(at: indexPath) {
-                cell.backgroundColor = .lightGray
+                cell.layer.borderWidth = 3
+                cell.layer.borderColor = colors[indexPath.row]?.withAlphaComponent(0.3).cgColor
             }
         }
     }
@@ -346,6 +347,7 @@ extension NewHabitViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) {
             cell.backgroundColor = .white
+            cell.layer.borderWidth = 0
         }
     }
 }

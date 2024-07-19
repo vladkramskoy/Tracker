@@ -22,7 +22,7 @@ final class EmojiCollectionViewCell: UICollectionViewCell {
             emojiLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
         
-        self.layer.cornerRadius = 4
+        self.layer.cornerRadius = 16
         self.layer.masksToBounds = true
     }
     
