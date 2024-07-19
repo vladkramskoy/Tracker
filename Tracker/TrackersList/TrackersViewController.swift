@@ -243,9 +243,9 @@ final class TrackersViewController: UIViewController {
         }
         
         if let index = completedTrackers.firstIndex(where: { $0.id == tracker.id && Calendar.current.isDate($0.date, inSameDayAs: currentDate) }) {
+            let recordToDelete = completedTrackers[index]
             completedTrackers.remove(at: index)
-            let record = completedTrackers[index]
-            try? trackerRecordStore.deleteTrackerRecord(by: record.id, on: record.date)
+            try? trackerRecordStore.deleteTrackerRecord(by: recordToDelete.id, on: recordToDelete.date)
         } else {
             let record = TrackerRecord(date: currentDate, id: tracker.id)
             completedTrackers.append(record)
