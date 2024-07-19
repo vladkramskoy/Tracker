@@ -12,8 +12,12 @@ final class TrackerCategoryStore {
     var context: NSManagedObjectContext
     
     convenience init() {
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        self.init(context: context)
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            let context = appDelegate.persistentContainer.viewContext
+            self.init(context: context)
+        } else {
+            fatalError("Unable to retriwe retrieve AppDelegate")
+        }
     }
     
     func fetchCategories() -> [TrackerCategory]? {
@@ -46,7 +50,7 @@ final class TrackerCategoryStore {
                     return Tracker(id: id, name: name, color: color, emoji: emoji, schedule: schedule)
                 }
                 
-                let category = TrackerCategory(name: categoryCoreData.name!, trackers: trackers)
+                let category = TrackerCategory(name: categoryCoreData.name ?? String(), trackers: trackers)
                 trackerCategories.append(category)
             }
             return trackerCategories

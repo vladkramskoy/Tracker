@@ -12,8 +12,12 @@ final class TrackerStore {
     var context: NSManagedObjectContext
     
     convenience init() {
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        self.init(context: context)
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            let context = appDelegate.persistentContainer.viewContext
+            self.init(context: context)
+        } else {
+            fatalError("Unable to retriwe retrieve AppDelegate")
+        }
     }
     
     init(context: NSManagedObjectContext) {

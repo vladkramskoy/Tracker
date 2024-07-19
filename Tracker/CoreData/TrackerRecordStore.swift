@@ -12,8 +12,12 @@ final class TrackerRecordStore {
     var context: NSManagedObjectContext
     
     convenience init() {
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        self.init(context: context)
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            let context = appDelegate.persistentContainer.viewContext
+            self.init(context: context)
+        } else {
+            fatalError("Unable to retriwe retrieve AppDelegate")
+        }
     }
     
     init(context: NSManagedObjectContext) {
@@ -53,7 +57,7 @@ final class TrackerRecordStore {
         let fetchRequest: NSFetchRequest<TrackerRecordCoreData> = TrackerRecordCoreData.fetchRequest()
         let calendar = Calendar.current
         let startOfDay = calendar.startOfDay(for: date)
-        let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)!
+        let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay) ?? Date()
         fetchRequest.predicate = NSPredicate(format: "id == %@ AND date >= %@ AND date < %@", id as CVarArg, startOfDay as CVarArg, endOfDay as CVarArg)
         
         do {

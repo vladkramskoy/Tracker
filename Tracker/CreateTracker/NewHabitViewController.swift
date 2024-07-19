@@ -104,12 +104,12 @@ final class NewHabitViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        view.addSubview(textFieldView)
-        view.addSubview(trackerNameTextField)
-        view.addSubview(tableView)
         view.addSubview(scrollView)
         view.addSubview(cancelButton)
         view.addSubview(createButton)
+        scrollView.addSubview(textFieldView)
+        scrollView.addSubview(trackerNameTextField)
+        scrollView.addSubview(tableView)
         scrollView.addSubview(emojiCollectionView)
         scrollView.addSubview(сolorsCollectionView)
         tableView.delegate = self
@@ -128,7 +128,7 @@ final class NewHabitViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        let contentHeight = emojiCollectionView.frame.height + 16 + сolorsCollectionView.frame.height
+        let contentHeight = textFieldView.frame.height + 24 + tableView.frame.height + 32 + emojiCollectionView.frame.height + 16 + сolorsCollectionView.frame.height
         scrollView.contentSize = CGSize(width: view.frame.width, height: contentHeight)
     }
     
@@ -180,9 +180,9 @@ final class NewHabitViewController: UIViewController {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            textFieldView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
-            textFieldView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            textFieldView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            textFieldView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            textFieldView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+            textFieldView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
             textFieldView.heightAnchor.constraint(equalToConstant: 75),
             
             trackerNameTextField.topAnchor.constraint(equalTo: textFieldView.topAnchor),
@@ -191,16 +191,16 @@ final class NewHabitViewController: UIViewController {
             trackerNameTextField.heightAnchor.constraint(equalToConstant: 75),
             
             tableView.topAnchor.constraint(equalTo: trackerNameTextField.bottomAnchor, constant: 24),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            tableView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+            tableView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
             tableView.heightAnchor.constraint(equalToConstant: 150),
             
-            scrollView.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 32),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: cancelButton.topAnchor, constant: -16),
             
-            emojiCollectionView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            emojiCollectionView.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 32),
             emojiCollectionView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             emojiCollectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             emojiCollectionView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
