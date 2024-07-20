@@ -17,6 +17,9 @@ final class TrackersViewController: UIViewController {
     private var completedTrackers: [TrackerRecord] = []
     private var filteredTrackerCategories: [TrackerCategory] = []
     private var dateFilteredTrackerCategories: [TrackerCategory] = []
+    private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
+    private let trackerCategoryStore = TrackerCategoryStore()
+    private let trackerRecordStore = TrackerRecordStore()
     
     private lazy var searchField: UISearchTextField = {
         let searchField = UISearchTextField()
@@ -87,7 +90,8 @@ final class TrackersViewController: UIViewController {
         super.viewDidLoad()
         title = "Трекеры"
         navigationController?.navigationBar.prefersLargeTitles = true
-        
+        TrackersViewController.categories = trackerCategoryStore.fetchCategories() ?? []
+        completedTrackers = trackerRecordStore.fetchTrackerRecords()
         filterTrackers(for: currentDate)
         setupSubview()
         setupConstraints()
@@ -99,6 +103,7 @@ final class TrackersViewController: UIViewController {
         updateUI(with: stubDefault)
         setupNotificationObserver()
         view.addGestureRecognizer(tapGesture)
+        feedbackGenerator.prepare()
     }
     
     private func setupSubview() {
@@ -238,15 +243,19 @@ final class TrackersViewController: UIViewController {
         }
         
         if let index = completedTrackers.firstIndex(where: { $0.id == tracker.id && Calendar.current.isDate($0.date, inSameDayAs: currentDate) }) {
+            let recordToDelete = completedTrackers[index]
             completedTrackers.remove(at: index)
+            try? trackerRecordStore.deleteTrackerRecord(by: recordToDelete.id, on: recordToDelete.date)
         } else {
             let record = TrackerRecord(date: currentDate, id: tracker.id)
             completedTrackers.append(record)
+            try? trackerRecordStore.addTrackerRecord(record)
         }
         collectionView.reloadData()
     }
     
     @objc private func addTrackerButtonTapped() {
+        feedbackGenerator.impactOccurred()
         let creatingTrackerViewController = CreateTrackerViewController()
         creatingTrackerViewController.title = "Создание трекера"
         let navigationController = UINavigationController(rootViewController: creatingTrackerViewController)
@@ -258,6 +267,7 @@ final class TrackersViewController: UIViewController {
     }
     
     @objc private func updateTrackers() {
+        TrackersViewController.categories = trackerCategoryStore.fetchCategories() ?? []
         filterTrackers(for: currentDate)
         collectionView.reloadData()
     }

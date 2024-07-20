@@ -9,12 +9,14 @@ import UIKit
 
 final class TrackersCollectionViewCell: UICollectionViewCell {
     static let identifier = "cell"
+    private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     let cardView = UIView()
     let iconLabel = UILabel()
     let textLabel = UILabel()
     let periodLabel = UILabel()
     let completeButton = UIButton(type: .system)
     var buttonAction: (() -> Void)?
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -49,6 +51,8 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         completeButton.layer.cornerRadius = 17
         completeButton.layer.masksToBounds = true
         completeButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        feedbackGenerator.prepare()
         
         NSLayoutConstraint.activate([
             cardView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -102,6 +106,7 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
     }
     
     @objc private func completeButtonTapped() {
+        feedbackGenerator.impactOccurred()
         buttonAction?()
     }
 }

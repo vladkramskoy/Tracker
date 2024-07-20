@@ -8,6 +8,8 @@
 import UIKit
 
 final class CreateTrackerViewController: UIViewController {
+    private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
+    
     private lazy var createHabitButton: UIButton = {
         let createHabitButton = UIButton(type: .system)
         createHabitButton.setTitle("Привычка", for: .normal)
@@ -38,6 +40,7 @@ final class CreateTrackerViewController: UIViewController {
         view.addSubview(createHabitButton)
         view.addSubview(createIrregularEventButton)
         setupConstraints()
+        feedbackGenerator.prepare()
     }
     
     private func setupConstraints() {
@@ -55,6 +58,7 @@ final class CreateTrackerViewController: UIViewController {
     }
     
     @objc private func createHabitButtonTapped() {
+        feedbackGenerator.impactOccurred()
         let newHabitViewController = NewHabitViewController()
         newHabitViewController.title = "Новая привычка"
         let navigationController = UINavigationController(rootViewController: newHabitViewController)
@@ -62,6 +66,7 @@ final class CreateTrackerViewController: UIViewController {
     }
     
     @objc private func createIrregularEventButtonTapped() {
+        feedbackGenerator.impactOccurred()
         let newIrregularEventViewController = NewIrregularEventViewController()
         newIrregularEventViewController.title = "Новое нерегулярное событие"
         let navigationController = UINavigationController(rootViewController: newIrregularEventViewController)

@@ -8,6 +8,9 @@
 import UIKit
 
 final class NewCategoryViewController: UIViewController {
+    private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
+    private let trackerCategoryStore = TrackerCategoryStore()
+    
     private lazy var textFieldView: UIView = {
         let textFieldView = UIView()
         textFieldView.backgroundColor = UIColor(named: "superLightGray")
@@ -54,6 +57,7 @@ final class NewCategoryViewController: UIViewController {
         doneButton.setContentHuggingPriority(.defaultHigh, for: .vertical)
         categoryNameTextField.delegate = self
         view.addGestureRecognizer(tapGesture)
+        feedbackGenerator.prepare()
     }
     
     private func setupConstraints() {
@@ -87,9 +91,15 @@ final class NewCategoryViewController: UIViewController {
     }
     
     @objc private func doneButtonTapped() {
+        feedbackGenerator.impactOccurred()
         guard let text = categoryNameTextField.text, !text.isEmpty else { return }
         let newCategory = TrackerCategory(name: text, trackers: [])
-        TrackersViewController.categories.append(newCategory)
+
+        do {
+            try trackerCategoryStore.addNewCategory(newCategory)
+        } catch {
+            print("Failed to add a category: \(error)")
+        }
         NotificationCenter.default.post(name: NSNotification.Name("NewCategoryAdded"), object: nil)
         presentingViewController?.dismiss(animated: true)
     }
