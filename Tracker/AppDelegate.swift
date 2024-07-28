@@ -25,12 +25,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow()
         
+        let userDefaults = UserDefaults.standard
+        let hasOnboarded = userDefaults.bool(forKey: "hasOnboarded")
+        
         if let window = self.window {
-            window.rootViewController = UITabBarController.createConfiguredTabBarController()
+            if hasOnboarded {
+                window.rootViewController = UITabBarController.createConfiguredTabBarController()
+            } else {
+                let onboardingViewController = OnboardingPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil) as UIPageViewController
+                window.rootViewController = onboardingViewController
+            }
             window.makeKeyAndVisible()
             window.overrideUserInterfaceStyle = .light
         }
-        
         return true
     }
     
@@ -44,6 +51,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
+    }
+    
+    func didFinishOnboarding() {
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(true, forKey: "hasOnboarded")
+        
+        let tabBarController = UITabBarController.createConfiguredTabBarController()
+        window?.rootViewController = tabBarController
     }
 }
 

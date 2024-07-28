@@ -20,6 +20,8 @@
 		8D68D45F2C1C6A7C00A01290 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D68D45E2C1C6A7C00A01290 /* Schedule.swift */; };
 		8D68D4612C1C722F00A01290 /* TrackerCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D68D4602C1C722F00A01290 /* TrackerCategory.swift */; };
 		8D68D4632C1C731400A01290 /* TrackerRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D68D4622C1C731400A01290 /* TrackerRecord.swift */; };
+		8D75DBA82C56DD04007AA70B /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D75DBA72C56DD04007AA70B /* OnboardingPageViewController.swift */; };
+		8D75DBAA2C56EA2E007AA70B /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D75DBA92C56EA2E007AA70B /* OnboardingViewController.swift */; };
 		8D7BD5142C1393F1007DC35C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7BD5132C1393F1007DC35C /* AppDelegate.swift */; };
 		8D7BD5182C1393F1007DC35C /* TrackersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7BD5172C1393F1007DC35C /* TrackersViewController.swift */; };
 		8D7BD51D2C1393F3007DC35C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D7BD51C2C1393F3007DC35C /* Assets.xcassets */; };
@@ -47,6 +49,8 @@
 		8D68D45E2C1C6A7C00A01290 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		8D68D4602C1C722F00A01290 /* TrackerCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerCategory.swift; sourceTree = "<group>"; };
 		8D68D4622C1C731400A01290 /* TrackerRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerRecord.swift; sourceTree = "<group>"; };
+		8D75DBA72C56DD04007AA70B /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
+		8D75DBA92C56EA2E007AA70B /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		8D7BD5102C1393F1007DC35C /* Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D7BD5132C1393F1007DC35C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8D7BD5172C1393F1007DC35C /* TrackersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersViewController.swift; sourceTree = "<group>"; };
@@ -96,6 +100,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		8D75DBA62C56DB69007AA70B /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				8D75DBA72C56DD04007AA70B /* OnboardingPageViewController.swift */,
+				8D75DBA92C56EA2E007AA70B /* OnboardingViewController.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		8D7BD5072C1393F1007DC35C = {
 			isa = PBXGroup;
 			children = (
@@ -118,6 +131,7 @@
 				8D7BD5132C1393F1007DC35C /* AppDelegate.swift */,
 				8DAA53C42C2E138200817FF4 /* TrackersList */,
 				8DAA53C52C2E13B800817FF4 /* CreateTracker */,
+				8D75DBA62C56DB69007AA70B /* Onboarding */,
 				8D68D45B2C1C64FF00A01290 /* Models */,
 				8D4BC66A2C3D3C070059C171 /* CoreData */,
 				8D7BD51C2C1393F3007DC35C /* Assets.xcassets */,
@@ -242,6 +256,8 @@
 				8DA39F2A2C2EC39800B58473 /* CategoryViewController.swift in Sources */,
 				8D970F382C2F1ED00052BC64 /* NewCategoryViewController.swift in Sources */,
 				8D592D4A2C28669300F2C5FB /* TrackersCollectionViewCell.swift in Sources */,
+				8D75DBAA2C56EA2E007AA70B /* OnboardingViewController.swift in Sources */,
+				8D75DBA82C56DD04007AA70B /* OnboardingPageViewController.swift in Sources */,
 				8DA28D1F2C3A9BC000C0720D /* Tracker.xcdatamodeld in Sources */,
 				8DE147162C36F27E00F271F3 /* ColorsCollectionViewCell.swift in Sources */,
 				8D45F2282C24A71D00A29D0B /* CreateTrackerViewController.swift in Sources */,
