@@ -60,7 +60,7 @@ final class CategoriesViewController: UIViewController {
         view.addSubview(tableView)
         view.addSubview(addCategoryButton)
         setupConstraints()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(CategoriesCustomTableViewCell.self, forCellReuseIdentifier: "customCell")
         addCategoryButton.setContentHuggingPriority(.defaultHigh, for: .vertical)
         tableView.delegate = self
         tableView.dataSource = self
@@ -138,7 +138,7 @@ extension CategoriesViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "customCell", for: indexPath)
         cell.textLabel?.text = TrackersViewController.categories[indexPath.row].name
         cell.backgroundColor = UIColor(named: "superLightGray")
         
