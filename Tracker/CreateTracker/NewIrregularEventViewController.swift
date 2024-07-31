@@ -138,7 +138,7 @@ final class NewIrregularEventViewController: UIViewController {
     @objc private func createButtonTapped() {
         feedbackGenerator.impactOccurred()
         guard let text = trackerNameTextField.text, !text.isEmpty else { return }
-        if let selectedCategory = CategoriesViewController.selectedCategory {
+        if let selectedCategory = CategoriesViewModel.selectedCategory {
             let schedule: [WeekDay: Bool] = [
                 .monday: true,
                 .tuesday: true,
@@ -157,7 +157,7 @@ final class NewIrregularEventViewController: UIViewController {
     
     @objc private func updateTableView() {
         DispatchQueue.main.async {
-            self.cellTitles = [("Категория", "\(CategoriesViewController.selectedCategoryString ?? "")")]
+            self.cellTitles = [("Категория", "\(CategoriesViewModel.selectedCategoryString ?? "")")]
             self.tableView.reloadData()
         }
     }
