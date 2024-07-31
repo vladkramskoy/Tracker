@@ -1,5 +1,5 @@
 //
-//  CategoryViewController.swift
+//  CategoriesViewController.swift
 //  Tracker
 //
 //  Created by Vladislav Kramskoy on 28.06.2024.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class CategoryViewController: UIViewController {
+final class CategoriesViewController: UIViewController {
     private var selectedIndexPath: IndexPath?
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     static var selectedCategory: TrackerCategory? = nil
@@ -132,7 +132,7 @@ final class CategoryViewController: UIViewController {
     }
 }
 
-extension CategoryViewController: UITableViewDataSource {
+extension CategoriesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return TrackersViewController.categories.count
     }
@@ -159,7 +159,7 @@ extension CategoryViewController: UITableViewDataSource {
     }
 }
 
-extension CategoryViewController: UITableViewDelegate {
+extension CategoriesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let selectedIndexPath = selectedIndexPath {
             let previousCell = tableView.cellForRow(at: selectedIndexPath)
@@ -170,8 +170,8 @@ extension CategoryViewController: UITableViewDelegate {
         cell?.accessoryType = .checkmark
         tableView.deselectRow(at: indexPath, animated: true)
         selectedIndexPath = indexPath
-        CategoryViewController.selectedCategoryString = TrackersViewController.categories[indexPath.row].name
-        CategoryViewController.selectedCategory = TrackersViewController.categories[indexPath.row]
+        CategoriesViewController.selectedCategoryString = TrackersViewController.categories[indexPath.row].name
+        CategoriesViewController.selectedCategory = TrackersViewController.categories[indexPath.row]
         
         cellDidTapped()
         // TODO: Реализовать логику удаления категорий

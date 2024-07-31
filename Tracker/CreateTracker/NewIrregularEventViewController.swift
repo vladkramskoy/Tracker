@@ -138,7 +138,7 @@ final class NewIrregularEventViewController: UIViewController {
     @objc private func createButtonTapped() {
         feedbackGenerator.impactOccurred()
         guard let text = trackerNameTextField.text, !text.isEmpty else { return }
-        if let selectedCategory = CategoryViewController.selectedCategory {
+        if let selectedCategory = CategoriesViewController.selectedCategory {
             let schedule: [WeekDay: Bool] = [
                 .monday: true,
                 .tuesday: true,
@@ -157,7 +157,7 @@ final class NewIrregularEventViewController: UIViewController {
     
     @objc private func updateTableView() {
         DispatchQueue.main.async {
-            self.cellTitles = [("Категория", "\(CategoryViewController.selectedCategoryString ?? "")")]
+            self.cellTitles = [("Категория", "\(CategoriesViewController.selectedCategoryString ?? "")")]
             self.tableView.reloadData()
         }
     }
@@ -253,7 +253,7 @@ extension NewIrregularEventViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-            let categoryViewController = CategoryViewController()
+            let categoryViewController = CategoriesViewController()
             categoryViewController.title = "Категория"
             let navigationController = UINavigationController(rootViewController: categoryViewController)
             present(navigationController, animated: true)
