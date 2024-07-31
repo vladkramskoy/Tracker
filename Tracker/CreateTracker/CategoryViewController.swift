@@ -94,8 +94,8 @@ final class CategoryViewController: UIViewController {
     }
     
     private func updateUI() {
-        TrackersViewModel.categories = trackerCategoryStore.fetchCategories() ?? []
-        if TrackersViewModel.categories.isEmpty {
+        TrackersViewController.categories = trackerCategoryStore.fetchCategories() ?? []
+        if TrackersViewController.categories.isEmpty {
             stubImage.isHidden = false
             stubLabel.isHidden = false
         } else {
@@ -134,12 +134,12 @@ final class CategoryViewController: UIViewController {
 
 extension CategoryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return TrackersViewModel.categories.count
+        return TrackersViewController.categories.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = TrackersViewModel.categories[indexPath.row].name
+        cell.textLabel?.text = TrackersViewController.categories[indexPath.row].name
         cell.backgroundColor = UIColor(named: "superLightGray")
         
         cell.layer.cornerRadius = 16
@@ -170,8 +170,8 @@ extension CategoryViewController: UITableViewDelegate {
         cell?.accessoryType = .checkmark
         tableView.deselectRow(at: indexPath, animated: true)
         selectedIndexPath = indexPath
-        CategoryViewController.selectedCategoryString = TrackersViewModel.categories[indexPath.row].name
-        CategoryViewController.selectedCategory = TrackersViewModel.categories[indexPath.row]
+        CategoryViewController.selectedCategoryString = TrackersViewController.categories[indexPath.row].name
+        CategoryViewController.selectedCategory = TrackersViewController.categories[indexPath.row]
         
         cellDidTapped()
         // TODO: Реализовать логику удаления категорий
@@ -182,7 +182,7 @@ extension CategoryViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == TrackersViewModel.categories.count - 1 {
+        if indexPath.row == TrackersViewController.categories.count - 1 {
             cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
         } else {
             cell.separatorInset = .zero

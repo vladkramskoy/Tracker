@@ -8,6 +8,7 @@
 import UIKit
 
 final class TrackersViewController: UIViewController {
+    static var categories: [TrackerCategory] = []
     private var currentDate: Date = Date() {
         didSet {
             filterTrackers(for: currentDate)
@@ -89,7 +90,7 @@ final class TrackersViewController: UIViewController {
         super.viewDidLoad()
         title = "Трекеры"
         navigationController?.navigationBar.prefersLargeTitles = true
-        TrackersViewModel.categories = trackerCategoryStore.fetchCategories() ?? []
+        TrackersViewController.categories = trackerCategoryStore.fetchCategories() ?? []
         completedTrackers = trackerRecordStore.fetchTrackerRecords()
         filterTrackers(for: currentDate)
         setupSubview()
@@ -164,7 +165,7 @@ final class TrackersViewController: UIViewController {
         guard let weekDayIndex = components.weekday else { return }
         guard let weekday = convertWeekDay(from: weekDayIndex) else { return }
         
-        dateFilteredTrackerCategories = TrackersViewModel.categories.map { category in
+        dateFilteredTrackerCategories = TrackersViewController.categories.map { category in
             let filteredTrackers = category.trackers.filter { tracker in
                 return tracker.schedule[weekday] == true
             }
@@ -266,7 +267,7 @@ final class TrackersViewController: UIViewController {
     }
     
     @objc private func updateTrackers() {
-        TrackersViewModel.categories = trackerCategoryStore.fetchCategories() ?? []
+        TrackersViewController.categories = trackerCategoryStore.fetchCategories() ?? []
         filterTrackers(for: currentDate)
         collectionView.reloadData()
     }
