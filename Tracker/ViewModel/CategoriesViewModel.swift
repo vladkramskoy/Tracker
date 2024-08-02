@@ -12,6 +12,7 @@ protocol CategoriesViewModelProtocol: AnyObject {
     static var selectedCategoryString: String? { get set }
     var selectedIndexPath: IndexPath? { get set }
     var onCategoriesUpdated: ((Bool, Bool) -> Void)? { get set }
+    var categories: [TrackerCategory] { get }
 
     func updateUI()
     func cellDidTapped()
@@ -27,9 +28,11 @@ final class CategoriesViewModel: CategoriesViewModelProtocol {
     var selectedIndexPath: IndexPath?
     var onCategoriesUpdated: ((Bool, Bool) -> Void)?
     
+    private(set) var categories: [TrackerCategory] = []
+    
     func updateUI() {
-        TrackersViewController.categories = trackerCategoryStore.fetchCategories() ?? []
-        let isEmpty = TrackersViewController.categories.isEmpty
+        categories = trackerCategoryStore.fetchCategories() ?? []
+        let isEmpty = categories.isEmpty
         onCategoriesUpdated?(isEmpty, !isEmpty)
     }
     
@@ -42,6 +45,6 @@ final class CategoriesViewModel: CategoriesViewModelProtocol {
     }
     
     func triggerFeedback() {
-         feedbackGenerator.impactOccurred()
-     }
+        feedbackGenerator.impactOccurred()
+    }
 }

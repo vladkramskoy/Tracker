@@ -136,14 +136,14 @@ final class CategoriesViewController: UIViewController {
 
 extension CategoriesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return TrackersViewController.categories.count
+        return viewModel.categories.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "customCell", for: indexPath) as? CategoriesCustomTableViewCell else {
             return UITableViewCell()
         }
-        cell.textLabel?.text = TrackersViewController.categories[indexPath.row].name
+        cell.textLabel?.text = viewModel.categories[indexPath.row].name
         cell.backgroundColor = UIColor(named: "superLightGray")
         
         if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
@@ -172,8 +172,8 @@ extension CategoriesViewController: UITableViewDelegate {
         cell?.accessoryType = .checkmark
         tableView.deselectRow(at: indexPath, animated: true)
         viewModel.selectedIndexPath = indexPath
-        CategoriesViewModel.selectedCategoryString = TrackersViewController.categories[indexPath.row].name
-        CategoriesViewModel.selectedCategory = TrackersViewController.categories[indexPath.row]
+        CategoriesViewModel.selectedCategoryString = viewModel.categories[indexPath.row].name
+        CategoriesViewModel.selectedCategory = viewModel.categories[indexPath.row]
         
         cellDidTapped()
         // TODO: Реализовать логику удаления категорий
@@ -184,7 +184,7 @@ extension CategoriesViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == TrackersViewController.categories.count - 1 {
+        if indexPath.row == viewModel.categories.count - 1 {
             cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
         } else {
             cell.separatorInset = .zero
