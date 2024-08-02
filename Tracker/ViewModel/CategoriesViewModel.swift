@@ -18,6 +18,7 @@ protocol CategoriesViewModelProtocol: AnyObject {
     func cellDidTapped()
     func handleViewDidLoad()
     func triggerFeedback()
+    func didSelectRowAt(_ index: Int)
 }
 
 final class CategoriesViewModel: CategoriesViewModelProtocol {
@@ -46,5 +47,11 @@ final class CategoriesViewModel: CategoriesViewModelProtocol {
     
     func triggerFeedback() {
         feedbackGenerator.impactOccurred()
+    }
+    
+    func didSelectRowAt(_ index: Int) {
+        selectedIndexPath = IndexPath(row: index, section: 0)
+        CategoriesViewModel.selectedCategoryString = categories[index].name
+        CategoriesViewModel.selectedCategory = categories[index]
     }
 }

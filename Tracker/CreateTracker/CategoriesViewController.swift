@@ -171,9 +171,7 @@ extension CategoriesViewController: UITableViewDelegate {
         let cell = tableView.cellForRow(at: indexPath)
         cell?.accessoryType = .checkmark
         tableView.deselectRow(at: indexPath, animated: true)
-        viewModel.selectedIndexPath = indexPath
-        CategoriesViewModel.selectedCategoryString = viewModel.categories[indexPath.row].name
-        CategoriesViewModel.selectedCategory = viewModel.categories[indexPath.row]
+        viewModel.didSelectRowAt(indexPath.row)
         
         cellDidTapped()
         // TODO: Реализовать логику удаления категорий
