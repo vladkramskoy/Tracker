@@ -12,14 +12,14 @@ import UIKit
 final class OnboardingPageViewController: UIPageViewController {
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     
-    lazy var pages: [UIViewController] = {
+    private lazy var pages: [UIViewController] = {
         let onboardingViewController1 = OnboardingViewController(backgroundImage: UIImage(named: "onboardingBackground1") ?? UIImage(), onboardingText: "Отслеживайте только то, что хотите")
         let onboardingViewController2 = OnboardingViewController(backgroundImage: UIImage(named: "onboardingBackground2") ?? UIImage(), onboardingText: "Даже если это не литры воды и йога")
         
         return [onboardingViewController1, onboardingViewController2]
     }()
     
-    lazy var pageControl: UIPageControl = {
+    private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.numberOfPages = pages.count
         pageControl.currentPage = 0

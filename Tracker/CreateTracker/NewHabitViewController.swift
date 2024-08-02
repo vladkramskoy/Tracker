@@ -250,7 +250,8 @@ extension NewHabitViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-            let categoryViewController = CategoriesViewController()
+            let viewModel = CategoriesViewModel()
+            let categoryViewController = CategoriesViewController(viewModel: viewModel)
             categoryViewController.title = "Категория"
             let navigationController = UINavigationController(rootViewController: categoryViewController)
             present(navigationController, animated: true)

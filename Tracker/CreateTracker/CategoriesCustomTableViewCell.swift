@@ -8,7 +8,7 @@
 import UIKit
 
 final class CategoriesCustomTableViewCell: UITableViewCell {
-    let customLabel: UILabel = {
+    private let customLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

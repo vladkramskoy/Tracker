@@ -7,14 +7,26 @@
 
 import UIKit
 
-final class CategoriesViewModel {
+protocol CategoriesViewModelProtocol: AnyObject {
+    static var selectedCategory: TrackerCategory? { get set }
+    static var selectedCategoryString: String? { get set }
+    var selectedIndexPath: IndexPath? { get set }
+    var onCategoriesUpdated: ((Bool, Bool) -> Void)? { get set }
+
+    func updateUI()
+    func cellDidTapped()
+    func handleViewDidLoad()
+    func triggerFeedback()
+}
+
+final class CategoriesViewModel: CategoriesViewModelProtocol {
     static var selectedCategory: TrackerCategory? = nil
     static var selectedCategoryString: String? = nil
     private let trackerCategoryStore = TrackerCategoryStore()
-    let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
+    private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     var selectedIndexPath: IndexPath?
     var onCategoriesUpdated: ((Bool, Bool) -> Void)?
-
+    
     func updateUI() {
         TrackersViewController.categories = trackerCategoryStore.fetchCategories() ?? []
         let isEmpty = TrackersViewController.categories.isEmpty
@@ -23,6 +35,10 @@ final class CategoriesViewModel {
     
     func cellDidTapped() {
         NotificationCenter.default.post(name: NSNotification.Name("CategoryDidSelected"), object: nil)
+    }
+    
+    func handleViewDidLoad() {
+        feedbackGenerator.prepare()
     }
     
     func triggerFeedback() {
