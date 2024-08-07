@@ -9,7 +9,7 @@ import UIKit
 
 final class NewIrregularEventViewController: UIViewController {
     private let trackerStore = TrackerStore()
-    private var cellTitles: [(String, String?)] = [("Категория", nil)] {
+    private var cellTitles: [(String, String?)] = [(Localizable.newHabitCategory, nil)] {
         didSet {
             checkAndUpdateCreateButton()
         }
@@ -31,7 +31,7 @@ final class NewIrregularEventViewController: UIViewController {
     
     private lazy var trackerNameTextField: UITextField = {
         let trackerNameTextField = UITextField()
-        trackerNameTextField.placeholder = "Введите название трекера"
+        trackerNameTextField.placeholder = Localizable.newHabitName
         trackerNameTextField.addTarget(self, action: #selector(textFieldDidChange(_ :)), for: .editingChanged)
         trackerNameTextField.translatesAutoresizingMaskIntoConstraints = false
         return trackerNameTextField
@@ -69,7 +69,7 @@ final class NewIrregularEventViewController: UIViewController {
     
     private lazy var cancelButton: UIButton = {
         let cancelButton = UIButton(type: .system)
-        cancelButton.setTitle("Отмена", for: .normal)
+        cancelButton.setTitle(Localizable.newHabitCancelButton, for: .normal)
         cancelButton.setTitleColor(UIColor(named: "lightRed"), for: .normal)
         createButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         cancelButton.layer.borderWidth = 1.0
@@ -82,7 +82,7 @@ final class NewIrregularEventViewController: UIViewController {
     
     private lazy var createButton: UIButton = {
         let createButton = UIButton(type: .system)
-        createButton.setTitle("Создать", for: .normal)
+        createButton.setTitle(Localizable.newHabitCreateButton, for: .normal)
         createButton.tintColor = .white
         createButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         createButton.layer.cornerRadius = 16
@@ -157,7 +157,7 @@ final class NewIrregularEventViewController: UIViewController {
     
     @objc private func updateTableView() {
         DispatchQueue.main.async {
-            self.cellTitles = [("Категория", "\(CategoriesViewModel.selectedCategoryString ?? "")")]
+            self.cellTitles = [(Localizable.newHabitCategory, "\(CategoriesViewModel.selectedCategoryString ?? "")")]
             self.tableView.reloadData()
         }
     }
@@ -255,7 +255,7 @@ extension NewIrregularEventViewController: UITableViewDelegate {
         case 0:
             let viewModel = CategoriesViewModel()
             let categoryViewController = CategoriesViewController(viewModel: viewModel)
-            categoryViewController.title = "Категория"
+            categoryViewController.title = Localizable.categoriesTitle
             let navigationController = UINavigationController(rootViewController: categoryViewController)
             present(navigationController, animated: true)
         default:
@@ -317,7 +317,7 @@ extension NewIrregularEventViewController: UICollectionViewDataSource {
             guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as? SupplementaryView else {
                 return UICollectionReusableView()
             }
-            view.titleLabel.text = "Цвет"
+            view.titleLabel.text = Localizable.newHabitColor
             view.titleLabel.font = UIFont.boldSystemFont(ofSize: 19)
             return view
         }

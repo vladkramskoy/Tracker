@@ -10,7 +10,7 @@ import UIKit
 final class ScheduleViewController: UIViewController {
     static var selectedDays: String? = nil
     static var schedule: [WeekDay: Bool] = [:]
-    private let weekDay = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"]
+    private let weekDay = [Localizable.scheduleDayOne, Localizable.scheduleDayTwo, Localizable.scheduleDayThree, Localizable.scheduleDayFour, Localizable.scheduleDayFive, Localizable.scheduleDaySix, Localizable.scheduleDaySeven]
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     
     private lazy var tableView: UITableView = {
@@ -23,7 +23,7 @@ final class ScheduleViewController: UIViewController {
     
     private lazy var doneButton: UIButton = {
         let doneButton = UIButton(type: .system)
-        doneButton.setTitle("Готово", for: .normal)
+        doneButton.setTitle(Localizable.scheduleDoneButton, for: .normal)
         doneButton.tintColor = .white
         doneButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         doneButton.layer.cornerRadius = 16
@@ -55,7 +55,7 @@ final class ScheduleViewController: UIViewController {
     }
     
     private func filteringSelectedDays() {
-        ScheduleViewController.selectedDays = ScheduleViewController.schedule.filter { $0.value }.map { $0.key.rawValue }.joined(separator: ", ")
+        ScheduleViewController.selectedDays = ScheduleViewController.schedule.filter { $0.value }.map { $0.key.localizedString }.joined(separator: ", ")
     }
     
     private func setupConstraints() {

@@ -25,7 +25,7 @@
 "createTracker.irregularEvent" = "حدث غير منتظم";
 
 "newHabit.title" = "عادة جديدة";
-"newHabit.search" = "أدخل اسم المقتفي";
+"newHabit.name" = "أدخل اسم المقتفي";
 "newHabit.category" = "الفئة";
 "newHabit.schedule" = "الجدول الزمني";
 "newHabit.color" = "اللون";

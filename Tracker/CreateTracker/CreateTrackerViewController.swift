@@ -12,7 +12,7 @@ final class CreateTrackerViewController: UIViewController {
     
     private lazy var createHabitButton: UIButton = {
         let createHabitButton = UIButton(type: .system)
-        createHabitButton.setTitle("Привычка", for: .normal)
+        createHabitButton.setTitle(Localizable.createTrackerHabit, for: .normal)
         createHabitButton.tintColor = .white
         createHabitButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         createHabitButton.addTarget(self, action: #selector(createHabitButtonTapped), for: .touchUpInside)
@@ -24,7 +24,7 @@ final class CreateTrackerViewController: UIViewController {
     
     private lazy var createIrregularEventButton: UIButton = {
         let createIrregularEventButton = UIButton(type: .system)
-        createIrregularEventButton.setTitle("Нерегулярное событие", for: .normal)
+        createIrregularEventButton.setTitle(Localizable.createTrackerIrregularEvent, for: .normal)
         createIrregularEventButton.tintColor = .white
         createIrregularEventButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         createIrregularEventButton.addTarget(self, action: #selector(createIrregularEventButtonTapped), for: .touchUpInside)
@@ -60,7 +60,7 @@ final class CreateTrackerViewController: UIViewController {
     @objc private func createHabitButtonTapped() {
         feedbackGenerator.impactOccurred()
         let newHabitViewController = NewHabitViewController()
-        newHabitViewController.title = "Новая привычка"
+        newHabitViewController.title = Localizable.newHabitTitle
         let navigationController = UINavigationController(rootViewController: newHabitViewController)
         present(navigationController, animated: true)
     }
@@ -68,7 +68,7 @@ final class CreateTrackerViewController: UIViewController {
     @objc private func createIrregularEventButtonTapped() {
         feedbackGenerator.impactOccurred()
         let newIrregularEventViewController = NewIrregularEventViewController()
-        newIrregularEventViewController.title = "Новое нерегулярное событие"
+        newIrregularEventViewController.title = Localizable.newIrregularEventTitle
         let navigationController = UINavigationController(rootViewController: newIrregularEventViewController)
         present(navigationController, animated: true)
     }

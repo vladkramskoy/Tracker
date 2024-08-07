@@ -67,11 +67,11 @@ extension UITabBarController {
         let tabBarController = UITabBarController()
         
         let trackerViewController = TrackersViewController()
-        trackerViewController.tabBarItem = UITabBarItem(title: "Трекеры", image: UIImage(named: "circleIcon"), tag: 0)
+        trackerViewController.tabBarItem = UITabBarItem(title: Localizable.tabBarTrackers, image: UIImage(named: "circleIcon"), tag: 0)
         let trackerNavigationController = UINavigationController(rootViewController: trackerViewController)
         
         let statisticsViewController = UIViewController()
-        statisticsViewController.tabBarItem = UITabBarItem(title: "Статистика", image: UIImage(named: "hareIcon"), tag: 1)
+        statisticsViewController.tabBarItem = UITabBarItem(title: Localizable.tabBarStatistics, image: UIImage(named: "hareIcon"), tag: 1)
         
         tabBarController.viewControllers = [trackerNavigationController, statisticsViewController]
         return tabBarController

@@ -22,7 +22,7 @@ final class NewCategoryViewController: UIViewController {
     
     private lazy var categoryNameTextField: UITextField = {
         let categoryNameTextField = UITextField()
-        categoryNameTextField.placeholder = "Введите название категории"
+        categoryNameTextField.placeholder = Localizable.newCategoryNameField
         categoryNameTextField.addTarget(self, action: #selector(textFieldDidChange(_ :)), for: .editingChanged)
         categoryNameTextField.translatesAutoresizingMaskIntoConstraints = false
         return categoryNameTextField
@@ -30,7 +30,7 @@ final class NewCategoryViewController: UIViewController {
     
     private lazy var doneButton: UIButton = {
         let doneButton = UIButton(type: .system)
-        doneButton.setTitle("Готово", for: .normal)
+        doneButton.setTitle(Localizable.newCategoryDoneButton, for: .normal)
         doneButton.tintColor = .white
         doneButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)

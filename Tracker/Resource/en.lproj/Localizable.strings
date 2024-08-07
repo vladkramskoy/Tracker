@@ -25,10 +25,10 @@
 "createTracker.irregularEvent" = "Irregular event";
 
 "newHabit.title" = "New habit";
-"newHabit.search" = "Enter the name of the tracker";
+"newHabit.name" = "Enter the name of the tracker";
 "newHabit.category" = "Category";
 "newHabit.schedule" = "Schedule";
-"newHabit.color" = "Colour";
+"newHabit.color" = "Color";
 "newHabit.cancelButton" = "Cancel";
 "newHabit.createButton" = "Create";
 

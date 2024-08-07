@@ -25,7 +25,7 @@
 "createTracker.irregularEvent" = "Нерегулярное событие";
 
 "newHabit.title" = "Новая привычка";
-"newHabit.search" = "Введите название трекера";
+"newHabit.name" = "Введите название трекера";
 "newHabit.category" = "Категория";
 "newHabit.schedule" = "Расписание";
 "newHabit.color" = "Цвет";

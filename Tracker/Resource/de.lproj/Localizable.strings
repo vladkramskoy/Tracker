@@ -25,7 +25,7 @@
 "createTracker.irregularEvent" = "Unregelmäßiges Ereignis";
 
 "newHabit.title" = "Neue Gewohnheit";
-"newHabit.search" = "Geben Sie den Namen des Trackers ein";
+"newHabit.name" = "Geben Sie den Namen des Trackers ein";
 "newHabit.category" = "Zimmerkategorie";
 "newHabit.schedule" = "Zeitplan";
 "newHabit.color" = "Farbe";

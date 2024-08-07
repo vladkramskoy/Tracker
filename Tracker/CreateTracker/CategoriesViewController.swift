@@ -19,7 +19,7 @@ final class CategoriesViewController: UIViewController {
     
     private lazy var stubLabel: UILabel = {
         let stubLabel = UILabel()
-        stubLabel.text = "Привычки и события можно\nобъединить по смыслу"
+        stubLabel.text = Localizable.categoriesStub
         stubLabel.numberOfLines = 2
         stubLabel.font = UIFont.systemFont(ofSize: 12)
         stubLabel.textAlignment = .center
@@ -29,7 +29,7 @@ final class CategoriesViewController: UIViewController {
     
     private lazy var addCategoryButton: UIButton = {
         let addCategoryButton = UIButton(type: .system)
-        addCategoryButton.setTitle("Добавить категорию", for: .normal)
+        addCategoryButton.setTitle(Localizable.categoriesAddButton, for: .normal)
         addCategoryButton.tintColor = .white
         addCategoryButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         addCategoryButton.addTarget(self, action: #selector(addCategoryButtonTapped), for: .touchUpInside)
@@ -120,7 +120,7 @@ final class CategoriesViewController: UIViewController {
     @objc private func addCategoryButtonTapped() {
         viewModel.triggerFeedback()
         let newCategoryViewController = NewCategoryViewController()
-        newCategoryViewController.title = "Новая категория"
+        newCategoryViewController.title = Localizable.newCategoryTitle
         let navigationController = UINavigationController(rootViewController: newCategoryViewController)
         present(navigationController, animated: true)
     }

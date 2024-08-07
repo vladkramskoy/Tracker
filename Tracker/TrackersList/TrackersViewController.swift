@@ -23,7 +23,7 @@ final class TrackersViewController: UIViewController {
     
     private lazy var searchField: UISearchTextField = {
         let searchField = UISearchTextField()
-        searchField.placeholder = "Поиск"
+        searchField.placeholder = Localizable.trackersSearch
         searchField.textColor = UIColor(named: "customGray")
         searchField.addTarget(self, action: #selector(searchTextChanged(_:)), for: .editingChanged)
         searchField.translatesAutoresizingMaskIntoConstraints = false
@@ -45,7 +45,7 @@ final class TrackersViewController: UIViewController {
     
     private lazy var stubLabel: UILabel = {
         let stubLabel = UILabel()
-        stubLabel.text = "Что будем отслеживать?"
+        stubLabel.text = Localizable.trackersStub
         stubLabel.font = UIFont.systemFont(ofSize: 12)
         stubLabel.textAlignment = .center
         stubLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -73,11 +73,11 @@ final class TrackersViewController: UIViewController {
     }()
     
     private lazy var stubDefault: Stub = {
-        return Stub(image: UIImage(named: "stubImage") ?? UIImage(), textLabel: "Что будем отслеживать?")
+        return Stub(image: UIImage(named: "stubImage") ?? UIImage(), textLabel: Localizable.trackersStub)
     }()
     
     private lazy var stubSearch: Stub = {
-        return Stub(image: UIImage(named: "stubImageSearch") ?? UIImage(), textLabel: "Ничего не найдено")
+        return Stub(image: UIImage(named: "stubImageSearch") ?? UIImage(), textLabel: Localizable.trackersStubSearch)
     }()
     
     private lazy var tapGesture: UITapGestureRecognizer = {
@@ -88,7 +88,7 @@ final class TrackersViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Трекеры"
+        title = Localizable.trackersTitle
         navigationController?.navigationBar.prefersLargeTitles = true
         TrackersViewController.categories = trackerCategoryStore.fetchCategories() ?? []
         completedTrackers = trackerRecordStore.fetchTrackerRecords()
@@ -257,7 +257,7 @@ final class TrackersViewController: UIViewController {
     @objc private func addTrackerButtonTapped() {
         feedbackGenerator.impactOccurred()
         let creatingTrackerViewController = CreateTrackerViewController()
-        creatingTrackerViewController.title = "Создание трекера"
+        creatingTrackerViewController.title = Localizable.createTrackerTitle
         let navigationController = UINavigationController(rootViewController: creatingTrackerViewController)
         present(navigationController, animated: true)
     }
@@ -306,9 +306,9 @@ extension TrackersViewController: UICollectionViewDataSource {
         let tracker = filteredTrackerCategories[indexPath.section].trackers[indexPath.item]
         let completedCount = countCompletedTrackers(for: tracker.id)
         if completedCount == 0 {
-            cell.periodLabel.text = "\(completedCount) дней"
+            cell.periodLabel.text = "\(completedCount) \(Localizable.trackerNotMarked)"
         } else {
-            cell.periodLabel.text = "\(completedCount) день"
+            cell.periodLabel.text = "\(completedCount) \(Localizable.trackerMarked)"
         }
         
         let isCompleted = completedTrackers.contains(where: { $0.id == tracker.id && Calendar.current.isDate($0.date, inSameDayAs: currentDate) })
