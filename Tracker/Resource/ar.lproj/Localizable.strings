@@ -1,0 +1,60 @@
+/* 
+  Localizable.strings
+  Tracker
+
+  Created by Vladislav Kramskoy on 06.08.2024.
+  
+*/
+
+"onboarding.messageScreenOne" = "تتبع فقط ما تريد";
+"onboarding.messageScreenTwo" = "حتى لو لم يكن لتر من الماء واليوغا";
+"onboarding.button" = "هذه هي التقنيات!";
+
+"trackers.title" = "بتتبع";
+"trackers.search" = "بحث";
+"trackers.stub" = "ما نحن ذاهبون لتتبع?";
+"trackers.stubSearch" = "لم يتم العثور على شيء";
+"tracker.notMarked" = "أيام";
+"tracker.marked" = "اليوم";
+
+"tabBar.trackers" = "بتتبع";
+"tabBar.statistics" = "الإحصاءات";
+
+"createTracker.title" = "إنشاء تعقب";
+"createTracker.habit" = "العادة";
+"createTracker.irregularEvent" = "حدث غير منتظم";
+
+"newHabit.title" = "عادة جديدة";
+"newHabit.search" = "أدخل اسم المقتفي";
+"newHabit.category" = "الفئة";
+"newHabit.schedule" = "الجدول الزمني";
+"newHabit.color" = "اللون";
+"newHabit.cancelButton" = "إلغاء";
+"newHabit.createButton" = "إنشاء";
+
+"newIrregularEvent.title" = "حدث جديد غير منتظم";
+
+"categories.title" = "الفئة";
+"categories.stub" = "يمكن أن تكون العادات والأحداث\nالجمع في المعنى";
+"categories.addButton" = "Add a category";
+
+"newCategory.title" = "فئة جديدة";
+"newCategory.nameField" = "أدخل اسم الفئة";
+"newCategory.doneButton" = "تم";
+
+"schedule.title" = "الجدول الزمني";
+"schedule.dayOne" = "الاثنين";
+"schedule.dayTwo" = "الثلاثاء";
+"schedule.dayThree" = "الأربعاء";
+"schedule.dayFour" = "الخميس";
+"schedule.dayFive" = "الجمعة";
+"schedule.daySix" = "السبت";
+"schedule.daySeven" = "الأحد";
+"schedule.doneButton" = "تم";
+"shortWeekDay.monday" = "اث";
+"shortWeekDay.tuesday" = "ث";
+"shortWeekDay.wednesday" = "أ";
+"shortWeekDay.thursday" = "خ";
+"shortWeekDay.friday" = "ج";
+"shortWeekDay.saturday" = "س";
+"shortWeekDay.sunday" = "ح";

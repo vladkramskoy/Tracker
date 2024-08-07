@@ -31,6 +31,7 @@
 		8DA1369E2C5AA29700965FD1 /* CategoriesCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA1369D2C5AA29700965FD1 /* CategoriesCustomTableViewCell.swift */; };
 		8DA28D1F2C3A9BC000C0720D /* Tracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8DA28D1D2C3A9BC000C0720D /* Tracker.xcdatamodeld */; };
 		8DA39F2A2C2EC39800B58473 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA39F292C2EC39800B58473 /* CategoriesViewController.swift */; };
+		8DC122FD2C62ABE0005A8880 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8DC122FB2C62ABE0005A8880 /* Localizable.strings */; };
 		8DC387102C2732D800B9136E /* NewHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC3870F2C2732D800B9136E /* NewHabitViewController.swift */; };
 		8DC387122C2735AA00B9136E /* NewIrregularEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC387112C2735AA00B9136E /* NewIrregularEventViewController.swift */; };
 		8DE147122C36AA5B00F271F3 /* SupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE147112C36AA5B00F271F3 /* SupplementaryView.swift */; };
@@ -64,6 +65,10 @@
 		8DA1369D2C5AA29700965FD1 /* CategoriesCustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesCustomTableViewCell.swift; sourceTree = "<group>"; };
 		8DA28D1E2C3A9BC000C0720D /* Tracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tracker.xcdatamodel; sourceTree = "<group>"; };
 		8DA39F292C2EC39800B58473 /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
+		8DC122FC2C62ABE0005A8880 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8DC123002C62AC6D005A8880 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8DC123012C62AC84005A8880 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8DC123022C62AC8C005A8880 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8DC3870F2C2732D800B9136E /* NewHabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHabitViewController.swift; sourceTree = "<group>"; };
 		8DC387112C2735AA00B9136E /* NewIrregularEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewIrregularEventViewController.swift; sourceTree = "<group>"; };
 		8DE147112C36AA5B00F271F3 /* SupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplementaryView.swift; sourceTree = "<group>"; };
@@ -139,9 +144,7 @@
 				8DA1369A2C5A9F1300965FD1 /* ViewModel */,
 				8D68D45B2C1C64FF00A01290 /* Models */,
 				8D4BC66A2C3D3C070059C171 /* CoreData */,
-				8D7BD51C2C1393F3007DC35C /* Assets.xcassets */,
-				8D7BD51E2C1393F3007DC35C /* LaunchScreen.storyboard */,
-				8D7BD5212C1393F3007DC35C /* Info.plist */,
+				8DC122F42C62A74C005A8880 /* Resource */,
 			);
 			path = Tracker;
 			sourceTree = "<group>";
@@ -179,6 +182,17 @@
 				8DE147112C36AA5B00F271F3 /* SupplementaryView.swift */,
 			);
 			path = CreateTracker;
+			sourceTree = "<group>";
+		};
+		8DC122F42C62A74C005A8880 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				8D7BD51C2C1393F3007DC35C /* Assets.xcassets */,
+				8D7BD51E2C1393F3007DC35C /* LaunchScreen.storyboard */,
+				8DC122FB2C62ABE0005A8880 /* Localizable.strings */,
+				8D7BD5212C1393F3007DC35C /* Info.plist */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -223,6 +237,9 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
+				de,
+				ar,
 			);
 			mainGroup = 8D7BD5072C1393F1007DC35C;
 			productRefGroup = 8D7BD5112C1393F1007DC35C /* Products */;
@@ -240,6 +257,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D7BD5202C1393F3007DC35C /* LaunchScreen.storyboard in Resources */,
+				8DC122FD2C62ABE0005A8880 /* Localizable.strings in Resources */,
 				8D7BD51D2C1393F3007DC35C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -291,6 +309,17 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		8DC122FB2C62ABE0005A8880 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8DC122FC2C62ABE0005A8880 /* en */,
+				8DC123002C62AC6D005A8880 /* ru */,
+				8DC123012C62AC84005A8880 /* de */,
+				8DC123022C62AC8C005A8880 /* ar */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -298,6 +327,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -359,6 +389,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -419,7 +450,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4BP938UGMK;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Tracker/Info.plist;
+				INFOPLIST_FILE = Tracker/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -450,7 +481,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4BP938UGMK;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Tracker/Info.plist;
+				INFOPLIST_FILE = Tracker/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

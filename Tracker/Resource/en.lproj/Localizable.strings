@@ -1,0 +1,60 @@
+/* 
+  Localizable.strings
+  Tracker
+
+  Created by Vladislav Kramskoy on 06.08.2024.
+  
+*/
+
+"onboarding.messageScreenOne" = "Track only what you want";
+"onboarding.messageScreenTwo" = "Even if it's not liters of water and yoga";
+"onboarding.button" = "These are the technologies!";
+
+"trackers.title" = "Trackers";
+"trackers.search" = "Search";
+"trackers.stub" = "What are we going to track?";
+"trackers.stubSearch" = "Nothing was found";
+"tracker.notMarked" = "days";
+"tracker.marked" = "day";
+
+"tabBar.trackers" = "Trackers";
+"tabBar.statistics" = "Statistics";
+
+"createTracker.title" = "Creating a tracker";
+"createTracker.habit" = "Habit";
+"createTracker.irregularEvent" = "Irregular event";
+
+"newHabit.title" = "New habit";
+"newHabit.search" = "Enter the name of the tracker";
+"newHabit.category" = "Category";
+"newHabit.schedule" = "Schedule";
+"newHabit.color" = "Colour";
+"newHabit.cancelButton" = "Cancel";
+"newHabit.createButton" = "Create";
+
+"newIrregularEvent.title" = "New irregular event";
+
+"categories.title" = "Category";
+"categories.stub" = "Habits and events can be\ncombine in meaning";
+"categories.addButton" = "Add a category";
+
+"newCategory.title" = "New category";
+"newCategory.nameField" = "Enter the name of the category";
+"newCategory.doneButton" = "Done";
+
+"schedule.title" = "Schedule";
+"schedule.dayOne" = "Monday";
+"schedule.dayTwo" = "Tuesday";
+"schedule.dayThree" = "Wednesday";
+"schedule.dayFour" = "Thursday";
+"schedule.dayFive" = "Friday";
+"schedule.daySix" = "Saturday";
+"schedule.daySeven" = "Sunday";
+"schedule.doneButton" = "Done";
+"shortWeekDay.monday" = "Mon";
+"shortWeekDay.tuesday" = "Tue";
+"shortWeekDay.wednesday" = "Wed";
+"shortWeekDay.thursday" = "Thu";
+"shortWeekDay.friday" = "Fri";
+"shortWeekDay.saturday" = "Sat";
+"shortWeekDay.sunday" = "Sun";
