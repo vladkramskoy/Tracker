@@ -140,7 +140,7 @@ final class NewHabitViewController: UIViewController {
     @objc private func createButtonTapped() {
         feedbackGenerator.impactOccurred()
         guard let text = trackerNameTextField.text, !text.isEmpty else { return }
-        if let selectedCategory = CategoryViewController.selectedCategory {
+        if let selectedCategory = CategoriesViewModel.selectedCategory {
             let newTracker = Tracker(id: UUID(), name: text, color: selectColor, emoji: selectEmoji, schedule: ScheduleViewController.schedule)
             trackerStore.addNewTrackerToCategory(newTracker, categoryName: selectedCategory.name)
             NotificationCenter.default.post(name: NSNotification.Name("TrackerCreated"), object: nil)
@@ -150,7 +150,7 @@ final class NewHabitViewController: UIViewController {
     
     @objc private func updateTableView() {
         DispatchQueue.main.async {
-            self.cellTitles = [("Категория", "\(CategoryViewController.selectedCategoryString ?? "")"), ("Расписание", "\(ScheduleViewController.selectedDays ?? "")")]
+            self.cellTitles = [("Категория", "\(CategoriesViewModel.selectedCategoryString ?? "")"), ("Расписание", "\(ScheduleViewController.selectedDays ?? "")")]
             self.tableView.reloadData()
         }
     }
@@ -250,7 +250,8 @@ extension NewHabitViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-            let categoryViewController = CategoryViewController()
+            let viewModel = CategoriesViewModel()
+            let categoryViewController = CategoriesViewController(viewModel: viewModel)
             categoryViewController.title = "Категория"
             let navigationController = UINavigationController(rootViewController: categoryViewController)
             present(navigationController, animated: true)

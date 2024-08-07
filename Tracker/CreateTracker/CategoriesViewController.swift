@@ -1,5 +1,5 @@
 //
-//  CategoryViewController.swift
+//  CategoriesViewController.swift
 //  Tracker
 //
 //  Created by Vladislav Kramskoy on 28.06.2024.
@@ -7,13 +7,9 @@
 
 import UIKit
 
-final class CategoryViewController: UIViewController {
-    private var selectedIndexPath: IndexPath?
-    private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
-    static var selectedCategory: TrackerCategory? = nil
-    static var selectedCategoryString: String? = nil
-    private let trackerCategoryStore = TrackerCategoryStore()
-
+final class CategoriesViewController: UIViewController {
+    private let viewModel: CategoriesViewModelProtocol
+    
     private lazy var stubImage: UIImageView = {
         let stubImage = UIImageView()
         stubImage.image = UIImage(named: "stubImage")
@@ -52,6 +48,15 @@ final class CategoryViewController: UIViewController {
         return tableView
     }()
     
+    init(viewModel: CategoriesViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -60,13 +65,14 @@ final class CategoryViewController: UIViewController {
         view.addSubview(tableView)
         view.addSubview(addCategoryButton)
         setupConstraints()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(CategoriesCustomTableViewCell.self, forCellReuseIdentifier: "customCell")
         addCategoryButton.setContentHuggingPriority(.defaultHigh, for: .vertical)
         tableView.delegate = self
         tableView.dataSource = self
-        updateUI()
+        setupBindings()
+        viewModel.updateUI()
         setupNotification()
-        feedbackGenerator.prepare()
+        viewModel.handleViewDidLoad()
     }
     
     private func setupConstraints() {
@@ -93,30 +99,26 @@ final class CategoryViewController: UIViewController {
         ])
     }
     
-    private func updateUI() {
-        TrackersViewController.categories = trackerCategoryStore.fetchCategories() ?? []
-        if TrackersViewController.categories.isEmpty {
-            stubImage.isHidden = false
-            stubLabel.isHidden = false
-        } else {
-            stubImage.isHidden = true
-            stubLabel.isHidden = true
-            tableView.isHidden = false
-        }
-        tableView.reloadData()
-    }
-    
     private func setupNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(updateData), name: Notification.Name("NewCategoryAdded"), object: nil)
     }
     
     private func cellDidTapped() {
-        NotificationCenter.default.post(name: NSNotification.Name("CategoryDidSelected"), object: nil)
+        viewModel.cellDidTapped()
         presentingViewController?.dismiss(animated: true)
     }
     
+    private func setupBindings() {
+        viewModel.onCategoriesUpdated = { [weak self] isStubVisible, isTableVisible in
+            self?.stubImage.isHidden = !isStubVisible
+            self?.stubLabel.isHidden = !isStubVisible
+            self?.tableView.isHidden = !isTableVisible
+            self?.tableView.reloadData()
+        }
+    }
+    
     @objc private func addCategoryButtonTapped() {
-        feedbackGenerator.impactOccurred()
+        viewModel.triggerFeedback()
         let newCategoryViewController = NewCategoryViewController()
         newCategoryViewController.title = "Новая категория"
         let navigationController = UINavigationController(rootViewController: newCategoryViewController)
@@ -124,7 +126,7 @@ final class CategoryViewController: UIViewController {
     }
     
     @objc private func updateData() {
-        updateUI()
+        viewModel.updateUI()
     }
     
     deinit {
@@ -132,25 +134,25 @@ final class CategoryViewController: UIViewController {
     }
 }
 
-extension CategoryViewController: UITableViewDataSource {
+extension CategoriesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return TrackersViewController.categories.count
+        return viewModel.categories.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = TrackersViewController.categories[indexPath.row].name
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "customCell", for: indexPath) as? CategoriesCustomTableViewCell else {
+            return UITableViewCell()
+        }
+        cell.textLabel?.text = viewModel.categories[indexPath.row].name
         cell.backgroundColor = UIColor(named: "superLightGray")
         
-        cell.layer.cornerRadius = 16
-        cell.layer.masksToBounds = true
         if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
             cell.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         } else {
             cell.layer.maskedCorners = []
         }
 
-        if let selectedIndexPath = selectedIndexPath, selectedIndexPath == indexPath {
+        if let selectedIndexPath = viewModel.selectedIndexPath, selectedIndexPath == indexPath {
             cell.accessoryType = .checkmark
         } else {
             cell.accessoryType = .none
@@ -159,9 +161,9 @@ extension CategoryViewController: UITableViewDataSource {
     }
 }
 
-extension CategoryViewController: UITableViewDelegate {
+extension CategoriesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let selectedIndexPath = selectedIndexPath {
+        if let selectedIndexPath = viewModel.selectedIndexPath {
             let previousCell = tableView.cellForRow(at: selectedIndexPath)
             previousCell?.accessoryType = .none
         }
@@ -169,9 +171,7 @@ extension CategoryViewController: UITableViewDelegate {
         let cell = tableView.cellForRow(at: indexPath)
         cell?.accessoryType = .checkmark
         tableView.deselectRow(at: indexPath, animated: true)
-        selectedIndexPath = indexPath
-        CategoryViewController.selectedCategoryString = TrackersViewController.categories[indexPath.row].name
-        CategoryViewController.selectedCategory = TrackersViewController.categories[indexPath.row]
+        viewModel.didSelectRowAt(indexPath.row)
         
         cellDidTapped()
         // TODO: Реализовать логику удаления категорий
@@ -182,7 +182,7 @@ extension CategoryViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == TrackersViewController.categories.count - 1 {
+        if indexPath.row == viewModel.categories.count - 1 {
             cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
         } else {
             cell.separatorInset = .zero
