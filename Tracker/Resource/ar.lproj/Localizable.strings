@@ -14,8 +14,8 @@
 "trackers.search" = "بحث";
 "trackers.stub" = "ما نحن ذاهبون لتتبع?";
 "trackers.stubSearch" = "لم يتم العثور على شيء";
-"tracker.notMarked" = "أيام";
-"tracker.marked" = "اليوم";
+"tracker.notMarked" = "أيام %@";
+"tracker.marked" = "اليوم %@";
 
 "tabBar.trackers" = "بتتبع";
 "tabBar.statistics" = "الإحصاءات";

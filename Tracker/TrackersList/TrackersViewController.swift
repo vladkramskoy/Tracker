@@ -86,6 +86,12 @@ final class TrackersViewController: UIViewController {
         return tapGesture
     }()
     
+    private lazy var numberFormatter: NumberFormatter = {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.locale = Locale.current
+        return numberFormatter
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = Localizable.trackersTitle
@@ -305,10 +311,13 @@ extension TrackersViewController: UICollectionViewDataSource {
         
         let tracker = filteredTrackerCategories[indexPath.section].trackers[indexPath.item]
         let completedCount = countCompletedTrackers(for: tracker.id)
+        let formattedNumber = numberFormatter.string(from: NSNumber(value: completedCount))
         if completedCount == 0 {
-            cell.periodLabel.text = "\(completedCount) \(Localizable.trackerNotMarked)"
+            let localizedFormatString = String(format: Localizable.trackerNotMarked, formattedNumber!)
+            cell.periodLabel.text = localizedFormatString
         } else {
-            cell.periodLabel.text = "\(completedCount) \(Localizable.trackerMarked)"
+            let localizedFormatString = String(format: Localizable.trackerMarked, formattedNumber!)
+            cell.periodLabel.text = localizedFormatString
         }
         
         let isCompleted = completedTrackers.contains(where: { $0.id == tracker.id && Calendar.current.isDate($0.date, inSameDayAs: currentDate) })

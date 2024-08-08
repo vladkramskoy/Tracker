@@ -14,8 +14,8 @@
 "trackers.search" = "Search";
 "trackers.stub" = "What are we going to track?";
 "trackers.stubSearch" = "Nothing was found";
-"tracker.notMarked" = "days";
-"tracker.marked" = "day";
+"tracker.notMarked" = "%@ days";
+"tracker.marked" = "%@ day";
 
 "tabBar.trackers" = "Trackers";
 "tabBar.statistics" = "Statistics";

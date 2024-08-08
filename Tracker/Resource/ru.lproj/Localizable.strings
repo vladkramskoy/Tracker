@@ -14,8 +14,8 @@
 "trackers.search" = "Поиск";
 "trackers.stub" = "Что будем отслеживать?";
 "trackers.stubSearch" = "Ничего не найдено";
-"tracker.notMarked" = "дней";
-"tracker.marked" = "день";
+"tracker.notMarked" = "%@ дней";
+"tracker.marked" = "%@ день";
 
 "tabBar.trackers" = "Трекеры";
 "tabBar.statistics" = "Статистика";
