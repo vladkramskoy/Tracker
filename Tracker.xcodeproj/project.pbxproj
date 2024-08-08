@@ -31,6 +31,7 @@
 		8DA1369C2C5A9F7000965FD1 /* CategoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA1369B2C5A9F7000965FD1 /* CategoriesViewModel.swift */; };
 		8DA1369E2C5AA29700965FD1 /* CategoriesCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA1369D2C5AA29700965FD1 /* CategoriesCustomTableViewCell.swift */; };
 		8DA28D1F2C3A9BC000C0720D /* Tracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8DA28D1D2C3A9BC000C0720D /* Tracker.xcdatamodeld */; };
+		8DA30F992C650FDC009FEFDE /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 8DA30F972C650FDC009FEFDE /* Localizable.stringsdict */; };
 		8DA39F2A2C2EC39800B58473 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA39F292C2EC39800B58473 /* CategoriesViewController.swift */; };
 		8DC122FD2C62ABE0005A8880 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8DC122FB2C62ABE0005A8880 /* Localizable.strings */; };
 		8DC387102C2732D800B9136E /* NewHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC3870F2C2732D800B9136E /* NewHabitViewController.swift */; };
@@ -66,6 +67,10 @@
 		8DA1369B2C5A9F7000965FD1 /* CategoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewModel.swift; sourceTree = "<group>"; };
 		8DA1369D2C5AA29700965FD1 /* CategoriesCustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesCustomTableViewCell.swift; sourceTree = "<group>"; };
 		8DA28D1E2C3A9BC000C0720D /* Tracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tracker.xcdatamodel; sourceTree = "<group>"; };
+		8DA30F982C650FDC009FEFDE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		8DA30F9A2C65124B009FEFDE /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ar; path = ar.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		8DA30F9B2C65124F009FEFDE /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = de; path = de.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		8DA30F9C2C651250009FEFDE /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		8DA39F292C2EC39800B58473 /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
 		8DC122FC2C62ABE0005A8880 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8DC123002C62AC6D005A8880 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -201,6 +206,7 @@
 				8D7BD51C2C1393F3007DC35C /* Assets.xcassets */,
 				8D7BD51E2C1393F3007DC35C /* LaunchScreen.storyboard */,
 				8DC122FB2C62ABE0005A8880 /* Localizable.strings */,
+				8DA30F972C650FDC009FEFDE /* Localizable.stringsdict */,
 				8D7BD5212C1393F3007DC35C /* Info.plist */,
 			);
 			path = Resource;
@@ -268,6 +274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D7BD5202C1393F3007DC35C /* LaunchScreen.storyboard in Resources */,
+				8DA30F992C650FDC009FEFDE /* Localizable.stringsdict in Resources */,
 				8DC122FD2C62ABE0005A8880 /* Localizable.strings in Resources */,
 				8D7BD51D2C1393F3007DC35C /* Assets.xcassets in Resources */,
 			);
@@ -319,6 +326,17 @@
 				8D7BD51F2C1393F3007DC35C /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		8DA30F972C650FDC009FEFDE /* Localizable.stringsdict */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8DA30F982C650FDC009FEFDE /* en */,
+				8DA30F9A2C65124B009FEFDE /* ar */,
+				8DA30F9B2C65124F009FEFDE /* de */,
+				8DA30F9C2C651250009FEFDE /* ru */,
+			);
+			name = Localizable.stringsdict;
 			sourceTree = "<group>";
 		};
 		8DC122FB2C62ABE0005A8880 /* Localizable.strings */ = {
