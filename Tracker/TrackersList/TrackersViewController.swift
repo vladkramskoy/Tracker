@@ -67,6 +67,7 @@ final class TrackersViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(TrackersCollectionViewCell.self, forCellWithReuseIdentifier: TrackersCollectionViewCell.identifier)
         collectionView.register(TrackersSupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TrackersSupplementaryView.identifier)
+        collectionView.backgroundColor = Colors.viewBackgroundColor
         collectionView.isHidden = true
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
@@ -144,7 +145,7 @@ final class TrackersViewController: UIViewController {
     }
     
     private func setupAppearance() {
-        view.backgroundColor = .white
+        view.backgroundColor = Colors.viewBackgroundColor
         
         if let iconView = searchField.leftView as? UIImageView {
             let tintedImage = iconView.image?.withRenderingMode(.alwaysTemplate)
@@ -155,6 +156,7 @@ final class TrackersViewController: UIViewController {
     
     private func setupNavigationBar() {
         let addTrackerButton = UIBarButtonItem(image: UIImage(named: "plusIcon"), style: .plain, target: self, action: #selector(addTrackerButtonTapped))
+        addTrackerButton.tintColor = UIColor(named: "dark&white(darkMode)") ?? UIColor()
         navigationItem.leftBarButtonItem = addTrackerButton
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: datePicker)
     }

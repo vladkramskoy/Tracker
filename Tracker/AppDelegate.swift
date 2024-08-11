@@ -36,7 +36,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 window.rootViewController = onboardingViewController
             }
             window.makeKeyAndVisible()
-            window.overrideUserInterfaceStyle = .light
         }
         return true
     }

@@ -22,7 +22,7 @@ final class NewIrregularEventViewController: UIViewController {
     
     private lazy var textFieldView: UIView = {
         let textFieldView = UIView()
-        textFieldView.backgroundColor = UIColor(named: "superLightGray")
+        textFieldView.backgroundColor = UIColor(named: "superLightGray(darkMode)")
         textFieldView.layer.cornerRadius = 16
         textFieldView.layer.masksToBounds = true
         textFieldView.translatesAutoresizingMaskIntoConstraints = false
@@ -101,7 +101,7 @@ final class NewIrregularEventViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = Colors.viewBackgroundColor
         view.addSubview(scrollView)
         view.addSubview(cancelButton)
         view.addSubview(createButton)
@@ -173,10 +173,12 @@ final class NewIrregularEventViewController: UIViewController {
     private func checkAndUpdateCreateButton() {
         if let text = trackerNameTextField.text, !text.isEmpty, cellTitles[0].1 != "", selectEmoji != "", selectColor != UIColor.black {
             createButton.isEnabled = true
-            createButton.backgroundColor = UIColor(named: "darkGray")
+            createButton.backgroundColor = UIColor(named: "dark&white(darkMode)")
+            createButton.tintColor = UIColor(named: "white&dark(darkMode)")
         } else {
             createButton.isEnabled = false
             createButton.backgroundColor = UIColor(named: "customGray")
+            createButton.tintColor = .white
         }
     }
     
@@ -241,7 +243,7 @@ extension NewIrregularEventViewController: UITableViewDataSource {
         cell.textLabel?.text = cellTitles[indexPath.row].0
         cell.detailTextLabel?.text = cellTitles[indexPath.row].1
         cell.detailTextLabel?.textColor = UIColor(named: "customGray")
-        cell.backgroundColor = UIColor(named: "superLightGray")
+        cell.backgroundColor = UIColor(named: "superLightGray(darkMode)")
         cell.layer.cornerRadius = 16
         cell.layer.masksToBounds = true
         cell.accessoryType = .disclosureIndicator

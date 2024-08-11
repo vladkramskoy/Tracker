@@ -15,6 +15,7 @@ final class ScheduleViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
+        tableView.separatorColor = UIColor(named: "customGray")
         tableView.layer.cornerRadius = 16
         tableView.layer.masksToBounds = true
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -24,10 +25,10 @@ final class ScheduleViewController: UIViewController {
     private lazy var doneButton: UIButton = {
         let doneButton = UIButton(type: .system)
         doneButton.setTitle(Localizable.scheduleDoneButton, for: .normal)
-        doneButton.tintColor = .white
+        doneButton.tintColor = UIColor(named: "white&dark(darkMode)")
         doneButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         doneButton.layer.cornerRadius = 16
-        doneButton.backgroundColor = UIColor(named: "darkGray")
+        doneButton.backgroundColor = UIColor(named: "dark&white(darkMode)")
         doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
         doneButton.translatesAutoresizingMaskIntoConstraints = false
         return doneButton
@@ -37,7 +38,7 @@ final class ScheduleViewController: UIViewController {
         super.viewDidLoad()
         
         initializingSchedule()
-        view.backgroundColor = .white
+        view.backgroundColor = Colors.viewBackgroundColor
         doneButton.setContentHuggingPriority(.defaultHigh, for: .vertical)
         view.addSubview(doneButton)
         view.addSubview(tableView)
@@ -96,9 +97,10 @@ extension ScheduleViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.backgroundColor = UIColor(named: "superLightGray")
+        cell.backgroundColor = UIColor(named: "superLightGray(darkMode)")
         
         let switchView = UISwitch(frame: .zero)
+        switchView.onTintColor = .systemBlue
         switchView.setOn(false, animated: true)
         switchView.tag = indexPath.row
         switchView.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
@@ -119,10 +121,12 @@ extension ScheduleViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let insetAmount: CGFloat = 16.0
+        
         if indexPath.row == weekDay.count - 1 {
             cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
         } else {
-            cell.separatorInset = .zero
+            cell.separatorInset = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: insetAmount)
         }
     }
 }

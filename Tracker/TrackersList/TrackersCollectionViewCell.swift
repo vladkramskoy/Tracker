@@ -47,7 +47,7 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         
         completeButton.setImage(UIImage(systemName: "plus"), for: .normal)
         completeButton.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
-        completeButton.tintColor = .white
+        completeButton.tintColor = UIColor(named: "white&dark(darkMode)")
         completeButton.layer.cornerRadius = 17
         completeButton.layer.masksToBounds = true
         completeButton.translatesAutoresizingMaskIntoConstraints = false

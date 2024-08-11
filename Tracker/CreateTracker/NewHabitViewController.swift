@@ -22,7 +22,7 @@ final class NewHabitViewController: UIViewController {
     
     private lazy var textFieldView: UIView = {
         let textFieldView = UIView()
-        textFieldView.backgroundColor = UIColor(named: "superLightGray")
+        textFieldView.backgroundColor = UIColor(named: "superLightGray(darkMode)")
         textFieldView.layer.cornerRadius = 16
         textFieldView.layer.masksToBounds = true
         textFieldView.translatesAutoresizingMaskIntoConstraints = false
@@ -39,6 +39,7 @@ final class NewHabitViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
+        tableView.separatorColor = UIColor(named: "customGray")
         tableView.layer.cornerRadius = 16
         tableView.layer.masksToBounds = true
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -103,7 +104,7 @@ final class NewHabitViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = Colors.viewBackgroundColor
         view.addSubview(scrollView)
         view.addSubview(cancelButton)
         view.addSubview(createButton)
@@ -166,10 +167,12 @@ final class NewHabitViewController: UIViewController {
     private func checkAndUpdateCreateButton() {
         if let text = trackerNameTextField.text, !text.isEmpty, cellTitles[0].1 != "", cellTitles[1].1 != "", selectEmoji != "", selectColor != UIColor.black {
             createButton.isEnabled = true
-            createButton.backgroundColor = UIColor(named: "darkGray")
+            createButton.backgroundColor = UIColor(named: "dark&white(darkMode)")
+            createButton.tintColor = UIColor(named: "white&dark(darkMode)")
         } else {
             createButton.isEnabled = false
             createButton.backgroundColor = UIColor(named: "customGray")
+            createButton.tintColor = .white
         }
     }
     
@@ -239,7 +242,7 @@ extension NewHabitViewController: UITableViewDataSource {
         cell.textLabel?.text = cellTitles[indexPath.row].0
         cell.detailTextLabel?.text = cellTitles[indexPath.row].1
         cell.detailTextLabel?.textColor = UIColor(named: "customGray")
-        cell.backgroundColor = UIColor(named: "superLightGray")
+        cell.backgroundColor = UIColor(named: "superLightGray(darkMode)")
         cell.accessoryType = .disclosureIndicator
         // TODO: Обработать ситуацию когда отменено создание трекера, а выбранное расписание не сбросилось
         return cell
@@ -271,10 +274,12 @@ extension NewHabitViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let insetAmount: CGFloat = 16.0
+        
         if indexPath.row == cellTitles.count - 1 {
             cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
         } else {
-            cell.separatorInset = .zero
+            cell.separatorInset = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: insetAmount)
         }
     }
 }

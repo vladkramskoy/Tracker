@@ -13,11 +13,11 @@ final class CreateTrackerViewController: UIViewController {
     private lazy var createHabitButton: UIButton = {
         let createHabitButton = UIButton(type: .system)
         createHabitButton.setTitle(Localizable.createTrackerHabit, for: .normal)
-        createHabitButton.tintColor = .white
+        createHabitButton.tintColor = UIColor(named: "white&dark(darkMode)")
         createHabitButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         createHabitButton.addTarget(self, action: #selector(createHabitButtonTapped), for: .touchUpInside)
         createHabitButton.layer.cornerRadius = 16
-        createHabitButton.backgroundColor = UIColor(named: "darkGray")
+        createHabitButton.backgroundColor = UIColor(named: "dark&white(darkMode)")
         createHabitButton.translatesAutoresizingMaskIntoConstraints = false
         return createHabitButton
     }()
@@ -25,18 +25,18 @@ final class CreateTrackerViewController: UIViewController {
     private lazy var createIrregularEventButton: UIButton = {
         let createIrregularEventButton = UIButton(type: .system)
         createIrregularEventButton.setTitle(Localizable.createTrackerIrregularEvent, for: .normal)
-        createIrregularEventButton.tintColor = .white
+        createIrregularEventButton.tintColor = UIColor(named: "white&dark(darkMode)")
         createIrregularEventButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         createIrregularEventButton.addTarget(self, action: #selector(createIrregularEventButtonTapped), for: .touchUpInside)
         createIrregularEventButton.layer.cornerRadius = 16
-        createIrregularEventButton.backgroundColor = UIColor(named: "darkGray")
+        createIrregularEventButton.backgroundColor = UIColor(named: "dark&white(darkMode)")
         createIrregularEventButton.translatesAutoresizingMaskIntoConstraints = false
         return createIrregularEventButton
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = Colors.viewBackgroundColor
         view.addSubview(createHabitButton)
         view.addSubview(createIrregularEventButton)
         setupConstraints()

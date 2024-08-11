@@ -13,7 +13,7 @@ final class NewCategoryViewController: UIViewController {
     
     private lazy var textFieldView: UIView = {
         let textFieldView = UIView()
-        textFieldView.backgroundColor = UIColor(named: "superLightGray")
+        textFieldView.backgroundColor = UIColor(named: "superLightGray(darkMode)")
         textFieldView.layer.cornerRadius = 16
         textFieldView.layer.masksToBounds = true
         textFieldView.translatesAutoresizingMaskIntoConstraints = false
@@ -49,7 +49,7 @@ final class NewCategoryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = Colors.viewBackgroundColor
         view.addSubview(textFieldView)
         view.addSubview(categoryNameTextField)
         view.addSubview(doneButton)
@@ -83,10 +83,12 @@ final class NewCategoryViewController: UIViewController {
     @objc private func textFieldDidChange(_ textField: UITextField) {
         if let text = categoryNameTextField.text, !text.isEmpty {
             doneButton.isEnabled = true
-            doneButton.backgroundColor = UIColor(named: "darkGray")
+            doneButton.backgroundColor = UIColor(named: "dark&white(darkMode)")
+            doneButton.tintColor = UIColor(named: "white&dark(darkMode)")
         } else {
             doneButton.isEnabled = false
             doneButton.backgroundColor = UIColor(named: "customGray")
+            doneButton.tintColor = .white
         }
     }
     

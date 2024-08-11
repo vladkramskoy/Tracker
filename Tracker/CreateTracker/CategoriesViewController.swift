@@ -30,17 +30,18 @@ final class CategoriesViewController: UIViewController {
     private lazy var addCategoryButton: UIButton = {
         let addCategoryButton = UIButton(type: .system)
         addCategoryButton.setTitle(Localizable.categoriesAddButton, for: .normal)
-        addCategoryButton.tintColor = .white
+        addCategoryButton.tintColor = UIColor(named: "white&dark(darkMode)")
         addCategoryButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         addCategoryButton.addTarget(self, action: #selector(addCategoryButtonTapped), for: .touchUpInside)
         addCategoryButton.layer.cornerRadius = 16
-        addCategoryButton.backgroundColor = UIColor(named: "darkGray")
+        addCategoryButton.backgroundColor = UIColor(named: "dark&white(darkMode)")
         addCategoryButton.translatesAutoresizingMaskIntoConstraints = false
         return addCategoryButton
     }()
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
+        tableView.separatorColor = UIColor(named: "customGray")
         tableView.layer.cornerRadius = 16
         tableView.layer.masksToBounds = true
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -59,7 +60,7 @@ final class CategoriesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = Colors.viewBackgroundColor
         view.addSubview(stubImage)
         view.addSubview(stubLabel)
         view.addSubview(tableView)
@@ -144,7 +145,7 @@ extension CategoriesViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         cell.textLabel?.text = viewModel.categories[indexPath.row].name
-        cell.backgroundColor = UIColor(named: "superLightGray")
+        cell.backgroundColor = UIColor(named: "superLightGray(darkMode)")
         
         if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
             cell.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
@@ -182,10 +183,12 @@ extension CategoriesViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let insetAmount: CGFloat = 16.0
+        
         if indexPath.row == viewModel.categories.count - 1 {
             cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
         } else {
-            cell.separatorInset = .zero
+            cell.separatorInset = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: insetAmount)
         }
     }
 }
