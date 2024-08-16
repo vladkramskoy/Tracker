@@ -371,9 +371,31 @@ extension TrackersViewController: UICollectionViewDataSource {
 }
 
 extension TrackersViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // TODO: process code
-        print("Cell tapped at \(indexPath)")
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(identifier: indexPath as NSCopying, previewProvider: nil) { suggestedActions in
+            let pin = UIAction(title: "Закрепить") { action in
+                print("pin")
+            }
+            let edit = UIAction(title: "Редактировать") { action in
+                print("edit")
+            }
+            let delete = UIAction(title: "Удалить", attributes: .destructive) { action in
+                print("delete")
+            }
+            
+            return UIMenu(title: "", children: [pin, edit, delete])
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        guard let indexPath = configuration.identifier as? IndexPath,
+              let cell = collectionView.cellForItem(at: indexPath) as? TrackersCollectionViewCell else {
+            return nil
+        }
+        let parametrs = UIPreviewParameters()
+        parametrs.backgroundColor = .clear
+        
+        return UITargetedPreview(view: cell.cardView, parameters: parametrs)
     }
 }
 
