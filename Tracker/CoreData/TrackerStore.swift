@@ -53,5 +53,24 @@ final class TrackerStore {
             print("Failed to fatch or save context: \(error)")
         }
     }
+    
+    func deleteTracker(at indexPath: IndexPath) throws {
+        let fetchRequest: NSFetchRequest<TrackerCategoryCoreData> = TrackerCategoryCoreData.fetchRequest()
+        
+        let categories = try context.fetch(fetchRequest)
+        guard indexPath.section < categories.count else {
+            throw NSError(domain: "Invalid section index", code: 1)
+        }
+        let category = categories[indexPath.section]
+        
+        guard let trakers = category.trackers?.allObjects as? [TrackerCoreData],
+              indexPath.row < trakers.count else {
+            throw NSError(domain: "Invalid row index", code: 2)
+        }
+        
+        let trackerToDelete = trakers[indexPath.row]
+        context.delete(trackerToDelete)
+        try context.save()
+    }
 }
 

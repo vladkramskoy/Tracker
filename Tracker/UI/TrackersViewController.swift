@@ -19,6 +19,7 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
     private var dateFilteredTrackerCategories: [TrackerCategory] = []
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     private let trackerCategoryStore = TrackerCategoryStore()
+    private let trackerStore = TrackerStore()
     private let trackerRecordStore = TrackerRecordStore()
     
     private lazy var searchField: UISearchTextField = {
@@ -373,14 +374,34 @@ extension TrackersViewController: UICollectionViewDataSource {
 extension TrackersViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         return UIContextMenuConfiguration(identifier: indexPath as NSCopying, previewProvider: nil) { suggestedActions in
-            let pin = UIAction(title: "Закрепить") { action in
+            let pin = UIAction(title: "Закрепить") { action in // amend
                 print("pin")
             }
-            let edit = UIAction(title: "Редактировать") { action in
+            let edit = UIAction(title: "Редактировать") { action in // amend
                 print("edit")
             }
-            let delete = UIAction(title: "Удалить", attributes: .destructive) { action in
-                print("delete")
+            let delete = UIAction(title: "Удалить", attributes: .destructive) { [weak self] action in // amend
+                guard let self else { return }
+                
+                let category = filteredTrackerCategories[indexPath.section]
+                var updatedTrackers = category.trackers
+                
+                updatedTrackers.remove(at: indexPath.row)
+                
+                if updatedTrackers.isEmpty {
+                    filteredTrackerCategories.remove(at: indexPath.section)
+                    collectionView.deleteSections(IndexSet(integer: indexPath.section))
+                } else {
+                    let updatedCtegory = TrackerCategory(name: category.name, trackers: updatedTrackers)
+                    filteredTrackerCategories[indexPath.section] = updatedCtegory
+                    collectionView.deleteItems(at: [indexPath])
+                }
+                
+                do {
+                    try self.trackerStore.deleteTracker(at: indexPath)
+                } catch {
+                    print("Failed to delete tracker: \(error)")
+                }
             }
             
             return UIMenu(title: "", children: [pin, edit, delete])
