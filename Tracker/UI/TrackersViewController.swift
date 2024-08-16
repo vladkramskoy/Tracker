@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class TrackersViewController: UIViewController {
+final class TrackersViewController: UIViewController, FiltersViewControllerDelegate {
     static var categories: [TrackerCategory] = []
     private var currentDate: Date = Date() {
         didSet {
@@ -61,7 +61,7 @@ final class TrackersViewController: UIViewController {
         return datePicker
     }()
     
-    private lazy var collectionView: UICollectionView = {
+    lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 167, height: 148)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -85,6 +85,18 @@ final class TrackersViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGesture.cancelsTouchesInView = false
         return tapGesture
+    }()
+    
+    private lazy var filtersButton: UIButton = {
+        let filtersButton = UIButton(type: .system)
+        filtersButton.setTitle("Фильтры", for: .normal) // amend
+        filtersButton.tintColor = .white // amend
+        filtersButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+        filtersButton.addTarget(self, action: #selector(filtersButtonTapped), for: .touchUpInside)
+        filtersButton.layer.cornerRadius = 16
+        filtersButton.backgroundColor = .systemBlue // amend
+        filtersButton.translatesAutoresizingMaskIntoConstraints = false
+        return filtersButton
     }()
     
     override func viewDidLoad() {
@@ -113,6 +125,7 @@ final class TrackersViewController: UIViewController {
         stubView.addSubview(stubImage)
         stubView.addSubview(stubLabel)
         view.addSubview(collectionView)
+        view.addSubview(filtersButton)
     }
     
     private func setupConstraints() {
@@ -140,7 +153,12 @@ final class TrackersViewController: UIViewController {
             collectionView.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 10),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            filtersButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            filtersButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            filtersButton.widthAnchor.constraint(equalToConstant: 114),
+            filtersButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
@@ -161,7 +179,12 @@ final class TrackersViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: datePicker)
     }
     
-    private func filterTrackers(for date: Date) {
+    func showAllTrackers() {
+        filteredTrackerCategories = TrackersViewController.categories.filter { !$0.trackers.isEmpty }
+        updateUI(with: stubDefault)
+    }
+    
+    func filterTrackers(for date: Date) {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.weekday], from: date)
         guard let weekDayIndex = components.weekday else { return }
@@ -190,6 +213,19 @@ final class TrackersViewController: UIViewController {
             }.compactMap { $0 }
             updateUI(with: stubSearch)
         }
+    }
+    
+    func filterCompletedTrackers(showCompleted: Bool) {
+        let completedTrackersIDs = Set(completedTrackers.map { $0.id })
+        
+        filteredTrackerCategories = TrackersViewController.categories.map { category in
+            let filteredTrackers = category.trackers.filter { tracker in
+                let isCompleted = completedTrackersIDs.contains(tracker.id)
+                return showCompleted ? isCompleted : !isCompleted
+            }
+            return TrackerCategory(name: category.name, trackers: filteredTrackers)
+        }.filter { !$0.trackers.isEmpty }
+        updateUI(with: stubDefault)
     }
     
     private func setupNotificationObserver() {
@@ -281,6 +317,13 @@ final class TrackersViewController: UIViewController {
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
+    }
+    
+    @objc func filtersButtonTapped() {
+        let filtersViewController = FiltersViewController(delegate: self)
+        filtersViewController.title = "Фильтры" // amend
+        let navigationController = UINavigationController(rootViewController: filtersViewController)
+        present(navigationController, animated: true)
     }
     
     deinit {

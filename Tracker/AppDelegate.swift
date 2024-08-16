@@ -44,6 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         YMMYandexMetrica.activate(with: configuration)
         
+        UserDefaults.standard.set(1, forKey: "selectedFilter")
+        
         return true
     }
     
