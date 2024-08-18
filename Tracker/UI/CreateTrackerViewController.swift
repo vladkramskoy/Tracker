@@ -60,6 +60,7 @@ final class CreateTrackerViewController: UIViewController {
     @objc private func createHabitButtonTapped() {
         feedbackGenerator.impactOccurred()
         let newHabitViewController = NewHabitViewController()
+        newHabitViewController.mode = .create
         newHabitViewController.title = Localizable.newHabitTitle
         let navigationController = UINavigationController(rootViewController: newHabitViewController)
         present(navigationController, animated: true)

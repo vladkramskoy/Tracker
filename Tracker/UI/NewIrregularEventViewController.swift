@@ -32,6 +32,7 @@ final class NewIrregularEventViewController: UIViewController {
     private lazy var trackerNameTextField: UITextField = {
         let trackerNameTextField = UITextField()
         trackerNameTextField.placeholder = Localizable.newHabitName
+        trackerNameTextField.font = UIFont.systemFont(ofSize: 17)
         trackerNameTextField.addTarget(self, action: #selector(textFieldDidChange(_ :)), for: .editingChanged)
         trackerNameTextField.translatesAutoresizingMaskIntoConstraints = false
         return trackerNameTextField
@@ -98,6 +99,10 @@ final class NewIrregularEventViewController: UIViewController {
         tapGesture.cancelsTouchesInView = false
         return tapGesture
     }()
+    
+    deinit {
+        print("NewIrregularEventViewController has been unloaded from memory.")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -347,7 +352,7 @@ extension NewIrregularEventViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) {
-            cell.backgroundColor = .white
+            cell.backgroundColor = .systemBackground
             cell.layer.borderWidth = 0
         }
     }

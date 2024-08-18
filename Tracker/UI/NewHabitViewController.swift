@@ -8,6 +8,18 @@
 import UIKit
 
 final class NewHabitViewController: UIViewController {
+    enum Mode {
+        case create
+        case edit
+    }
+    
+    var mode: Mode = .create {
+        didSet {
+            configureForCurrentMode()
+        }
+    }
+    var editTracker: Tracker?
+    
     private let trackerStore = TrackerStore()
     private var cellTitles: [(String, String?)] = [(Localizable.newHabitCategory, nil), (Localizable.newHabitSchedule, nil)] {
         didSet {
@@ -19,6 +31,7 @@ final class NewHabitViewController: UIViewController {
     private let colors = [UIColor(named: "color1"), UIColor(named: "color2"), UIColor(named: "color3"), UIColor(named: "color4"), UIColor(named: "color5"), UIColor(named: "color6"), UIColor(named: "color7"), UIColor(named: "color8"), UIColor(named: "color9"), UIColor(named: "color10"), UIColor(named: "color11"), UIColor(named: "color12"), UIColor(named: "color13"), UIColor(named: "color14"), UIColor(named: "color15"), UIColor(named: "color16"), UIColor(named: "color17"), UIColor(named: "color18")]
     private var selectColor = UIColor.black
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
+    private var topAnchorConstant: CGFloat?
     
     private lazy var textFieldView: UIView = {
         let textFieldView = UIView()
@@ -32,6 +45,7 @@ final class NewHabitViewController: UIViewController {
     private lazy var trackerNameTextField: UITextField = {
         let trackerNameTextField = UITextField()
         trackerNameTextField.placeholder = Localizable.newHabitName
+        trackerNameTextField.font = UIFont.systemFont(ofSize: 17)
         trackerNameTextField.addTarget(self, action: #selector(textFieldDidChange(_ :)), for: .editingChanged)
         trackerNameTextField.translatesAutoresizingMaskIntoConstraints = false
         return trackerNameTextField
@@ -102,6 +116,20 @@ final class NewHabitViewController: UIViewController {
         return tapGesture
     }()
     
+    private lazy var trackerDurationLabel = {
+        let trackerDurationLabel = UILabel()
+        trackerDurationLabel.text = "5 дней" // amend
+        trackerDurationLabel.textAlignment = .center
+        trackerDurationLabel.font = UIFont.boldSystemFont(ofSize: 32)
+        trackerDurationLabel.translatesAutoresizingMaskIntoConstraints = false
+        return trackerDurationLabel
+    }()
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+        print("NewHabitViewController has been unloaded from memory.")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Colors.viewBackgroundColor
@@ -113,6 +141,7 @@ final class NewHabitViewController: UIViewController {
         scrollView.addSubview(tableView)
         scrollView.addSubview(emojiCollectionView)
         scrollView.addSubview(сolorsCollectionView)
+        scrollView.addSubview(trackerDurationLabel)
         tableView.delegate = self
         tableView.dataSource = self
         emojiCollectionView.delegate = self
@@ -135,7 +164,7 @@ final class NewHabitViewController: UIViewController {
     
     @objc private func cancelButtonTapped() {
         feedbackGenerator.impactOccurred()
-        self.presentingViewController?.presentingViewController?.dismiss(animated: true)
+        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
     }
     
     @objc private func createButtonTapped() {
@@ -181,9 +210,83 @@ final class NewHabitViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(updateTableView), name: NSNotification.Name("CategoryDidSelected"), object: nil)
     }
     
+    private func configureForCurrentMode() {
+        switch mode {
+        case .create:
+            self.title = "Новая привычка" // amend
+            self.topAnchorConstant = 0
+            trackerDurationLabel.isHidden = true
+        case .edit:
+            self.title = "Редактирование привычки" // amend
+            self.createButton.setTitle("Сохранить", for: .normal) // amend
+            self.topAnchorConstant = 78
+            trackerDurationLabel.isHidden = false
+            
+            if let tracker = self.editTracker {
+                trackerNameTextField.text = tracker.name
+                selectEmoji = tracker.emoji
+                selectColor = tracker.color
+            }
+        }
+    }
+    
+    private func selectEmojisCellBeforeShowingEditMode() {
+        if let tracker = self.editTracker {
+            if let index = self.emoji.firstIndex(of: tracker.emoji) {
+                let indexPath = IndexPath(item: index, section: 0)
+                
+                if let cell = emojiCollectionView.cellForItem(at: indexPath) {
+                    cell.backgroundColor = UIColor(named: "superLightGray2")
+                }
+            }
+        }
+    }
+    
+    private func selectColorsCellBeforeShowingEditMode() {
+        if let tracker = self.editTracker {
+            if let index = self.colors.firstIndex(of: tracker.color) {
+                let indexPath = IndexPath(item: index, section: 0)
+                
+                if let cell = сolorsCollectionView.cellForItem(at: indexPath) {
+                    cell.layer.borderWidth = 3
+                    cell.layer.borderColor = colors[indexPath.row]?.withAlphaComponent(0.3).cgColor
+                }
+            }
+        }
+    }
+    
+    private func deselectCellEmojiEditMode() {
+        if let tracker = self.editTracker {
+            if let index = self.emoji.firstIndex(of: tracker.emoji) {
+                let indexPath = IndexPath(item: index, section: 0)
+                
+                if let cell = emojiCollectionView.cellForItem(at: indexPath) {
+                    cell.backgroundColor = .systemBackground
+                }
+            }
+        }
+    }
+    
+    private func deselectCellColorsEditMode() {
+        if let tracker = self.editTracker {
+            if let index = self.colors.firstIndex(of: tracker.color) {
+                let indexPath = IndexPath(item: index, section: 0)
+                
+                if let cell = сolorsCollectionView.cellForItem(at: indexPath) {
+                    cell.layer.borderWidth = 0
+                }
+            }
+        }
+    }
+    
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            textFieldView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            trackerDurationLabel.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            trackerDurationLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+            trackerDurationLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
+            trackerDurationLabel.heightAnchor.constraint(equalToConstant: 38),
+            
+            textFieldView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: topAnchorConstant ?? 0),
             textFieldView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
             textFieldView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
             textFieldView.heightAnchor.constraint(equalToConstant: 75),
@@ -213,7 +316,7 @@ final class NewHabitViewController: UIViewController {
             сolorsCollectionView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             сolorsCollectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             сolorsCollectionView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            сolorsCollectionView.heightAnchor.constraint(equalToConstant: 222),
+            сolorsCollectionView.heightAnchor.constraint(equalToConstant: 294),
             
             cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             cancelButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -225,10 +328,6 @@ final class NewHabitViewController: UIViewController {
             createButton.heightAnchor.constraint(equalToConstant: 60),
             createButton.widthAnchor.constraint(equalToConstant: 161),
         ])
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -296,6 +395,10 @@ extension NewHabitViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == emojiCollectionView {
+            if mode == .edit {
+                selectEmojisCellBeforeShowingEditMode()
+            }
+            
             guard let cell = emojiCollectionView.dequeueReusableCell(withReuseIdentifier: EmojiCollectionViewCell.identifier, for: indexPath) as? EmojiCollectionViewCell else {
                 return UICollectionViewCell()
             }
@@ -303,6 +406,10 @@ extension NewHabitViewController: UICollectionViewDataSource {
             cell.emojiLabel.text = emoji[indexPath.row]
             return cell
         } else if collectionView == сolorsCollectionView {
+            if mode == .edit {
+                selectColorsCellBeforeShowingEditMode()
+            }
+            
             guard let cell = сolorsCollectionView.dequeueReusableCell(withReuseIdentifier: ColorsCollectionViewCell.identifier, for: indexPath) as? ColorsCollectionViewCell else {
                 return UICollectionViewCell()
             }
@@ -335,12 +442,20 @@ extension NewHabitViewController: UICollectionViewDataSource {
 extension NewHabitViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == emojiCollectionView {
+            if mode == .edit {
+                deselectCellEmojiEditMode()
+            }
+            
             selectEmoji = emoji[indexPath.row]
             checkAndUpdateCreateButton()
             if let cell = collectionView.cellForItem(at: indexPath) {
                 cell.backgroundColor = UIColor(named: "superLightGray2")
             }
         } else if collectionView == сolorsCollectionView {
+            if mode == .edit {
+                deselectCellColorsEditMode()
+            }
+            
             selectColor = colors[indexPath.row] ?? UIColor()
             checkAndUpdateCreateButton()
             if let cell = collectionView.cellForItem(at: indexPath) {
@@ -352,7 +467,7 @@ extension NewHabitViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) {
-            cell.backgroundColor = .white
+            cell.backgroundColor = .systemBackground
             cell.layer.borderWidth = 0
         }
     }

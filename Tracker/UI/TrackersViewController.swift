@@ -377,8 +377,15 @@ extension TrackersViewController: UICollectionViewDelegate {
             let pin = UIAction(title: "Закрепить") { action in // amend
                 print("pin")
             }
-            let edit = UIAction(title: "Редактировать") { action in // amend
-                print("edit")
+            let edit = UIAction(title: "Редактировать") { [weak self] action in // amend
+                guard let self = self else { return }
+
+                let newHabitViewController = NewHabitViewController()
+                newHabitViewController.editTracker = filteredTrackerCategories[indexPath.section].trackers[indexPath.row]
+                newHabitViewController.mode = .edit
+                
+                let navigationController = UINavigationController(rootViewController: newHabitViewController)
+                self.present(navigationController, animated: true)
             }
             let delete = UIAction(title: "Удалить", attributes: .destructive) { [weak self] action in // amend
                 guard let self else { return }
