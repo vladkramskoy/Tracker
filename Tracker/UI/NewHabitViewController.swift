@@ -32,6 +32,9 @@ final class NewHabitViewController: UIViewController {
     private var selectColor = UIColor.black
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     private var topAnchorConstant: CGFloat?
+    private let trackerRecordStore = TrackerRecordStore()
+    private var completedTrackers: [TrackerRecord] = []
+    private var completedCount: Int?
     
     private lazy var textFieldView: UIView = {
         let textFieldView = UIView()
@@ -118,7 +121,8 @@ final class NewHabitViewController: UIViewController {
     
     private lazy var trackerDurationLabel = {
         let trackerDurationLabel = UILabel()
-        trackerDurationLabel.text = "5 дней" // amend
+        let formatString = NSLocalizedString("numberOfMarkedTrackers", comment: "")
+        trackerDurationLabel.text = String.localizedStringWithFormat(formatString, completedCount ?? Int())
         trackerDurationLabel.textAlignment = .center
         trackerDurationLabel.font = UIFont.boldSystemFont(ofSize: 32)
         trackerDurationLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -158,7 +162,10 @@ final class NewHabitViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        let contentHeight = textFieldView.frame.height + 24 + tableView.frame.height + 32 + emojiCollectionView.frame.height + 16 + сolorsCollectionView.frame.height
+        let contentHeightCreateMode = textFieldView.frame.height + 24 + tableView.frame.height + 32 + emojiCollectionView.frame.height + 16 + сolorsCollectionView.frame.height
+        let contentHeightEditMode = trackerDurationLabel.frame.height + 24 + textFieldView.frame.height + 24 + tableView.frame.height + 32 + emojiCollectionView.frame.height + 16 + сolorsCollectionView.frame.height
+        let contentHeight = mode == .create ? contentHeightCreateMode : contentHeightEditMode
+        
         scrollView.contentSize = CGSize(width: view.frame.width, height: contentHeight)
     }
     
@@ -220,12 +227,17 @@ final class NewHabitViewController: UIViewController {
             self.title = "Редактирование привычки" // amend
             self.createButton.setTitle("Сохранить", for: .normal) // amend
             self.topAnchorConstant = 78
+            completedTrackers = trackerRecordStore.fetchTrackerRecords()
             trackerDurationLabel.isHidden = false
             
             if let tracker = self.editTracker {
                 trackerNameTextField.text = tracker.name
                 selectEmoji = tracker.emoji
                 selectColor = tracker.color
+                
+                self.completedCount = countCompletedTrackersEditMode(for: tracker.id)
+                let formatString = NSLocalizedString("numberOfMarkedTrackers", comment: "")
+                trackerDurationLabel.text = String.localizedStringWithFormat(formatString, completedCount ?? Int())
             }
         }
     }
@@ -279,6 +291,10 @@ final class NewHabitViewController: UIViewController {
         }
     }
     
+    private func countCompletedTrackersEditMode(for trackerID: UUID) -> Int {
+        return completedTrackers.filter { $0.id == trackerID }.count
+    }
+    
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             trackerDurationLabel.topAnchor.constraint(equalTo: scrollView.topAnchor),
@@ -316,7 +332,7 @@ final class NewHabitViewController: UIViewController {
             сolorsCollectionView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             сolorsCollectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             сolorsCollectionView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            сolorsCollectionView.heightAnchor.constraint(equalToConstant: 294),
+            сolorsCollectionView.heightAnchor.constraint(equalToConstant: 222),
             
             cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             cancelButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
