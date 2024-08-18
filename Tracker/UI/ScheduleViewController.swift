@@ -51,7 +51,9 @@ final class ScheduleViewController: UIViewController {
     
     private func initializingSchedule() {
         for day in WeekDay.allCases {
-            ScheduleViewController.schedule[day] = false
+            if ScheduleViewController.schedule[day] == nil {
+                ScheduleViewController.schedule[day] = false
+            }
         }
     }
     
@@ -101,7 +103,7 @@ extension ScheduleViewController: UITableViewDataSource {
         
         let switchView = UISwitch(frame: .zero)
         switchView.onTintColor = .systemBlue
-        switchView.setOn(false, animated: true)
+        switchView.setOn(ScheduleViewController.schedule[WeekDay.allCases[indexPath.row]] ?? false, animated: true)
         switchView.tag = indexPath.row
         switchView.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
         

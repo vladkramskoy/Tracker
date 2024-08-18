@@ -19,6 +19,8 @@ final class NewHabitViewController: UIViewController {
         }
     }
     var editTracker: Tracker?
+    var categoryConteinsTracker: TrackerCategory?
+    var indexPathEditTracker: IndexPath?
     
     private let trackerStore = TrackerStore()
     private var cellTitles: [(String, String?)] = [(Localizable.newHabitCategory, nil), (Localizable.newHabitSchedule, nil)] {
@@ -158,6 +160,7 @@ final class NewHabitViewController: UIViewController {
         setupNotificationObserver()
         view.addGestureRecognizer(tapGesture)
         feedbackGenerator.prepare()
+        сolorsCollectionView.reloadData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -177,12 +180,29 @@ final class NewHabitViewController: UIViewController {
     @objc private func createButtonTapped() {
         feedbackGenerator.impactOccurred()
         guard let text = trackerNameTextField.text, !text.isEmpty else { return }
-        if let selectedCategory = CategoriesViewModel.selectedCategory {
-            let newTracker = Tracker(id: UUID(), name: text, color: selectColor, emoji: selectEmoji, schedule: ScheduleViewController.schedule)
-            trackerStore.addNewTrackerToCategory(newTracker, categoryName: selectedCategory.name)
-            NotificationCenter.default.post(name: NSNotification.Name("TrackerCreated"), object: nil)
+        
+        if mode == .create {
+            if let selectedCategory = CategoriesViewModel.selectedCategory {
+                let newTracker = Tracker(id: UUID(), name: text, color: selectColor, emoji: selectEmoji, schedule: ScheduleViewController.schedule)
+                trackerStore.addNewTrackerToCategory(newTracker, categoryName: selectedCategory.name)
+            }
+        } else {
+            guard let indexPath = indexPathEditTracker else { return }
+            
+            if let selectedCategory = CategoriesViewModel.selectedCategory, let id = editTracker?.id {
+                let editTracker = Tracker(id: id, name: text, color: selectColor, emoji: selectEmoji, schedule: ScheduleViewController.schedule)
+                
+                do {
+                    try trackerStore.deleteTracker(at: indexPath)
+                } catch {
+                    print("Error deleting the tracker: \(error.localizedDescription)")
+                }
+                trackerStore.addNewTrackerToCategory(editTracker, categoryName: selectedCategory.name)
+            }
         }
-        self.presentingViewController?.presentingViewController?.dismiss(animated: true)
+        
+        NotificationCenter.default.post(name: NSNotification.Name("TrackerCreated"), object: nil)
+        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
     }
     
     @objc private func updateTableView() {
@@ -235,8 +255,11 @@ final class NewHabitViewController: UIViewController {
                 selectEmoji = tracker.emoji
                 selectColor = tracker.color
                 
-//                CategoriesViewModel.selectedCategory = 
-//                CategoriesViewModel.selectedCategoryString
+                CategoriesViewModel.selectedCategory = categoryConteinsTracker
+                CategoriesViewModel.selectedCategoryString = categoryConteinsTracker?.name
+                ScheduleViewController.schedule = tracker.schedule
+                ScheduleViewController.selectedDays = ScheduleViewController.schedule.filter { $0.value }.map { $0.key.localizedString }.joined(separator: ", ")
+                updateTableView()
                 
                 self.completedCount = countCompletedTrackersEditMode(for: tracker.id)
                 let formatString = NSLocalizedString("numberOfMarkedTrackers", comment: "")
@@ -413,11 +436,12 @@ extension NewHabitViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if mode == .edit {
+            selectEmojisCellBeforeShowingEditMode()
+            selectColorsCellBeforeShowingEditMode()
+        }
+        
         if collectionView == emojiCollectionView {
-            if mode == .edit {
-                selectEmojisCellBeforeShowingEditMode()
-            }
-            
             guard let cell = emojiCollectionView.dequeueReusableCell(withReuseIdentifier: EmojiCollectionViewCell.identifier, for: indexPath) as? EmojiCollectionViewCell else {
                 return UICollectionViewCell()
             }
@@ -425,10 +449,6 @@ extension NewHabitViewController: UICollectionViewDataSource {
             cell.emojiLabel.text = emoji[indexPath.row]
             return cell
         } else if collectionView == сolorsCollectionView {
-            if mode == .edit {
-                selectColorsCellBeforeShowingEditMode()
-            }
-            
             guard let cell = сolorsCollectionView.dequeueReusableCell(withReuseIdentifier: ColorsCollectionViewCell.identifier, for: indexPath) as? ColorsCollectionViewCell else {
                 return UICollectionViewCell()
             }

@@ -71,6 +71,7 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
         collectionView.backgroundColor = Colors.viewBackgroundColor
         collectionView.isHidden = true
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.contentInset.bottom = 60
         return collectionView
     }()
     
@@ -382,7 +383,10 @@ extension TrackersViewController: UICollectionViewDelegate {
 
                 let newHabitViewController = NewHabitViewController()
                 newHabitViewController.editTracker = filteredTrackerCategories[indexPath.section].trackers[indexPath.row]
+                newHabitViewController.categoryConteinsTracker = filteredTrackerCategories[indexPath.section]
                 newHabitViewController.mode = .edit
+                newHabitViewController.indexPathEditTracker = indexPath
+                CategoriesViewModel.selectedIndexPath = IndexPath(row: indexPath.section, section: 0)
                 
                 let navigationController = UINavigationController(rootViewController: newHabitViewController)
                 self.present(navigationController, animated: true)
