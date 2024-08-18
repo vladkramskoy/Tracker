@@ -235,6 +235,9 @@ final class NewHabitViewController: UIViewController {
                 selectEmoji = tracker.emoji
                 selectColor = tracker.color
                 
+//                CategoriesViewModel.selectedCategory = 
+//                CategoriesViewModel.selectedCategoryString
+                
                 self.completedCount = countCompletedTrackersEditMode(for: tracker.id)
                 let formatString = NSLocalizedString("numberOfMarkedTrackers", comment: "")
                 trackerDurationLabel.text = String.localizedStringWithFormat(formatString, completedCount ?? Int())

@@ -10,7 +10,7 @@ import UIKit
 protocol CategoriesViewModelProtocol: AnyObject {
     static var selectedCategory: TrackerCategory? { get set }
     static var selectedCategoryString: String? { get set }
-    var selectedIndexPath: IndexPath? { get set }
+    static var selectedIndexPath: IndexPath? { get set }
     var onCategoriesUpdated: ((Bool, Bool) -> Void)? { get set }
     var categories: [TrackerCategory] { get }
 
@@ -24,9 +24,9 @@ protocol CategoriesViewModelProtocol: AnyObject {
 final class CategoriesViewModel: CategoriesViewModelProtocol {
     static var selectedCategory: TrackerCategory? = nil
     static var selectedCategoryString: String? = nil
+    static var selectedIndexPath: IndexPath?
     private let trackerCategoryStore = TrackerCategoryStore()
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
-    var selectedIndexPath: IndexPath?
     var onCategoriesUpdated: ((Bool, Bool) -> Void)?
     
     private(set) var categories: [TrackerCategory] = []
@@ -50,7 +50,7 @@ final class CategoriesViewModel: CategoriesViewModelProtocol {
     }
     
     func didSelectRowAt(_ index: Int) {
-        selectedIndexPath = IndexPath(row: index, section: 0)
+        CategoriesViewModel.selectedIndexPath = IndexPath(row: index, section: 0)
         CategoriesViewModel.selectedCategoryString = categories[index].name
         CategoriesViewModel.selectedCategory = categories[index]
     }

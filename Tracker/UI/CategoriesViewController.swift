@@ -152,8 +152,8 @@ extension CategoriesViewController: UITableViewDataSource {
         } else {
             cell.layer.maskedCorners = []
         }
-
-        if let selectedIndexPath = viewModel.selectedIndexPath, selectedIndexPath == indexPath {
+        
+        if let selectedIndexPath = CategoriesViewModel.selectedIndexPath, selectedIndexPath == indexPath {
             cell.accessoryType = .checkmark
         } else {
             cell.accessoryType = .none
@@ -164,7 +164,7 @@ extension CategoriesViewController: UITableViewDataSource {
 
 extension CategoriesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let selectedIndexPath = viewModel.selectedIndexPath {
+        if let selectedIndexPath = CategoriesViewModel.selectedIndexPath {
             let previousCell = tableView.cellForRow(at: selectedIndexPath)
             previousCell?.accessoryType = .none
         }
