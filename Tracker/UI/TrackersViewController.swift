@@ -205,6 +205,7 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
     private func filterContentForSearchText(_ searchText: String) {
         if searchText.isEmpty {
             filteredTrackerCategories = dateFilteredTrackerCategories
+            sortPinnedCategory()
             updateUI(with: stubDefault)
         } else {
             filteredTrackerCategories = dateFilteredTrackerCategories.map { category in
@@ -294,7 +295,29 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
         collectionView.reloadData()
     }
     
-    private func deleteTracker(indexPath: IndexPath) {
+    private func addTrackerInPinned(tracker: Tracker, toCategory categoryName: String) {
+        if let categoryIndex = filteredTrackerCategories.firstIndex(where: { $0.name == categoryName }) {
+            let currentCategory = filteredTrackerCategories[categoryIndex]
+            
+            let updateCategory = TrackerCategory(name: currentCategory.name, trackers: currentCategory.trackers + [tracker])
+            filteredTrackerCategories[categoryIndex] = updateCategory
+            
+            let newIndexPath = IndexPath(row: updateCategory.trackers.count - 1, section: categoryIndex)
+            collectionView.performBatchUpdates({ collectionView.insertItems(at: [newIndexPath])}, completion: nil)
+        } else {
+            let updateCategory = TrackerCategory(name: "Закрепленные", trackers: [tracker])
+            filteredTrackerCategories.insert(updateCategory, at: 0)
+            TrackersViewController.categories.insert(updateCategory, at: 0)
+            
+            collectionView.performBatchUpdates({
+                collectionView.insertSections(IndexSet(integer: 0))
+            })
+        }
+        
+        trackerStore.addNewTrackerToCategory(tracker, categoryName: categoryName)
+    }
+    
+    private func deleteTracker(indexPath: IndexPath, trackerName: String) {
         let category = filteredTrackerCategories[indexPath.section]
         var updatedTrackers = category.trackers
         
@@ -303,6 +326,7 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
         if updatedTrackers.isEmpty {
             filteredTrackerCategories.remove(at: indexPath.section)
             collectionView.deleteSections(IndexSet(integer: indexPath.section))
+            updateUI(with: stubDefault)
         } else {
             let updatedCtegory = TrackerCategory(name: category.name, trackers: updatedTrackers)
             filteredTrackerCategories[indexPath.section] = updatedCtegory
@@ -310,20 +334,41 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
         }
         
         do {
-            try self.trackerStore.deleteTracker(at: indexPath)
+            try self.trackerStore.deleteTracker(withName: trackerName)
         } catch {
-            print("Failed to delete tracker: \(error)")
+            print("Failed to delete tracker: \(error.localizedDescription)")
         }
     }
     
-    private func showActionShhet(indexPath: IndexPath) {
+    private func showActionShhet(indexPath: IndexPath, trackerName: String) {
         let actionSheet = UIAlertController(title: "Уверены что хотите удалить трекер?", message: nil, preferredStyle: .actionSheet) // amend
         actionSheet.addAction(UIAlertAction(title: "Удалить", style: .destructive, handler: { [weak self] _ in // amend
             guard let self else { return }
-            self.deleteTracker(indexPath: indexPath)
+            self.deleteTracker(indexPath: indexPath, trackerName: trackerName)
         }))
         actionSheet.addAction(UIAlertAction(title: "Отменить", style: .cancel, handler: nil))
         present(actionSheet, animated: true)
+    }
+    
+    private func sortPinnedCategory() {        
+        filteredTrackerCategories.sort { (category1, category2) -> Bool in
+            if category1.name == "Закрепленные" {
+                return true
+            } else if category2.name == "Закрепленные" {
+                return false
+            } else {
+                return false
+            }
+        }
+    }
+    
+    private func ensurePinnedCategoryExist(in categories: inout [TrackerCategory]) {
+        let pinnedCategoryName = "Закрепленные"
+        
+        if !categories.contains(where: { $0.name == pinnedCategoryName }) {
+            let pinnedCategory = TrackerCategory(name: pinnedCategoryName, trackers: [])
+            categories.insert(pinnedCategory, at: 0)
+        }
     }
     
     @objc private func addTrackerButtonTapped() {
@@ -407,8 +452,12 @@ extension TrackersViewController: UICollectionViewDataSource {
 extension TrackersViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         return UIContextMenuConfiguration(identifier: indexPath as NSCopying, previewProvider: nil) { suggestedActions in
-            let pin = UIAction(title: "Закрепить") { action in // amend
-                print("pin")
+            let pin = UIAction(title: "Закрепить") { [weak self] action in // amend
+                guard let self = self else { return }
+                
+                let tracker = self.filteredTrackerCategories[indexPath.section].trackers[indexPath.row]
+                self.deleteTracker(indexPath: indexPath, trackerName: tracker.name)
+                self.addTrackerInPinned(tracker: tracker, toCategory: "Закрепленные")
             }
             let edit = UIAction(title: "Редактировать") { [weak self] action in // amend
                 guard let self = self else { return }
@@ -417,7 +466,6 @@ extension TrackersViewController: UICollectionViewDelegate {
                 newHabitViewController.editTracker = filteredTrackerCategories[indexPath.section].trackers[indexPath.row]
                 newHabitViewController.categoryConteinsTracker = filteredTrackerCategories[indexPath.section]
                 newHabitViewController.mode = .edit
-                newHabitViewController.indexPathEditTracker = indexPath
                 CategoriesViewModel.selectedIndexPath = IndexPath(row: indexPath.section, section: 0)
                 
                 let navigationController = UINavigationController(rootViewController: newHabitViewController)
@@ -425,7 +473,9 @@ extension TrackersViewController: UICollectionViewDelegate {
             }
             let delete = UIAction(title: "Удалить", attributes: .destructive) { [weak self] action in // amend
                 guard let self else { return }
-                self.showActionShhet(indexPath: indexPath)
+                
+                let tracker = filteredTrackerCategories[indexPath.section].trackers[indexPath.row]
+                self.showActionShhet(indexPath: indexPath, trackerName: tracker.name)
             }
             
             return UIMenu(title: "", children: [pin, edit, delete])

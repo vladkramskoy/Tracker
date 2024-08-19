@@ -20,7 +20,6 @@ final class NewHabitViewController: UIViewController {
     }
     var editTracker: Tracker?
     var categoryConteinsTracker: TrackerCategory?
-    var indexPathEditTracker: IndexPath?
     
     private let trackerStore = TrackerStore()
     private var cellTitles: [(String, String?)] = [(Localizable.newHabitCategory, nil), (Localizable.newHabitSchedule, nil)] {
@@ -68,6 +67,7 @@ final class NewHabitViewController: UIViewController {
     private lazy var emojiCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let emojiCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        emojiCollectionView.backgroundColor = Colors.viewBackgroundColor
         emojiCollectionView.register(EmojiCollectionViewCell.self, forCellWithReuseIdentifier: EmojiCollectionViewCell.identifier)
         emojiCollectionView.register(SupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
         emojiCollectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -77,6 +77,7 @@ final class NewHabitViewController: UIViewController {
     private lazy var сolorsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let сolorsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        сolorsCollectionView.backgroundColor = Colors.viewBackgroundColor
         сolorsCollectionView.register(ColorsCollectionViewCell.self, forCellWithReuseIdentifier: ColorsCollectionViewCell.identifier)
         сolorsCollectionView.register(SupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
         сolorsCollectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -187,13 +188,11 @@ final class NewHabitViewController: UIViewController {
                 trackerStore.addNewTrackerToCategory(newTracker, categoryName: selectedCategory.name)
             }
         } else {
-            guard let indexPath = indexPathEditTracker else { return }
-            
             if let selectedCategory = CategoriesViewModel.selectedCategory, let id = editTracker?.id {
                 let editTracker = Tracker(id: id, name: text, color: selectColor, emoji: selectEmoji, schedule: ScheduleViewController.schedule)
                 
                 do {
-                    try trackerStore.deleteTracker(at: indexPath)
+                    try trackerStore.deleteTracker(withName: editTracker.name)
                 } catch {
                     print("Error deleting the tracker: \(error.localizedDescription)")
                 }

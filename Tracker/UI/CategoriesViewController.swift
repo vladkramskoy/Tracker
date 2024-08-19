@@ -42,6 +42,7 @@ final class CategoriesViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorColor = UIColor(named: "customGray")
+        tableView.backgroundColor = Colors.viewBackgroundColor
         tableView.layer.cornerRadius = 16
         tableView.layer.masksToBounds = true
         tableView.translatesAutoresizingMaskIntoConstraints = false

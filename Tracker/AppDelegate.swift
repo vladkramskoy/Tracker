@@ -46,6 +46,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UserDefaults.standard.set(1, forKey: "selectedFilter")
         
+        let categoryManager = CategoryManager()
+        categoryManager.addPinnedCategoryNeeded()
+        
         return true
     }
     

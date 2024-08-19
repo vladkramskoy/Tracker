@@ -54,23 +54,20 @@ final class TrackerStore {
         }
     }
     
-    func deleteTracker(at indexPath: IndexPath) throws {
+    func deleteTracker(withName name: String) throws {
         let fetchRequest: NSFetchRequest<TrackerCategoryCoreData> = TrackerCategoryCoreData.fetchRequest()
-        
         let categories = try context.fetch(fetchRequest)
-        guard indexPath.section < categories.count else {
-            throw NSError(domain: "Invalid section index", code: 1)
-        }
-        let category = categories[indexPath.section]
         
-        guard let trakers = category.trackers?.allObjects as? [TrackerCoreData],
-              indexPath.row < trakers.count else {
-            throw NSError(domain: "Invalid row index", code: 2)
+        for category in categories {
+            guard let trackers = category.trackers?.allObjects as? [TrackerCoreData] else { continue }
+            
+            if let trackerToDelete = trackers.first(where: { $0.name == name }) {
+                context.delete(trackerToDelete)
+                try context.save()
+                return
+            }
         }
-        
-        let trackerToDelete = trakers[indexPath.row]
-        context.delete(trackerToDelete)
-        try context.save()
+        throw NSError(domain: "Tracker not found", code: 3, userInfo: [NSLocalizedDescriptionKey: "No tracker found with the name \(name)"])
     }
 }
 

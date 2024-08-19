@@ -43,6 +43,7 @@
 		8DC122FD2C62ABE0005A8880 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8DC122FB2C62ABE0005A8880 /* Localizable.strings */; };
 		8DC387102C2732D800B9136E /* NewHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC3870F2C2732D800B9136E /* NewHabitViewController.swift */; };
 		8DC387122C2735AA00B9136E /* NewIrregularEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC387112C2735AA00B9136E /* NewIrregularEventViewController.swift */; };
+		8DCBC1492C73660D00CEF1F0 /* CategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCBC1482C73660D00CEF1F0 /* CategoryManager.swift */; };
 		8DD93DBE2C662ADC0055F997 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8DD93DBC2C662ADC0055F997 /* InfoPlist.strings */; };
 		8DE147122C36AA5B00F271F3 /* SupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE147112C36AA5B00F271F3 /* SupplementaryView.swift */; };
 		8DE147162C36F27E00F271F3 /* ColorsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE147152C36F27E00F271F3 /* ColorsCollectionViewCell.swift */; };
@@ -107,6 +108,7 @@
 		8DC123022C62AC8C005A8880 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8DC3870F2C2732D800B9136E /* NewHabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHabitViewController.swift; sourceTree = "<group>"; };
 		8DC387112C2735AA00B9136E /* NewIrregularEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewIrregularEventViewController.swift; sourceTree = "<group>"; };
+		8DCBC1482C73660D00CEF1F0 /* CategoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryManager.swift; sourceTree = "<group>"; };
 		8DD93DBD2C662ADC0055F997 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8DD93DBF2C6630120055F997 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8DD93DC02C6630120055F997 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				8D044D332C6D178600AE72F8 /* AnalyticsService.swift */,
+				8DCBC1482C73660D00CEF1F0 /* CategoryManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				8DC387122C2735AA00B9136E /* NewIrregularEventViewController.swift in Sources */,
 				8D0454D72C35BB9E00D455F0 /* EmojiCollectionViewCell.swift in Sources */,
 				8DA10EA52C6E606B004A944A /* FiltersViewController.swift in Sources */,
+				8DCBC1492C73660D00CEF1F0 /* CategoryManager.swift in Sources */,
 				8D952DAC2C63E14D00DD90E0 /* Localizable.swift in Sources */,
 				8D68D4612C1C722F00A01290 /* TrackerCategory.swift in Sources */,
 				8D37BC8F2C2B0BD400B2E66F /* ScheduleViewController.swift in Sources */,

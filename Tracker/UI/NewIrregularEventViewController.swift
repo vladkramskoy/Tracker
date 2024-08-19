@@ -47,6 +47,7 @@ final class NewIrregularEventViewController: UIViewController {
     private lazy var emojiCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let emojiCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        emojiCollectionView.backgroundColor = Colors.viewBackgroundColor
         emojiCollectionView.register(EmojiCollectionViewCell.self, forCellWithReuseIdentifier: EmojiCollectionViewCell.identifier)
         emojiCollectionView.register(SupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
         emojiCollectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -56,6 +57,7 @@ final class NewIrregularEventViewController: UIViewController {
     private lazy var сolorsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let сolorsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        сolorsCollectionView.backgroundColor = Colors.viewBackgroundColor
         сolorsCollectionView.register(ColorsCollectionViewCell.self, forCellWithReuseIdentifier: ColorsCollectionViewCell.identifier)
         сolorsCollectionView.register(SupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
         сolorsCollectionView.translatesAutoresizingMaskIntoConstraints = false
