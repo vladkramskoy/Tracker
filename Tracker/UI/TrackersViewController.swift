@@ -325,6 +325,36 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
         trackerStore.addNewTrackerToCategory(tracker, categoryName: categoryName)
     }
     
+    private func transferTrackerFromPinned(tracker: Tracker, toCategory categoryName: String) {
+        if let categoryIndex = filteredTrackerCategories.firstIndex(where: { $0.name == categoryName }) {
+            let currentCategory = filteredTrackerCategories[categoryIndex]
+            
+            let updateCategory = TrackerCategory(name: currentCategory.name, trackers: currentCategory.trackers + [tracker])
+            filteredTrackerCategories[categoryIndex] = updateCategory
+            
+            let newIndexPath = IndexPath(row: updateCategory.trackers.count - 1, section: categoryIndex)
+            
+            updatePinnedTrackers(from: filteredTrackerCategories)
+            
+            collectionView.performBatchUpdates({ collectionView.insertItems(at: [newIndexPath])}, completion: nil)
+        } else {
+            if let categoryIndex = TrackersViewController.categories.firstIndex(where: { $0.name == categoryName }) {
+                let currentCategory = TrackersViewController.categories[categoryIndex]
+                let updatedCategory = TrackerCategory(name: currentCategory.name, trackers: [tracker])
+                filteredTrackerCategories.append(updatedCategory)
+                
+                updatePinnedTrackers(from: filteredTrackerCategories)
+                
+                collectionView.performBatchUpdates({
+                    let newSectionIndex = filteredTrackerCategories.count - 1
+                    collectionView.insertSections(IndexSet(integer: newSectionIndex))
+                }, completion: nil)
+            }
+        }
+        
+        trackerStore.addNewTrackerToCategory(tracker, categoryName: categoryName)
+    }
+    
     private func deleteTracker(indexPath: IndexPath, trackerName: String) {
         let category = filteredTrackerCategories[indexPath.section]
         var updatedTrackers = category.trackers
@@ -471,13 +501,22 @@ extension TrackersViewController: UICollectionViewDataSource {
 extension TrackersViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         return UIContextMenuConfiguration(identifier: indexPath as NSCopying, previewProvider: nil) { suggestedActions in
-            let pin = UIAction(title: "Закрепить") { [weak self] action in // amend
+            let tracker = self.filteredTrackerCategories[indexPath.section].trackers[indexPath.row]
+            let isPinned = self.pinnedTrackers.contains(tracker.id)
+            let actionTitle = isPinned ? "Открепить" : "Закрепить" // amend
+            
+            let pin = UIAction(title: actionTitle) { [weak self] action in
                 guard let self = self else { return }
                 
-                let tracker = self.filteredTrackerCategories[indexPath.section].trackers[indexPath.row]
-                self.deleteTracker(indexPath: indexPath, trackerName: tracker.name)
-                self.addTrackerInPinned(tracker: tracker, toCategory: "Закрепленные")
+                if isPinned {
+                    self.deleteTracker(indexPath: indexPath, trackerName: tracker.name)
+                    self.transferTrackerFromPinned(tracker: tracker, toCategory: "Зеленая категория") // В какую категорию то????
+                } else {
+                    self.deleteTracker(indexPath: indexPath, trackerName: tracker.name)
+                    self.addTrackerInPinned(tracker: tracker, toCategory: "Закрепленные")
+                }
             }
+            
             let edit = UIAction(title: "Редактировать") { [weak self] action in // amend
                 guard let self = self else { return }
 
