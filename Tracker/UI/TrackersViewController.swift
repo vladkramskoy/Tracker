@@ -17,6 +17,7 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
     private var completedTrackers: [TrackerRecord] = []
     private var filteredTrackerCategories: [TrackerCategory] = []
     private var dateFilteredTrackerCategories: [TrackerCategory] = []
+    private var pinnedTrackers: Set<UUID> = Set()
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     private let trackerCategoryStore = TrackerCategoryStore()
     private let trackerStore = TrackerStore()
@@ -251,6 +252,7 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
                 self.stubView.isHidden = true
                 self.collectionView.isHidden = false
             }
+            self.updatePinnedTrackers(from: self.filteredTrackerCategories)
             self.collectionView.reloadData()
         }
     }
@@ -303,11 +305,17 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
             filteredTrackerCategories[categoryIndex] = updateCategory
             
             let newIndexPath = IndexPath(row: updateCategory.trackers.count - 1, section: categoryIndex)
+            
+            updatePinnedTrackers(from: filteredTrackerCategories)
+            
             collectionView.performBatchUpdates({ collectionView.insertItems(at: [newIndexPath])}, completion: nil)
         } else {
             let updateCategory = TrackerCategory(name: "Закрепленные", trackers: [tracker])
+            
             filteredTrackerCategories.insert(updateCategory, at: 0)
             TrackersViewController.categories.insert(updateCategory, at: 0)
+            
+            updatePinnedTrackers(from: filteredTrackerCategories)
             
             collectionView.performBatchUpdates({
                 collectionView.insertSections(IndexSet(integer: 0))
@@ -362,13 +370,19 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
         }
     }
     
-    private func ensurePinnedCategoryExist(in categories: inout [TrackerCategory]) {
-        let pinnedCategoryName = "Закрепленные"
-        
-        if !categories.contains(where: { $0.name == pinnedCategoryName }) {
-            let pinnedCategory = TrackerCategory(name: pinnedCategoryName, trackers: [])
-            categories.insert(pinnedCategory, at: 0)
+    private func updatePinnedTrackers(from categories: [TrackerCategory]) {
+        pinnedTrackers.removeAll()
+        for category in categories {
+            if category.name == "Закрепленные" {
+                for tracker in category.trackers {
+                    pinnedTrackers.insert(tracker.id)
+                }
+            }
         }
+    }
+    
+    private func isPinned(tracker: Tracker) -> Bool {
+        return pinnedTrackers.contains(tracker.id)
     }
     
     @objc private func addTrackerButtonTapped() {
@@ -422,6 +436,7 @@ extension TrackersViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackersCollectionViewCell.identifier, for: indexPath) as? TrackersCollectionViewCell else { return UICollectionViewCell()
         }
+                
         cell.iconLabel.text = filteredTrackerCategories[indexPath.section].trackers[indexPath.item].emoji
         cell.cardView.backgroundColor = filteredTrackerCategories[indexPath.section].trackers[indexPath.item].color
         cell.textLabel.text = filteredTrackerCategories[indexPath.section].trackers[indexPath.item].name
@@ -438,6 +453,10 @@ extension TrackersViewController: UICollectionViewDataSource {
         cell.buttonAction = { [weak self] in
             self?.handleButtonTap(for: tracker)
         }
+        
+        cell.pinIcon.isHidden = isPinned(tracker: tracker)
+        cell.pinIcon.isHidden = !isPinned(tracker: tracker)
+        
         return cell
     }
     

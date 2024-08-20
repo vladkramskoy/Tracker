@@ -29,6 +29,10 @@ final class CategoriesViewModel: CategoriesViewModelProtocol {
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     var onCategoriesUpdated: ((Bool, Bool) -> Void)?
     
+//    var filteredCategories: [TrackerCategory] {
+//        return categories.filter { $0.name != "Закрепленные" }
+//    }
+    
     private(set) var categories: [TrackerCategory] = []
     
     func updateUI() {

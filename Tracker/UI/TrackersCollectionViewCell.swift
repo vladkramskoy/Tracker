@@ -12,11 +12,11 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     let cardView = UIView()
     let iconLabel = UILabel()
+    let pinIcon = UIImageView()
     let textLabel = UILabel()
     let periodLabel = UILabel()
     let completeButton = UIButton(type: .system)
     var buttonAction: (() -> Void)?
-
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,6 +26,7 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(completeButton)
         cardView.addSubview(iconLabel)
         cardView.addSubview(textLabel)
+        cardView.addSubview(pinIcon)
         
         cardView.layer.cornerRadius = 16
         cardView.translatesAutoresizingMaskIntoConstraints = false
@@ -35,6 +36,10 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         iconLabel.layer.cornerRadius = 12
         iconLabel.textAlignment = .center
         iconLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        pinIcon.image = UIImage(named: "pin")
+        pinIcon.translatesAutoresizingMaskIntoConstraints = false
+        pinIcon.isHidden = true
         
         textLabel.numberOfLines = 2
         textLabel.textColor = .white
@@ -64,6 +69,11 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
             iconLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
             iconLabel.heightAnchor.constraint(equalToConstant: 24),
             iconLabel.widthAnchor.constraint(equalToConstant: 24),
+            
+            pinIcon.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 18),
+            pinIcon.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -12),
+            pinIcon.heightAnchor.constraint(equalToConstant: 12),
+            pinIcon.widthAnchor.constraint(equalToConstant: 8),
             
             textLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 44),
             textLabel.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 12),
