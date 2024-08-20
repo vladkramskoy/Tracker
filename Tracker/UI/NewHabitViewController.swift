@@ -20,6 +20,7 @@ final class NewHabitViewController: UIViewController {
     }
     var editTracker: Tracker?
     var categoryConteinsTracker: TrackerCategory?
+    var oldTrakerName: String?
     
     private let trackerStore = TrackerStore()
     private var cellTitles: [(String, String?)] = [(Localizable.newHabitCategory, nil), (Localizable.newHabitSchedule, nil)] {
@@ -192,7 +193,7 @@ final class NewHabitViewController: UIViewController {
                 let editTracker = Tracker(id: id, name: text, color: selectColor, emoji: selectEmoji, schedule: ScheduleViewController.schedule)
                 
                 do {
-                    try trackerStore.deleteTracker(withName: editTracker.name)
+                    try trackerStore.deleteTracker(withName: oldTrakerName ?? String())
                 } catch {
                     print("Error deleting the tracker: \(error.localizedDescription)")
                 }
@@ -246,6 +247,7 @@ final class NewHabitViewController: UIViewController {
             self.title = "Редактирование привычки" // amend
             self.createButton.setTitle("Сохранить", for: .normal) // amend
             self.topAnchorConstant = 78
+            self.oldTrakerName = editTracker?.name
             completedTrackers = trackerRecordStore.fetchTrackerRecords()
             trackerDurationLabel.isHidden = false
             
