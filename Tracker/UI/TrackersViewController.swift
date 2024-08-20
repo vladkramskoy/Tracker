@@ -18,10 +18,12 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
     private var filteredTrackerCategories: [TrackerCategory] = []
     private var dateFilteredTrackerCategories: [TrackerCategory] = []
     private var pinnedTrackers: Set<UUID> = Set()
+    private var trackerOriginalCategories: [UUID: String] = [:]
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     private let trackerCategoryStore = TrackerCategoryStore()
     private let trackerStore = TrackerStore()
     private let trackerRecordStore = TrackerRecordStore()
+    private let pinnedCategoryManager = PinnedCategoryManager()
     
     private lazy var searchField: UISearchTextField = {
         let searchField = UISearchTextField()
@@ -352,6 +354,7 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
             }
         }
         
+        pinnedCategoryManager.removeOriginalCategory(for: tracker.id)
         trackerStore.addNewTrackerToCategory(tracker, categoryName: categoryName)
     }
     
@@ -501,6 +504,7 @@ extension TrackersViewController: UICollectionViewDataSource {
 extension TrackersViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         return UIContextMenuConfiguration(identifier: indexPath as NSCopying, previewProvider: nil) { suggestedActions in
+            let category = self.filteredTrackerCategories[indexPath.section]
             let tracker = self.filteredTrackerCategories[indexPath.section].trackers[indexPath.row]
             let isPinned = self.pinnedTrackers.contains(tracker.id)
             let actionTitle = isPinned ? "Открепить" : "Закрепить" // amend
@@ -509,9 +513,13 @@ extension TrackersViewController: UICollectionViewDelegate {
                 guard let self = self else { return }
                 
                 if isPinned {
+                    trackerOriginalCategories = pinnedCategoryManager.loadOriginalCategories()
+                    
                     self.deleteTracker(indexPath: indexPath, trackerName: tracker.name)
-                    self.transferTrackerFromPinned(tracker: tracker, toCategory: "Зеленая категория") // В какую категорию то????
+                    self.transferTrackerFromPinned(tracker: tracker, toCategory: trackerOriginalCategories[tracker.id] ?? String())
+                    
                 } else {
+                    pinnedCategoryManager.saveOriginalCategory(for: tracker.id, categoryName: category.name)
                     self.deleteTracker(indexPath: indexPath, trackerName: tracker.name)
                     self.addTrackerInPinned(tracker: tracker, toCategory: "Закрепленные")
                 }

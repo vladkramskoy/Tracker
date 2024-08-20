@@ -40,6 +40,7 @@
 		8DA28D1F2C3A9BC000C0720D /* Tracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8DA28D1D2C3A9BC000C0720D /* Tracker.xcdatamodeld */; };
 		8DA30F992C650FDC009FEFDE /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 8DA30F972C650FDC009FEFDE /* Localizable.stringsdict */; };
 		8DA39F2A2C2EC39800B58473 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA39F292C2EC39800B58473 /* CategoriesViewController.swift */; };
+		8DB9CB862C753A2E00755566 /* PinnedCategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB9CB852C753A2E00755566 /* PinnedCategoryManager.swift */; };
 		8DC122FD2C62ABE0005A8880 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8DC122FB2C62ABE0005A8880 /* Localizable.strings */; };
 		8DC387102C2732D800B9136E /* NewHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC3870F2C2732D800B9136E /* NewHabitViewController.swift */; };
 		8DC387122C2735AA00B9136E /* NewIrregularEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC387112C2735AA00B9136E /* NewIrregularEventViewController.swift */; };
@@ -102,6 +103,7 @@
 		8DA30F9B2C65124F009FEFDE /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = de; path = de.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		8DA30F9C2C651250009FEFDE /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		8DA39F292C2EC39800B58473 /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
+		8DB9CB852C753A2E00755566 /* PinnedCategoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedCategoryManager.swift; sourceTree = "<group>"; };
 		8DC122FC2C62ABE0005A8880 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8DC123002C62AC6D005A8880 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8DC123012C62AC84005A8880 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 			children = (
 				8D044D332C6D178600AE72F8 /* AnalyticsService.swift */,
 				8DCBC1482C73660D00CEF1F0 /* CategoryManager.swift */,
+				8DB9CB852C753A2E00755566 /* PinnedCategoryManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -521,6 +524,7 @@
 				8D592D4A2C28669300F2C5FB /* TrackersCollectionViewCell.swift in Sources */,
 				8D75DBAA2C56EA2E007AA70B /* OnboardingViewController.swift in Sources */,
 				8D044D342C6D178600AE72F8 /* AnalyticsService.swift in Sources */,
+				8DB9CB862C753A2E00755566 /* PinnedCategoryManager.swift in Sources */,
 				8D75DBA82C56DD04007AA70B /* OnboardingPageViewController.swift in Sources */,
 				8DA28D1F2C3A9BC000C0720D /* Tracker.xcdatamodeld in Sources */,
 				8DE147162C36F27E00F271F3 /* ColorsCollectionViewCell.swift in Sources */,
