@@ -138,14 +138,14 @@ final class CategoriesViewController: UIViewController {
 
 extension CategoriesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.categories.count
+        return viewModel.filteredCategories.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "customCell", for: indexPath) as? CategoriesCustomTableViewCell else {
             return UITableViewCell()
         }
-        cell.textLabel?.text = viewModel.categories[indexPath.row].name
+        cell.textLabel?.text = viewModel.filteredCategories[indexPath.row].name
         cell.backgroundColor = UIColor(named: "superLightGray(darkMode)")
         
         if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
@@ -154,7 +154,7 @@ extension CategoriesViewController: UITableViewDataSource {
             cell.layer.maskedCorners = []
         }
         
-        let category = viewModel.categories[indexPath.row]
+        let category = viewModel.filteredCategories[indexPath.row]
         if let selectedCategoryName = CategoriesViewModel.selectedCategory?.name, selectedCategoryName == category.name {
             cell.accessoryType = .checkmark
         } else {
@@ -187,7 +187,7 @@ extension CategoriesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let insetAmount: CGFloat = 16.0
         
-        if indexPath.row == viewModel.categories.count - 1 {
+        if indexPath.row == viewModel.filteredCategories.count - 1 {
             cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
         } else {
             cell.separatorInset = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: insetAmount)
