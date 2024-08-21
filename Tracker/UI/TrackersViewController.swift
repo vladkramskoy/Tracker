@@ -124,6 +124,16 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
         feedbackGenerator.prepare()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        AnalyticsService.shared.reportEventOpenViewController(eventName: "open_screen", event: "open", screen: "Main", item: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        AnalyticsService.shared.reportEventOpenViewController(eventName: "close_screen", event: "close", screen: "Main", item: nil)
+    }
+    
     private func setupSubview() {
         view.addSubview(searchField)
         view.addSubview(stubView)
@@ -423,6 +433,7 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
         let creatingTrackerViewController = CreateTrackerViewController()
         creatingTrackerViewController.title = Localizable.createTrackerTitle
         let navigationController = UINavigationController(rootViewController: creatingTrackerViewController)
+        AnalyticsService.shared.reportEventOpenViewController(eventName: "tap_button", event: "click", screen: "Main", item: "add_track")
         present(navigationController, animated: true)
     }
     
@@ -449,6 +460,7 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
         let filtersViewController = FiltersViewController(delegate: self)
         filtersViewController.title = Localizable.filtersTitle
         let navigationController = UINavigationController(rootViewController: filtersViewController)
+        AnalyticsService.shared.reportEventOpenViewController(eventName: "tap_button", event: "click", screen: "Main", item: "filter")
         present(navigationController, animated: true)
     }
     
@@ -517,7 +529,6 @@ extension TrackersViewController: UICollectionViewDelegate {
                     
                     self.deleteTracker(indexPath: indexPath, trackerName: tracker.name)
                     self.transferTrackerFromPinned(tracker: tracker, toCategory: trackerOriginalCategories[tracker.id] ?? String())
-                    
                 } else {
                     pinnedCategoryManager.saveOriginalCategory(for: tracker.id, categoryName: category.name)
                     self.deleteTracker(indexPath: indexPath, trackerName: tracker.name)
@@ -535,12 +546,14 @@ extension TrackersViewController: UICollectionViewDelegate {
                 CategoriesViewModel.selectedIndexPath = IndexPath(row: indexPath.section, section: 0)
                 
                 let navigationController = UINavigationController(rootViewController: newHabitViewController)
+                AnalyticsService.shared.reportEventOpenViewController(eventName: "tap_button", event: "click", screen: "Main", item: "edit")
                 self.present(navigationController, animated: true)
             }
             let delete = UIAction(title: Localizable.сontextMenuDelete, attributes: .destructive) { [weak self] action in
                 guard let self else { return }
                 
                 let tracker = filteredTrackerCategories[indexPath.section].trackers[indexPath.row]
+                AnalyticsService.shared.reportEventOpenViewController(eventName: "tap_button", event: "click", screen: "Main", item: "delete")
                 self.showActionSheet(indexPath: indexPath, trackerName: tracker.name)
             }
             

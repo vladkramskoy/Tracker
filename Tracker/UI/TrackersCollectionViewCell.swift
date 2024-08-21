@@ -117,6 +117,7 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
     
     @objc private func completeButtonTapped() {
         feedbackGenerator.impactOccurred()
+        AnalyticsService.shared.reportEventOpenViewController(eventName: "tap_button", event: "click", screen: "Main", item: "track")
         buttonAction?()
     }
 }

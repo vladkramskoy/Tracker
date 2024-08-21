@@ -101,7 +101,7 @@ iOSInjectionProject/
 # End of https://www.toptal.com/developers/gitignore/api/swift,xcode
 
 # Ignore snapshot test images
-TrackerTests/__Snapshots__/
+# TrackerTests/__Snapshots__/
 
 # Ignore configuration files with sensitive data
 Tracker/Utilities/Constants.swift
