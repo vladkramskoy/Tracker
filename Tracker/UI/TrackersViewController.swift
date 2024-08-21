@@ -24,6 +24,7 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
     private let trackerStore = TrackerStore()
     private let trackerRecordStore = TrackerRecordStore()
     private let pinnedCategoryManager = PinnedCategoryManager()
+    private let statisticsService = StatisticsService()
     
     private lazy var searchField: UISearchTextField = {
         let searchField = UISearchTextField()
@@ -300,10 +301,12 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
         if let index = completedTrackers.firstIndex(where: { $0.id == tracker.id && Calendar.current.isDate($0.date, inSameDayAs: currentDate) }) {
             let recordToDelete = completedTrackers[index]
             completedTrackers.remove(at: index)
+            statisticsService.removeRecord(recordToDelete)
             try? trackerRecordStore.deleteTrackerRecord(by: recordToDelete.id, on: recordToDelete.date)
         } else {
             let record = TrackerRecord(date: currentDate, id: tracker.id)
             completedTrackers.append(record)
+            statisticsService.updateStatistics(with: record)
             try? trackerRecordStore.addTrackerRecord(record)
         }
         collectionView.reloadData()

@@ -82,4 +82,5 @@
 "statistics.bestPeriod" = "Лучший период";
 "statistics.perfectDays" = "Идеальные дни";
 "statistics.trackersСompleted" = "Трекеров завершено";
-"statistics.averageValue" = "Среднее значение";
+"statistics.averageValue" = "Среднее значение (%)";
+"statistics.placeholderLabel" = "Анализировать пока нечего";

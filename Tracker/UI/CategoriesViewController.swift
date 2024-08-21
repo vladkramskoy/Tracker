@@ -157,6 +157,8 @@ extension CategoriesViewController: UITableViewDataSource {
         let category = viewModel.categories[indexPath.row]
         if let selectedCategoryName = CategoriesViewModel.selectedCategory?.name, selectedCategoryName == category.name {
             cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
         }
         return cell
     }

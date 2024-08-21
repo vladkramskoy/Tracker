@@ -82,4 +82,5 @@
 "statistics.bestPeriod" = "Best period";
 "statistics.perfectDays" = "Ideal days";
 "statistics.trackersСompleted" = "Trackers completed";
-"statistics.averageValue" = "Average value";
+"statistics.averageValue" = "Average value (%)";
+"statistics.placeholderLabel" = "There is nothing to analyze yet";

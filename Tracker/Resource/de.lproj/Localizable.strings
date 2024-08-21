@@ -82,4 +82,5 @@
 "statistics.bestPeriod" = "Beste Zeit";
 "statistics.perfectDays" = "Ideale Tage";
 "statistics.trackersСompleted" = "Tracker abgeschlossen";
-"statistics.averageValue" = "Durchschnittswert";
+"statistics.averageValue" = "Durchschnittswert (%)";
+"statistics.placeholderLabel" = "Es gibt noch nichts zu analysieren";

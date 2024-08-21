@@ -40,6 +40,7 @@
 		8DA28D1F2C3A9BC000C0720D /* Tracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8DA28D1D2C3A9BC000C0720D /* Tracker.xcdatamodeld */; };
 		8DA30F992C650FDC009FEFDE /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 8DA30F972C650FDC009FEFDE /* Localizable.stringsdict */; };
 		8DA39F2A2C2EC39800B58473 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA39F292C2EC39800B58473 /* CategoriesViewController.swift */; };
+		8DAC1E5C2C76785400151BF8 /* StatisticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAC1E5B2C76785400151BF8 /* StatisticsService.swift */; };
 		8DB6423C2C75DC4500D99A52 /* GradientBorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB6423B2C75DC4500D99A52 /* GradientBorderView.swift */; };
 		8DB9CB862C753A2E00755566 /* PinnedCategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB9CB852C753A2E00755566 /* PinnedCategoryManager.swift */; };
 		8DB9CB882C7546DE00755566 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB9CB872C7546DE00755566 /* StatisticsViewController.swift */; };
@@ -106,6 +107,7 @@
 		8DA30F9B2C65124F009FEFDE /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = de; path = de.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		8DA30F9C2C651250009FEFDE /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		8DA39F292C2EC39800B58473 /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
+		8DAC1E5B2C76785400151BF8 /* StatisticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsService.swift; sourceTree = "<group>"; };
 		8DB6423B2C75DC4500D99A52 /* GradientBorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientBorderView.swift; sourceTree = "<group>"; };
 		8DB9CB852C753A2E00755566 /* PinnedCategoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedCategoryManager.swift; sourceTree = "<group>"; };
 		8DB9CB872C7546DE00755566 /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				8D044D332C6D178600AE72F8 /* AnalyticsService.swift */,
 				8DCBC1482C73660D00CEF1F0 /* CategoryManager.swift */,
 				8DB9CB852C753A2E00755566 /* PinnedCategoryManager.swift */,
+				8DAC1E5B2C76785400151BF8 /* StatisticsService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -518,6 +521,7 @@
 				8DA10EA52C6E606B004A944A /* FiltersViewController.swift in Sources */,
 				8DCBC1492C73660D00CEF1F0 /* CategoryManager.swift in Sources */,
 				8D952DAC2C63E14D00DD90E0 /* Localizable.swift in Sources */,
+				8DAC1E5C2C76785400151BF8 /* StatisticsService.swift in Sources */,
 				8D68D4612C1C722F00A01290 /* TrackerCategory.swift in Sources */,
 				8D37BC8F2C2B0BD400B2E66F /* ScheduleViewController.swift in Sources */,
 				8D68D45D2C1C657E00A01290 /* Tracker.swift in Sources */,

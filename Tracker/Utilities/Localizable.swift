@@ -85,4 +85,5 @@ struct Localizable {
     static let statisticsPerfectDays = NSLocalizedString("statistics.perfectDays", comment: "")
     static let statisticsTrackersСompleted = NSLocalizedString("statistics.trackersСompleted", comment: "")
     static let statisticsAverageValue = NSLocalizedString("statistics.averageValue", comment: "")
+    static let statisticsPlaceholderLabel = NSLocalizedString("statistics.placeholderLabel", comment: "")
 }

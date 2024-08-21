@@ -10,7 +10,9 @@ import UIKit
 final class StatisticsViewController: UIViewController {
     var data: [TrackerData] = []
     
-    private lazy var tableView: UITableView = {
+    private var statisticsService = StatisticsService()
+    
+    lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = Colors.viewBackgroundColor
         tableView.separatorStyle = .none
@@ -19,7 +21,6 @@ final class StatisticsViewController: UIViewController {
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        data.isEmpty ? showPlaceholder() : ()
         return tableView
     }()
     
@@ -30,21 +31,25 @@ final class StatisticsViewController: UIViewController {
         view.backgroundColor = Colors.viewBackgroundColor
         view.addSubview(tableView)
         setupConstraints()
-
-        data = [
-            TrackerData(title: Localizable.statisticsBestPeriod, value: 6),
-            TrackerData(title: Localizable.statisticsPerfectDays, value: 2),
-            TrackerData(title: Localizable.statisticsTrackersСompleted, value: 5),
-            TrackerData(title: Localizable.statisticsAverageValue, value: 4)
-        ]
+        data = statisticsService.getStatisticsData()
+        
+        if data.isEmpty {
+            tableView.isHidden = true
+            showPlaceholder()
+        }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        data = statisticsService.getStatisticsData()
+        tableView.reloadData()
+    }
+
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 206),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            tableView.heightAnchor.constraint(equalToConstant: 1000)
+            tableView.heightAnchor.constraint(equalToConstant: 500)
         ])
     }
     
@@ -55,7 +60,7 @@ final class StatisticsViewController: UIViewController {
         view.addSubview(placeholderImage)
         
         let placeholderLabel = UILabel()
-        placeholderLabel.text = "Анализировать пока нечего"
+        placeholderLabel.text = Localizable.statisticsPlaceholderLabel
         placeholderLabel.font = UIFont.systemFont(ofSize: 12)
         placeholderLabel.textAlignment = .center
         placeholderLabel.translatesAutoresizingMaskIntoConstraints = false

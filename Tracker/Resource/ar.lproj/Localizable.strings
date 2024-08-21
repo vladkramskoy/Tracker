@@ -82,4 +82,5 @@
 "statistics.bestPeriod" = "أفضل فترة";
 "statistics.perfectDays" = "أيام مثالية";
 "statistics.trackersСompleted" = "بتتبع الانتهاء";
-"statistics.averageValue" = "متوسط القيمة";
+"statistics.averageValue" = "متوسط القيمة ( ٪ )";
+"statistics.placeholderLabel" = "لا يوجد شيء لتحليل حتى الآن";
