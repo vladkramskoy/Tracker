@@ -39,7 +39,7 @@ final class FiltersViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white // amend
+        view.backgroundColor = Colors.viewBackgroundColor
         view.addSubview(tableView)
         setupConstraints()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")

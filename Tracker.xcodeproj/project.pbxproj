@@ -40,7 +40,10 @@
 		8DA28D1F2C3A9BC000C0720D /* Tracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8DA28D1D2C3A9BC000C0720D /* Tracker.xcdatamodeld */; };
 		8DA30F992C650FDC009FEFDE /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 8DA30F972C650FDC009FEFDE /* Localizable.stringsdict */; };
 		8DA39F2A2C2EC39800B58473 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA39F292C2EC39800B58473 /* CategoriesViewController.swift */; };
+		8DB6423C2C75DC4500D99A52 /* GradientBorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB6423B2C75DC4500D99A52 /* GradientBorderView.swift */; };
 		8DB9CB862C753A2E00755566 /* PinnedCategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB9CB852C753A2E00755566 /* PinnedCategoryManager.swift */; };
+		8DB9CB882C7546DE00755566 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB9CB872C7546DE00755566 /* StatisticsViewController.swift */; };
+		8DB9CB8A2C7547FD00755566 /* TrackerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB9CB892C7547FD00755566 /* TrackerData.swift */; };
 		8DC122FD2C62ABE0005A8880 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8DC122FB2C62ABE0005A8880 /* Localizable.strings */; };
 		8DC387102C2732D800B9136E /* NewHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC3870F2C2732D800B9136E /* NewHabitViewController.swift */; };
 		8DC387122C2735AA00B9136E /* NewIrregularEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC387112C2735AA00B9136E /* NewIrregularEventViewController.swift */; };
@@ -103,7 +106,10 @@
 		8DA30F9B2C65124F009FEFDE /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = de; path = de.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		8DA30F9C2C651250009FEFDE /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		8DA39F292C2EC39800B58473 /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
+		8DB6423B2C75DC4500D99A52 /* GradientBorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientBorderView.swift; sourceTree = "<group>"; };
 		8DB9CB852C753A2E00755566 /* PinnedCategoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedCategoryManager.swift; sourceTree = "<group>"; };
+		8DB9CB872C7546DE00755566 /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
+		8DB9CB892C7547FD00755566 /* TrackerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerData.swift; sourceTree = "<group>"; };
 		8DC122FC2C62ABE0005A8880 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8DC123002C62AC6D005A8880 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8DC123012C62AC84005A8880 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -190,6 +196,7 @@
 				8D68D4622C1C731400A01290 /* TrackerRecord.swift */,
 				8D68D45E2C1C6A7C00A01290 /* Schedule.swift */,
 				8D2EC4882C35697C0030C199 /* Stub.swift */,
+				8DB9CB892C7547FD00755566 /* TrackerData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -266,6 +273,8 @@
 				8DE147152C36F27E00F271F3 /* ColorsCollectionViewCell.swift */,
 				8DE147112C36AA5B00F271F3 /* SupplementaryView.swift */,
 				8DA10EA42C6E606A004A944A /* FiltersViewController.swift */,
+				8DB9CB872C7546DE00755566 /* StatisticsViewController.swift */,
+				8DB6423B2C75DC4500D99A52 /* GradientBorderView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -502,7 +511,9 @@
 				8D2EC4892C35697C0030C199 /* Stub.swift in Sources */,
 				8D4BC6702C3D3C970059C171 /* TrackerRecordStore.swift in Sources */,
 				8DA10E802C6DF4AE004A944A /* Constants.swift in Sources */,
+				8DB6423C2C75DC4500D99A52 /* GradientBorderView.swift in Sources */,
 				8DC387122C2735AA00B9136E /* NewIrregularEventViewController.swift in Sources */,
+				8DB9CB882C7546DE00755566 /* StatisticsViewController.swift in Sources */,
 				8D0454D72C35BB9E00D455F0 /* EmojiCollectionViewCell.swift in Sources */,
 				8DA10EA52C6E606B004A944A /* FiltersViewController.swift in Sources */,
 				8DCBC1492C73660D00CEF1F0 /* CategoryManager.swift in Sources */,
@@ -529,6 +540,7 @@
 				8DA28D1F2C3A9BC000C0720D /* Tracker.xcdatamodeld in Sources */,
 				8DE147162C36F27E00F271F3 /* ColorsCollectionViewCell.swift in Sources */,
 				8D45F2282C24A71D00A29D0B /* CreateTrackerViewController.swift in Sources */,
+				8DB9CB8A2C7547FD00755566 /* TrackerData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
