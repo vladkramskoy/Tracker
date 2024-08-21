@@ -14,14 +14,14 @@ protocol FiltersViewControllerDelegate: AnyObject {
 }
 
 final class FiltersViewController: UIViewController {
-    private let filters = ["Все трекеры", "Трекеры на сегодня", "Завершенные", "Не завершенные"] // amend
+    private let filters = [Localizable.filtersAllTrackers, Localizable.filtersTrackersForToday, Localizable.filtersCompleted, Localizable.filtersNotCompleted]
     weak var delegate: FiltersViewControllerDelegate?
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.isScrollEnabled = false
         tableView.tableHeaderView = UIView()
-        tableView.separatorColor = UIColor(named: "customGray") // amend
+        tableView.separatorColor = UIColor(named: "customGray")
         tableView.layer.cornerRadius = 16
         tableView.layer.masksToBounds = true
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -65,7 +65,7 @@ extension FiltersViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
         cell.textLabel?.text = filters[indexPath.row]
-        cell.backgroundColor = UIColor(named: "superLightGray(darkMode)") // amend
+        cell.backgroundColor = UIColor(named: "superLightGray(darkMode)")
         
         let selectedCellIndex = UserDefaults.standard.integer(forKey: "selectedFilter")
         cell.accessoryType = (indexPath.row == selectedCellIndex) ? .checkmark : .none

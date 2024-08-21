@@ -16,6 +16,22 @@
 "trackers.stubSearch" = "Ничего не найдено";
 "tracker.notMarked" = "%@ дней";
 "tracker.marked" = "%@ день";
+"tracker.filtersButton" = "Фильтры";
+
+"сontextMenu.pin" = "Закрепить";
+"сontextMenu.unpin" = "Открепить";
+"сontextMenu.edit" = "Редактировать";
+"сontextMenu.delete" = "Удалить";
+
+"actionSheent.title" = "Уверены что хотите удалить трекер?";
+"actionSheent.delete" = "Удалить";
+"actionSheent.cancel" = "Отменить";
+
+"filters.title" = "Фильтры";
+"filters.allTrackers" = "Все трекеры";
+"filters.trackersForToday" = "Трекеры на сегодня";
+"filters.completed" = "Завершенные";
+"filters.notCompleted" = "Не завершенные";
 
 "tabBar.trackers" = "Трекеры";
 "tabBar.statistics" = "Статистика";
@@ -31,6 +47,9 @@
 "newHabit.color" = "Цвет";
 "newHabit.cancelButton" = "Отменить";
 "newHabit.createButton" = "Создать";
+
+"editHabit.title" = "Редактирование привычки";
+"editHabit.saveButton" = "Сохранить";
 
 "newIrregularEvent.title" = "Новое нерегулярное событие";
 
@@ -58,3 +77,9 @@
 "shortWeekDay.friday" = "Пт";
 "shortWeekDay.saturday" = "Сб";
 "shortWeekDay.sunday" = "Вс";
+
+"statistics.title" = "Статистика";
+"statistics.bestPeriod" = "Лучший период";
+"statistics.perfectDays" = "Идеальные дни";
+"statistics.trackersСompleted" = "Трекеров завершено";
+"statistics.averageValue" = "Среднее значение";

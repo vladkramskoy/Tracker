@@ -94,12 +94,12 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
     
     private lazy var filtersButton: UIButton = {
         let filtersButton = UIButton(type: .system)
-        filtersButton.setTitle("Фильтры", for: .normal) // amend
-        filtersButton.tintColor = .white // amend
+        filtersButton.setTitle(Localizable.trackerFiltersButton, for: .normal)
+        filtersButton.tintColor = .white
         filtersButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
         filtersButton.addTarget(self, action: #selector(filtersButtonTapped), for: .touchUpInside)
         filtersButton.layer.cornerRadius = 16
-        filtersButton.backgroundColor = .systemBlue // amend
+        filtersButton.backgroundColor = .systemBlue
         filtersButton.translatesAutoresizingMaskIntoConstraints = false
         return filtersButton
     }()
@@ -381,13 +381,13 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
         }
     }
     
-    private func showActionShhet(indexPath: IndexPath, trackerName: String) {
-        let actionSheet = UIAlertController(title: "Уверены что хотите удалить трекер?", message: nil, preferredStyle: .actionSheet) // amend
-        actionSheet.addAction(UIAlertAction(title: "Удалить", style: .destructive, handler: { [weak self] _ in // amend
+    private func showActionSheet(indexPath: IndexPath, trackerName: String) {
+        let actionSheet = UIAlertController(title: Localizable.actionSheentTitle, message: nil, preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: Localizable.actionSheentDelete, style: .destructive, handler: { [weak self] _ in
             guard let self else { return }
             self.deleteTracker(indexPath: indexPath, trackerName: trackerName)
         }))
-        actionSheet.addAction(UIAlertAction(title: "Отменить", style: .cancel, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: Localizable.actionSheentCancel, style: .cancel, handler: nil))
         present(actionSheet, animated: true)
     }
     
@@ -447,7 +447,7 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
     
     @objc func filtersButtonTapped() {
         let filtersViewController = FiltersViewController(delegate: self)
-        filtersViewController.title = "Фильтры" // amend
+        filtersViewController.title = Localizable.filtersTitle
         let navigationController = UINavigationController(rootViewController: filtersViewController)
         present(navigationController, animated: true)
     }
@@ -507,7 +507,7 @@ extension TrackersViewController: UICollectionViewDelegate {
             let category = self.filteredTrackerCategories[indexPath.section]
             let tracker = self.filteredTrackerCategories[indexPath.section].trackers[indexPath.row]
             let isPinned = self.pinnedTrackers.contains(tracker.id)
-            let actionTitle = isPinned ? "Открепить" : "Закрепить" // amend
+            let actionTitle = isPinned ? Localizable.сontextMenuUnpin : Localizable.сontextMenuPin
             
             let pin = UIAction(title: actionTitle) { [weak self] action in
                 guard let self = self else { return }
@@ -525,7 +525,7 @@ extension TrackersViewController: UICollectionViewDelegate {
                 }
             }
             
-            let edit = UIAction(title: "Редактировать") { [weak self] action in // amend
+            let edit = UIAction(title: Localizable.сontextMenuEdit) { [weak self] action in
                 guard let self = self else { return }
 
                 let newHabitViewController = NewHabitViewController()
@@ -537,11 +537,11 @@ extension TrackersViewController: UICollectionViewDelegate {
                 let navigationController = UINavigationController(rootViewController: newHabitViewController)
                 self.present(navigationController, animated: true)
             }
-            let delete = UIAction(title: "Удалить", attributes: .destructive) { [weak self] action in // amend
+            let delete = UIAction(title: Localizable.сontextMenuDelete, attributes: .destructive) { [weak self] action in
                 guard let self else { return }
                 
                 let tracker = filteredTrackerCategories[indexPath.section].trackers[indexPath.row]
-                self.showActionShhet(indexPath: indexPath, trackerName: tracker.name)
+                self.showActionSheet(indexPath: indexPath, trackerName: tracker.name)
             }
             
             return UIMenu(title: "", children: [pin, edit, delete])

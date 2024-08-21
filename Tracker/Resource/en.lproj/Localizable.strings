@@ -16,6 +16,22 @@
 "trackers.stubSearch" = "Nothing was found";
 "tracker.notMarked" = "%@ days";
 "tracker.marked" = "%@ day";
+"tracker.filtersButton" = "Filters";
+
+"сontextMenu.pin" = "Pin";
+"сontextMenu.unpin" = "Unpin";
+"сontextMenu.edit" = "Edit";
+"сontextMenu.delete" = "Delete";
+
+"actionSheent.title" = "Are you sure you want to delete the tracker?";
+"actionSheent.delete" = "Delete";
+"actionSheent.cancel" = "Cancel";
+
+"filters.title" = "Filters";
+"filters.allTrackers" = "All trackers";
+"filters.trackersForToday" = "Trackers for today";
+"filters.completed" = "Completed";
+"filters.notCompleted" = "Not completed";
 
 "tabBar.trackers" = "Trackers";
 "tabBar.statistics" = "Statistics";
@@ -31,6 +47,9 @@
 "newHabit.color" = "Color";
 "newHabit.cancelButton" = "Cancel";
 "newHabit.createButton" = "Create";
+
+"editHabit.title" = "Editing habit";
+"editHabit.saveButton" = "Save";
 
 "newIrregularEvent.title" = "New irregular event";
 
@@ -58,3 +77,9 @@
 "shortWeekDay.friday" = "Fri";
 "shortWeekDay.saturday" = "Sat";
 "shortWeekDay.sunday" = "Sun";
+
+"statistics.title" = "Statistics";
+"statistics.bestPeriod" = "Best period";
+"statistics.perfectDays" = "Ideal days";
+"statistics.trackersСompleted" = "Trackers completed";
+"statistics.averageValue" = "Average value";

@@ -18,6 +18,22 @@ struct Localizable {
     static let trackersStubSearch = NSLocalizedString("trackers.stubSearch", comment: "")
     static let trackerNotMarked = NSLocalizedString("tracker.notMarked", comment: "")
     static let trackerMarked = NSLocalizedString("tracker.marked", comment: "")
+    static let trackerFiltersButton = NSLocalizedString("tracker.filtersButton", comment: "")
+    
+    static let сontextMenuPin = NSLocalizedString("сontextMenu.pin", comment: "")
+    static let сontextMenuUnpin = NSLocalizedString("сontextMenu.unpin", comment: "")
+    static let сontextMenuEdit = NSLocalizedString("сontextMenu.edit", comment: "")
+    static let сontextMenuDelete = NSLocalizedString("сontextMenu.delete", comment: "")
+    
+    static let actionSheentTitle = NSLocalizedString("actionSheent.title", comment: "")
+    static let actionSheentDelete = NSLocalizedString("actionSheent.delete", comment: "")
+    static let actionSheentCancel = NSLocalizedString("actionSheent.cancel", comment: "")
+    
+    static let filtersTitle = NSLocalizedString("filters.title", comment: "")
+    static let filtersAllTrackers = NSLocalizedString("filters.allTrackers", comment: "")
+    static let filtersTrackersForToday = NSLocalizedString("filters.trackersForToday", comment: "")
+    static let filtersCompleted = NSLocalizedString("filters.completed", comment: "")
+    static let filtersNotCompleted = NSLocalizedString("filters.notCompleted", comment: "")
     
     static let tabBarTrackers = NSLocalizedString("tabBar.trackers", comment: "")
     static let tabBarStatistics = NSLocalizedString("tabBar.statistics", comment: "")
@@ -33,6 +49,9 @@ struct Localizable {
     static let newHabitColor = NSLocalizedString("newHabit.color", comment: "")
     static let newHabitCancelButton = NSLocalizedString("newHabit.cancelButton", comment: "")
     static let newHabitCreateButton = NSLocalizedString("newHabit.createButton", comment: "")
+    
+    static let editHabitTitle = NSLocalizedString("editHabit.title", comment: "")
+    static let editHabitSaveButton = NSLocalizedString("editHabit.saveButton", comment: "")
     
     static let newIrregularEventTitle = NSLocalizedString("newIrregularEvent.title", comment: "")
     
@@ -60,4 +79,10 @@ struct Localizable {
     static let shortWeekDayFriday = NSLocalizedString("shortWeekDay.friday", comment: "")
     static let shortWeekDaySaturday = NSLocalizedString("shortWeekDay.saturday", comment: "")
     static let shortWeekDaySunday = NSLocalizedString("shortWeekDay.sunday", comment: "")
+    
+    static let statisticsTitle = NSLocalizedString("statistics.title", comment: "")
+    static let statisticsBestPeriod = NSLocalizedString("statistics.bestPeriod", comment: "")
+    static let statisticsPerfectDays = NSLocalizedString("statistics.perfectDays", comment: "")
+    static let statisticsTrackersСompleted = NSLocalizedString("statistics.trackersСompleted", comment: "")
+    static let statisticsAverageValue = NSLocalizedString("statistics.averageValue", comment: "")
 }

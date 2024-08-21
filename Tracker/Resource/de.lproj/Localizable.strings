@@ -16,6 +16,22 @@
 "trackers.stubSearch" = "Es wurde nichts gefunden";
 "tracker.notMarked" = "%@ tage";
 "tracker.marked" = "%@ tag";
+"tracker.filtersButton" = "Preisauswahl";
+
+"сontextMenu.pin" = "Befestigen";
+"сontextMenu.unpin" = "Loslösen";
+"сontextMenu.edit" = "Bearbeiten";
+"сontextMenu.delete" = "Löschen";
+
+"actionSheent.title" = "Sind Sie sicher, dass Sie den Tracker löschen möchten?";
+"actionSheent.delete" = "Löschen";
+"actionSheent.cancel" = "Stornieren";
+
+"filters.title" = "Preisauswahl";
+"filters.allTrackers" = "Alle Tracker";
+"filters.trackersForToday" = "Tracker für heute";
+"filters.completed" = "Abgeschlossen";
+"filters.notCompleted" = "Nicht abgeschlossen";
 
 "tabBar.trackers" = "Tracker";
 "tabBar.statistics" = "Statistik";
@@ -31,6 +47,9 @@
 "newHabit.color" = "Farbe";
 "newHabit.cancelButton" = "Stornieren";
 "newHabit.createButton" = "Erstellen";
+
+"editHabit.title" = "Gewohnheit bearbeiten";
+"editHabit.saveButton" = "Speichern";
 
 "newIrregularEvent.title" = "Neues unregelmäßiges Ereignis";
 
@@ -58,3 +77,9 @@
 "shortWeekDay.friday" = "Fr";
 "shortWeekDay.saturday" = "Sa";
 "shortWeekDay.sunday" = "So";
+
+"statistics.title" = "Statistik";
+"statistics.bestPeriod" = "Beste Zeit";
+"statistics.perfectDays" = "Ideale Tage";
+"statistics.trackersСompleted" = "Tracker abgeschlossen";
+"statistics.averageValue" = "Durchschnittswert";

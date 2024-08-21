@@ -240,12 +240,11 @@ final class NewHabitViewController: UIViewController {
     private func configureForCurrentMode() {
         switch mode {
         case .create:
-            self.title = "Новая привычка" // amend
             self.topAnchorConstant = 0
             trackerDurationLabel.isHidden = true
         case .edit:
-            self.title = "Редактирование привычки" // amend
-            self.createButton.setTitle("Сохранить", for: .normal) // amend
+            self.title = Localizable.editHabitTitle
+            self.createButton.setTitle(Localizable.editHabitSaveButton, for: .normal)
             self.topAnchorConstant = 78
             self.oldTrakerName = editTracker?.name
             completedTrackers = trackerRecordStore.fetchTrackerRecords()

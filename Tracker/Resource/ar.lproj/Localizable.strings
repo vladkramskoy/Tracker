@@ -16,6 +16,22 @@
 "trackers.stubSearch" = "لم يتم العثور على شيء";
 "tracker.notMarked" = "أيام %@";
 "tracker.marked" = "اليوم %@";
+"tracker.filtersButton" = "الفلاتر";
+
+"сontextMenu.pin" = "دبوس";
+"сontextMenu.unpin" = "أونبين";
+"сontextMenu.edit" = "تحرير";
+"сontextMenu.delete" = "يحذف";
+
+"actionSheent.title" = "هل أنت متأكد أنك تريد حذف تعقب?";
+"actionSheent.delete" = "يحذف";
+"actionSheent.cancel" = "إلغاء";
+
+"filters.title" = "الفلاتر";
+"filters.allTrackers" = "جميع أجهزة التتبع";
+"filters.trackersForToday" = "بتتبع لهذا اليوم";
+"filters.completed" = "اكتمل";
+"filters.notCompleted" = "لم تكتمل";
 
 "tabBar.trackers" = "بتتبع";
 "tabBar.statistics" = "الإحصاءات";
@@ -31,6 +47,9 @@
 "newHabit.color" = "اللون";
 "newHabit.cancelButton" = "إلغاء";
 "newHabit.createButton" = "إنشاء";
+
+"editHabit.title" = "عادة التحرير";
+"editHabit.saveButton" = "حفظ";
 
 "newIrregularEvent.title" = "حدث جديد غير منتظم";
 
@@ -58,3 +77,9 @@
 "shortWeekDay.friday" = "ج";
 "shortWeekDay.saturday" = "س";
 "shortWeekDay.sunday" = "ح";
+
+"statistics.title" = "الإحصاءات";
+"statistics.bestPeriod" = "أفضل فترة";
+"statistics.perfectDays" = "أيام مثالية";
+"statistics.trackersСompleted" = "بتتبع الانتهاء";
+"statistics.averageValue" = "متوسط القيمة";

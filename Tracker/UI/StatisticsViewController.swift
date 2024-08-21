@@ -25,17 +25,17 @@ final class StatisticsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Статистика" // amend
+        title = Localizable.statisticsTitle
         navigationController?.navigationBar.prefersLargeTitles = true
         view.backgroundColor = Colors.viewBackgroundColor
         view.addSubview(tableView)
         setupConstraints()
 
         data = [
-            TrackerData(title: "Лучший период", value: 6), // amend
-            TrackerData(title: "Идеальные дни", value: 2),
-            TrackerData(title: "Трекеров завершено", value: 5),
-            TrackerData(title: "Среднее значение", value: 4)
+            TrackerData(title: Localizable.statisticsBestPeriod, value: 6),
+            TrackerData(title: Localizable.statisticsPerfectDays, value: 2),
+            TrackerData(title: Localizable.statisticsTrackersСompleted, value: 5),
+            TrackerData(title: Localizable.statisticsAverageValue, value: 4)
         ]
     }
     
