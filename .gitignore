@@ -104,5 +104,5 @@ iOSInjectionProject/
 # TrackerTests/__Snapshots__/
 
 # Ignore configuration files with sensitive data
-Tracker/Utilities/Constants.swift
+# Tracker/Utilities/Constants.swift
    

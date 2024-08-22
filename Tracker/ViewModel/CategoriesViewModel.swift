@@ -29,7 +29,7 @@ final class CategoriesViewModel: CategoriesViewModelProtocol {
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     var onCategoriesUpdated: ((Bool, Bool) -> Void)?
     
-    var filteredCategories: [TrackerCategory] { // ???
+    var filteredCategories: [TrackerCategory] {
         return categories.filter { $0.name != "Закрепленные" }
     }
     
