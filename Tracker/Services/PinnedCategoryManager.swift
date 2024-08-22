@@ -7,7 +7,7 @@
 
 import Foundation
 
-class PinnedCategoryManager {
+final class PinnedCategoryManager {
     private let userDefaultsKey = "trackerOriginalCategories"
     
     func saveOriginalCategory(for trackerID: UUID, categoryName: String) {

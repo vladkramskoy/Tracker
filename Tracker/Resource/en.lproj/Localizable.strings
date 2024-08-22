@@ -23,9 +23,9 @@
 "сontextMenu.edit" = "Edit";
 "сontextMenu.delete" = "Delete";
 
-"actionSheent.title" = "Are you sure you want to delete the tracker?";
-"actionSheent.delete" = "Delete";
-"actionSheent.cancel" = "Cancel";
+"actionSheet.title" = "Are you sure you want to delete the tracker?";
+"actionSheet.delete" = "Delete";
+"actionSheet.cancel" = "Cancel";
 
 "filters.title" = "Filters";
 "filters.allTrackers" = "All trackers";

@@ -25,6 +25,7 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
     private let trackerRecordStore = TrackerRecordStore()
     private let pinnedCategoryManager = PinnedCategoryManager()
     private let statisticsService = StatisticsService()
+    private var analyticsService: AnalyticsServiceProtocol = AnalyticsService.shared
     
     private lazy var searchField: UISearchTextField = {
         let searchField = UISearchTextField()
@@ -127,12 +128,12 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        AnalyticsService.shared.reportEventOpenViewController(eventName: "open_screen", event: "open", screen: "Main", item: nil)
+        analyticsService.reportEventOpenViewController(eventName: "open_screen", event: "open", screen: "Main", item: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        AnalyticsService.shared.reportEventOpenViewController(eventName: "close_screen", event: "close", screen: "Main", item: nil)
+        analyticsService.reportEventOpenViewController(eventName: "close_screen", event: "close", screen: "Main", item: nil)
     }
     
     private func setupSubview() {
@@ -395,12 +396,12 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
     }
     
     private func showActionSheet(indexPath: IndexPath, trackerName: String) {
-        let actionSheet = UIAlertController(title: Localizable.actionSheentTitle, message: nil, preferredStyle: .actionSheet)
-        actionSheet.addAction(UIAlertAction(title: Localizable.actionSheentDelete, style: .destructive, handler: { [weak self] _ in
+        let actionSheet = UIAlertController(title: Localizable.actionSheetTitle, message: nil, preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: Localizable.actionSheetDelete, style: .destructive, handler: { [weak self] _ in
             guard let self else { return }
             self.deleteTracker(indexPath: indexPath, trackerName: trackerName)
         }))
-        actionSheet.addAction(UIAlertAction(title: Localizable.actionSheentCancel, style: .cancel, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: Localizable.actionSheetCancel, style: .cancel, handler: nil))
         present(actionSheet, animated: true)
     }
     
@@ -436,7 +437,7 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
         let creatingTrackerViewController = CreateTrackerViewController()
         creatingTrackerViewController.title = Localizable.createTrackerTitle
         let navigationController = UINavigationController(rootViewController: creatingTrackerViewController)
-        AnalyticsService.shared.reportEventOpenViewController(eventName: "tap_button", event: "click", screen: "Main", item: "add_track")
+        analyticsService.reportEventOpenViewController(eventName: "tap_button", event: "click", screen: "Main", item: "add_track")
         present(navigationController, animated: true)
     }
     
@@ -463,7 +464,7 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
         let filtersViewController = FiltersViewController(delegate: self)
         filtersViewController.title = Localizable.filtersTitle
         let navigationController = UINavigationController(rootViewController: filtersViewController)
-        AnalyticsService.shared.reportEventOpenViewController(eventName: "tap_button", event: "click", screen: "Main", item: "filter")
+        analyticsService.reportEventOpenViewController(eventName: "tap_button", event: "click", screen: "Main", item: "filter")
         present(navigationController, animated: true)
     }
     
@@ -518,7 +519,11 @@ extension TrackersViewController: UICollectionViewDataSource {
 
 extension TrackersViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        return UIContextMenuConfiguration(identifier: indexPath as NSCopying, previewProvider: nil) { suggestedActions in
+        return UIContextMenuConfiguration(identifier: indexPath as NSCopying, previewProvider: nil) { [weak self] suggestedActions in
+            guard let self = self else {
+                return UIMenu(title: "", children: [])
+            }
+            
             let category = self.filteredTrackerCategories[indexPath.section]
             let tracker = self.filteredTrackerCategories[indexPath.section].trackers[indexPath.row]
             let isPinned = self.pinnedTrackers.contains(tracker.id)
@@ -549,14 +554,14 @@ extension TrackersViewController: UICollectionViewDelegate {
                 CategoriesViewModel.selectedIndexPath = IndexPath(row: indexPath.section, section: 0)
                 
                 let navigationController = UINavigationController(rootViewController: newHabitViewController)
-                AnalyticsService.shared.reportEventOpenViewController(eventName: "tap_button", event: "click", screen: "Main", item: "edit")
+                analyticsService.reportEventOpenViewController(eventName: "tap_button", event: "click", screen: "Main", item: "edit")
                 self.present(navigationController, animated: true)
             }
             let delete = UIAction(title: Localizable.сontextMenuDelete, attributes: .destructive) { [weak self] action in
                 guard let self else { return }
                 
                 let tracker = filteredTrackerCategories[indexPath.section].trackers[indexPath.row]
-                AnalyticsService.shared.reportEventOpenViewController(eventName: "tap_button", event: "click", screen: "Main", item: "delete")
+                analyticsService.reportEventOpenViewController(eventName: "tap_button", event: "click", screen: "Main", item: "delete")
                 self.showActionSheet(indexPath: indexPath, trackerName: tracker.name)
             }
             

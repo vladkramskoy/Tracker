@@ -10,6 +10,8 @@ import UIKit
 final class StatisticsService {
     private let userDefaults = UserDefaults.standard
     private let trackerRecordsKey = "trackerRecords"
+    private let encoder = JSONEncoder()
+    private let decoder = JSONDecoder()
     
     func updateStatistics(with newRecord: TrackerRecord) {
         var trackerRecords = fetchTrackerRecords()
@@ -27,14 +29,14 @@ final class StatisticsService {
     
     private func fetchTrackerRecords() -> [TrackerRecord] {
         guard let data = userDefaults.data(forKey: trackerRecordsKey),
-              let records = try? JSONDecoder().decode([TrackerRecord].self, from: data) else {
+              let records = try? decoder.decode([TrackerRecord].self, from: data) else {
             return []
         }
         return records
     }
     
     private func saveTrackerRecords(_ records: [TrackerRecord]) {
-        if let data = try? JSONEncoder().encode(records) {
+        if let data = try? encoder.encode(records) {
             userDefaults.set(data, forKey: trackerRecordsKey)
         }
     }
@@ -80,7 +82,7 @@ final class StatisticsService {
     }
     
     private func calculateAverage(totalMarks: Int, perfectDays: Int) -> Int {
-        return totalMarks > 0 ? (perfectDays * 100) / totalMarks : 0
+        totalMarks > 0 ? (perfectDays * 100) / totalMarks : 0
     }
     
     func getStatisticsData() -> [TrackerData] {

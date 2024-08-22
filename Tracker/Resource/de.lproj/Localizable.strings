@@ -23,9 +23,9 @@
 "сontextMenu.edit" = "Bearbeiten";
 "сontextMenu.delete" = "Löschen";
 
-"actionSheent.title" = "Sind Sie sicher, dass Sie den Tracker löschen möchten?";
-"actionSheent.delete" = "Löschen";
-"actionSheent.cancel" = "Stornieren";
+"actionSheet.title" = "Sind Sie sicher, dass Sie den Tracker löschen möchten?";
+"actionSheet.delete" = "Löschen";
+"actionSheet.cancel" = "Stornieren";
 
 "filters.title" = "Preisauswahl";
 "filters.allTrackers" = "Alle Tracker";

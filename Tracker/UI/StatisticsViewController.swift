@@ -8,7 +8,7 @@
 import UIKit
 
 final class StatisticsViewController: UIViewController {
-    var data: [TrackerData] = []
+    private var data: [TrackerData] = []
     
     private var statisticsService = StatisticsService()
     

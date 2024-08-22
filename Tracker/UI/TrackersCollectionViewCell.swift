@@ -10,6 +10,7 @@ import UIKit
 final class TrackersCollectionViewCell: UICollectionViewCell {
     static let identifier = "cell"
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
+    private var analyticsService: AnalyticsServiceProtocol = AnalyticsService.shared
     let cardView = UIView()
     let iconLabel = UILabel()
     let pinIcon = UIImageView()
@@ -93,6 +94,7 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         ])
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -117,7 +119,7 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
     
     @objc private func completeButtonTapped() {
         feedbackGenerator.impactOccurred()
-        AnalyticsService.shared.reportEventOpenViewController(eventName: "tap_button", event: "click", screen: "Main", item: "track")
+        analyticsService.reportEventOpenViewController(eventName: "tap_button", event: "click", screen: "Main", item: "track")
         buttonAction?()
     }
 }

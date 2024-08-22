@@ -8,8 +8,12 @@
 import Foundation
 import YandexMobileMetrica
 
-final class AnalyticsService {
-    static let shared = AnalyticsService()
+protocol AnalyticsServiceProtocol {
+    func reportEventOpenViewController(eventName: String, event: String, screen: String, item: String?)
+}
+
+final class AnalyticsService: AnalyticsServiceProtocol {
+    static let shared: AnalyticsServiceProtocol = AnalyticsService()
     
     func reportEventOpenViewController(eventName: String, event: String, screen: String, item: String?) {
         var params : [AnyHashable : Any] = ["event": event, "screen": screen]

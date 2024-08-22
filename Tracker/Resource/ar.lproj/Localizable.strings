@@ -23,9 +23,9 @@
 "сontextMenu.edit" = "تحرير";
 "сontextMenu.delete" = "يحذف";
 
-"actionSheent.title" = "هل أنت متأكد أنك تريد حذف تعقب?";
-"actionSheent.delete" = "يحذف";
-"actionSheent.cancel" = "إلغاء";
+"actionSheet.title" = "هل أنت متأكد أنك تريد حذف تعقب?";
+"actionSheet.delete" = "يحذف";
+"actionSheet.cancel" = "إلغاء";
 
 "filters.title" = "الفلاتر";
 "filters.allTrackers" = "جميع أجهزة التتبع";
