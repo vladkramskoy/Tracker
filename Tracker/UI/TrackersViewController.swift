@@ -198,7 +198,7 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
     
     func showAllTrackers() {
         filteredTrackerCategories = TrackersViewController.categories.filter { !$0.trackers.isEmpty }
-        updateUI(with: stubDefault)
+        updateUI(with: stubSearch)
     }
     
     func filterTrackers(for date: Date) {
@@ -213,7 +213,7 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
             }
             return TrackerCategory(name: category.name, trackers: filteredTrackers)
         }.filter { !$0.trackers.isEmpty }
-        updateUI(with: stubDefault)
+        updateUI(with: stubSearch)
         filterContentForSearchText(searchField.text ?? "")
     }
     
@@ -221,7 +221,7 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
         if searchText.isEmpty {
             filteredTrackerCategories = dateFilteredTrackerCategories
             sortPinnedCategory()
-            updateUI(with: stubDefault)
+            updateUI(with: stubSearch)
         } else {
             filteredTrackerCategories = dateFilteredTrackerCategories.map { category in
                 let filteredTrackers = category.trackers.filter { tracker in
@@ -243,7 +243,7 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
             }
             return TrackerCategory(name: category.name, trackers: filteredTrackers)
         }.filter { !$0.trackers.isEmpty }
-        updateUI(with: stubDefault)
+        updateUI(with: stubSearch)
     }
     
     private func setupNotificationObserver() {
