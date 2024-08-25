@@ -329,7 +329,6 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
             let updateCategory = TrackerCategory(name: "Закрепленные", trackers: [tracker])
             
             filteredTrackerCategories.insert(updateCategory, at: 0)
-            TrackersViewController.categories.insert(updateCategory, at: 0)
             
             updatePinnedTrackers(from: filteredTrackerCategories)
             

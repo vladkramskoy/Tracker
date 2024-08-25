@@ -13,6 +13,8 @@ import YandexMobileMetrica
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
+    private let userDefaults = UserDefaults.standard
+    
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Tracker")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -26,8 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow()
         
-        let userDefaults = UserDefaults.standard
         let hasOnboarded = userDefaults.bool(forKey: "hasOnboarded")
+        let pinnedCategoryHasBeenAdded = userDefaults.bool(forKey: "pinnedCategoryHasBeenAdded")
         
         if let window = self.window {
             if hasOnboarded {
@@ -37,6 +39,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 window.rootViewController = onboardingViewController
             }
             window.makeKeyAndVisible()
+        }
+        
+        if !pinnedCategoryHasBeenAdded {
+            addPinnedCategory()
         }
         
         guard let configuration = YMMYandexMetricaConfiguration(apiKey: Constants.yandexMetricaApiKey) else {
@@ -65,11 +71,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func didFinishOnboarding() {
-        let userDefaults = UserDefaults.standard
         userDefaults.set(true, forKey: "hasOnboarded")
         
         let tabBarController = UITabBarController.createConfiguredTabBarController()
         window?.rootViewController = tabBarController
+    }
+    
+    private func addPinnedCategory() {
+        userDefaults.set(true, forKey: "pinnedCategoryHasBeenAdded")
+        
+        let trackerCategoryStore = TrackerCategoryStore()
+        let pinnedCetgory = TrackerCategory(name: "Закрепленные", trackers: [])
+        TrackersViewController.categories.insert(pinnedCetgory, at: 0)
+        
+        do {
+            try trackerCategoryStore.addNewCategory(pinnedCetgory)
+        } catch {
+            print("Error adding a category to the database")
+        }
+
     }
 }
 
