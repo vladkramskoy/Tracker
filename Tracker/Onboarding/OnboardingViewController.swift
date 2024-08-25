@@ -14,6 +14,7 @@ final class OnboardingViewController: UIViewController {
     private lazy var textLabel: UILabel = {
         let textLabel = UILabel()
         textLabel.text = onboardingText
+        textLabel.textColor = UIColor(named: "darkGray")
         textLabel.numberOfLines = 2
         textLabel.font = UIFont.boldSystemFont(ofSize: 32)
         textLabel.textAlignment = .center
