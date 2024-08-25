@@ -24,49 +24,48 @@ final class StatisticsViewController: UIViewController {
         return tableView
     }()
     
+    
+    private lazy var placeholderImage = {
+        let placeholderImage = UIImageView()
+        placeholderImage.image = UIImage(named: "statisticsPlaceholder")
+        placeholderImage.isHidden = true
+        placeholderImage.translatesAutoresizingMaskIntoConstraints = false
+        return placeholderImage
+    }()
+    
+    private lazy var placeholderLabel = {
+        let placeholderLabel = UILabel()
+        placeholderLabel.text = Localizable.statisticsPlaceholderLabel
+        placeholderLabel.font = UIFont.systemFont(ofSize: 12)
+        placeholderLabel.textAlignment = .center
+        placeholderLabel.isHidden = true
+        placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
+        return placeholderLabel
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = Localizable.statisticsTitle
         navigationController?.navigationBar.prefersLargeTitles = true
         view.backgroundColor = Colors.viewBackgroundColor
         view.addSubview(tableView)
+        view.addSubview(placeholderImage)
+        view.addSubview(placeholderLabel)
         setupConstraints()
-        data = statisticsService.getStatisticsData()
-        
-        if data.isEmpty {
-            tableView.isHidden = true
-            showPlaceholder()
-        }
+        updateData()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        data = statisticsService.getStatisticsData()
-        tableView.reloadData()
+    override func viewWillAppear(_ animated: Bool) {
+        updateData()
     }
-
+    
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 206),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            tableView.heightAnchor.constraint(equalToConstant: 500)
-        ])
-    }
-    
-    private func showPlaceholder() {
-        let placeholderImage = UIImageView()
-        placeholderImage.image = UIImage(named: "statisticsPlaceholder")
-        placeholderImage.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(placeholderImage)
-        
-        let placeholderLabel = UILabel()
-        placeholderLabel.text = Localizable.statisticsPlaceholderLabel
-        placeholderLabel.font = UIFont.systemFont(ofSize: 12)
-        placeholderLabel.textAlignment = .center
-        placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(placeholderLabel)
-        
-        NSLayoutConstraint.activate([
+            tableView.heightAnchor.constraint(equalToConstant: 500),
+            
             placeholderImage.heightAnchor.constraint(equalToConstant: 80),
             placeholderImage.widthAnchor.constraint(equalToConstant: 80),
             placeholderImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -76,6 +75,26 @@ final class StatisticsViewController: UIViewController {
             placeholderLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             placeholderLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
+    }
+    
+    private func shouldShowPlaceholder() -> Bool {
+        return data.isEmpty || !data.contains(where: { $0.value != 0 })
+    }
+    
+    private func updateData() {
+        data = statisticsService.getStatisticsData()
+        
+        if shouldShowPlaceholder() {
+            tableView.isHidden = true
+            placeholderImage.isHidden = false
+            placeholderLabel.isHidden = false
+        } else {
+            tableView.isHidden = false
+            placeholderImage.isHidden = true
+            placeholderLabel.isHidden = true
+        }
+        
+        tableView.reloadData()
     }
 }
 
