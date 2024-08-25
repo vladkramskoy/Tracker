@@ -13,8 +13,8 @@ final class OnboardingPageViewController: UIPageViewController {
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     
     private lazy var pages: [UIViewController] = {
-        let onboardingViewController1 = OnboardingViewController(backgroundImage: UIImage(named: "onboardingBackground1") ?? UIImage(), onboardingText: "Отслеживайте только то, что хотите")
-        let onboardingViewController2 = OnboardingViewController(backgroundImage: UIImage(named: "onboardingBackground2") ?? UIImage(), onboardingText: "Даже если это не литры воды и йога")
+        let onboardingViewController1 = OnboardingViewController(backgroundImage: UIImage(named: "onboardingBackground1") ?? UIImage(), onboardingText: Localizable.onboardingMessageScreenOne)
+        let onboardingViewController2 = OnboardingViewController(backgroundImage: UIImage(named: "onboardingBackground2") ?? UIImage(), onboardingText: Localizable.onboardingMessageScreenTwo)
         
         return [onboardingViewController1, onboardingViewController2]
     }()
@@ -31,7 +31,7 @@ final class OnboardingPageViewController: UIPageViewController {
     
     private lazy var startButton: UIButton = {
         let startButton = UIButton(type: .system)
-        startButton.setTitle("Вот это технологии!", for: .normal)
+        startButton.setTitle(Localizable.onboardingButton, for: .normal)
         startButton.tintColor = .white
         startButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         startButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)

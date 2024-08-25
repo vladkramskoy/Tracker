@@ -53,5 +53,21 @@ final class TrackerStore {
             print("Failed to fatch or save context: \(error)")
         }
     }
+    
+    func deleteTracker(withName name: String) throws {
+        let fetchRequest: NSFetchRequest<TrackerCategoryCoreData> = TrackerCategoryCoreData.fetchRequest()
+        let categories = try context.fetch(fetchRequest)
+        
+        for category in categories {
+            guard let trackers = category.trackers?.allObjects as? [TrackerCoreData] else { continue }
+            
+            if let trackerToDelete = trackers.first(where: { $0.name == name }) {
+                context.delete(trackerToDelete)
+                try context.save()
+                return
+            }
+        }
+        throw NSError(domain: "Tracker not found", code: 3, userInfo: [NSLocalizedDescriptionKey: "No tracker found with the name \(name)"])
+    }
 }
 

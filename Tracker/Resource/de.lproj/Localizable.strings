@@ -1,0 +1,86 @@
+/* 
+  Localizable.strings
+  Tracker
+
+  Created by Vladislav Kramskoy on 06.08.2024.
+  
+*/
+
+"onboarding.messageScreenOne" = "Verfolgen Sie nur, was Sie wollen";
+"onboarding.messageScreenTwo" = "Auch wenn es nicht Liter Wasser und Yoga sind";
+"onboarding.button" = "Das sind die Technologien!";
+
+"trackers.title" = "Tracker";
+"trackers.search" = "Suche";
+"trackers.stub" = "Was werden wir verfolgen?";
+"trackers.stubSearch" = "Es wurde nichts gefunden";
+"tracker.notMarked" = "%@ tage";
+"tracker.marked" = "%@ tag";
+"tracker.filtersButton" = "Preisauswahl";
+
+"сontextMenu.pin" = "Befestigen";
+"сontextMenu.unpin" = "Loslösen";
+"сontextMenu.edit" = "Bearbeiten";
+"сontextMenu.delete" = "Löschen";
+
+"actionSheet.title" = "Sind Sie sicher, dass Sie den Tracker löschen möchten?";
+"actionSheet.delete" = "Löschen";
+"actionSheet.cancel" = "Stornieren";
+
+"filters.title" = "Preisauswahl";
+"filters.allTrackers" = "Alle Tracker";
+"filters.trackersForToday" = "Tracker für heute";
+"filters.completed" = "Abgeschlossen";
+"filters.notCompleted" = "Nicht abgeschlossen";
+
+"tabBar.trackers" = "Tracker";
+"tabBar.statistics" = "Statistik";
+
+"createTracker.title" = "Erstellen eines Trackers";
+"createTracker.habit" = "Gewohnheit";
+"createTracker.irregularEvent" = "Unregelmäßiges Ereignis";
+
+"newHabit.title" = "Neue Gewohnheit";
+"newHabit.name" = "Geben Sie den Namen des Trackers ein";
+"newHabit.category" = "Zimmerkategorie";
+"newHabit.schedule" = "Zeitplan";
+"newHabit.color" = "Farbe";
+"newHabit.cancelButton" = "Stornieren";
+"newHabit.createButton" = "Erstellen";
+
+"editHabit.title" = "Gewohnheit bearbeiten";
+"editHabit.saveButton" = "Speichern";
+
+"newIrregularEvent.title" = "Neues unregelmäßiges Ereignis";
+
+"categories.title" = "Zimmerkategorie";
+"categories.stub" = "Gewohnheiten und Ereignisse können\nin der Bedeutung kombiniert werden";
+"categories.addButton" = "Fügen Sie eine Kategorie hinzu";
+
+"newCategory.title" = "Neue Kategorie";
+"newCategory.nameField" = "Geben Sie den Namen der Kategorie ein";
+"newCategory.doneButton" = "Erfolgen";
+
+"schedule.title" = "Zeitplan";
+"schedule.dayOne" = "Montag";
+"schedule.dayTwo" = "Dienstag";
+"schedule.dayThree" = "Mittwoch";
+"schedule.dayFour" = "Donnerstag";
+"schedule.dayFive" = "Freitag";
+"schedule.daySix" = "Samstag";
+"schedule.daySeven" = "Sonntag";
+"schedule.doneButton" = "Erfolgen";
+"shortWeekDay.monday" = "Mo";
+"shortWeekDay.tuesday" = "Di";
+"shortWeekDay.wednesday" = "Mi";
+"shortWeekDay.thursday" = "Do";
+"shortWeekDay.friday" = "Fr";
+"shortWeekDay.saturday" = "Sa";
+"shortWeekDay.sunday" = "So";
+
+"statistics.title" = "Statistik";
+"statistics.bestPeriod" = "Beste Zeit";
+"statistics.perfectDays" = "Ideale Tage";
+"statistics.trackersСompleted" = "Tracker abgeschlossen";
+"statistics.averageValue" = "Durchschnittswert (%)";
+"statistics.placeholderLabel" = "Es gibt noch nichts zu analysieren";

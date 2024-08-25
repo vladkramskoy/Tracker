@@ -10,9 +10,9 @@ import UIKit
 protocol CategoriesViewModelProtocol: AnyObject {
     static var selectedCategory: TrackerCategory? { get set }
     static var selectedCategoryString: String? { get set }
-    var selectedIndexPath: IndexPath? { get set }
+    static var selectedIndexPath: IndexPath? { get set }
     var onCategoriesUpdated: ((Bool, Bool) -> Void)? { get set }
-    var categories: [TrackerCategory] { get }
+    var filteredCategories: [TrackerCategory] { get }
 
     func updateUI()
     func cellDidTapped()
@@ -24,16 +24,24 @@ protocol CategoriesViewModelProtocol: AnyObject {
 final class CategoriesViewModel: CategoriesViewModelProtocol {
     static var selectedCategory: TrackerCategory? = nil
     static var selectedCategoryString: String? = nil
+    static var selectedIndexPath: IndexPath?
     private let trackerCategoryStore = TrackerCategoryStore()
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
-    var selectedIndexPath: IndexPath?
     var onCategoriesUpdated: ((Bool, Bool) -> Void)?
     
-    private(set) var categories: [TrackerCategory] = []
+    var filteredCategories: [TrackerCategory] {
+        return categories.filter { $0.name != "Закрепленные" }
+    }
+    
+    private(set) var categories: [TrackerCategory] = [] {
+        didSet {
+            self.categories = filteredCategories
+        }
+    }
     
     func updateUI() {
         categories = trackerCategoryStore.fetchCategories() ?? []
-        let isEmpty = categories.isEmpty
+        let isEmpty = filteredCategories.isEmpty
         onCategoriesUpdated?(isEmpty, !isEmpty)
     }
     
@@ -50,8 +58,8 @@ final class CategoriesViewModel: CategoriesViewModelProtocol {
     }
     
     func didSelectRowAt(_ index: Int) {
-        selectedIndexPath = IndexPath(row: index, section: 0)
-        CategoriesViewModel.selectedCategoryString = categories[index].name
-        CategoriesViewModel.selectedCategory = categories[index]
+        CategoriesViewModel.selectedIndexPath = IndexPath(row: index, section: 0)
+        CategoriesViewModel.selectedCategoryString = filteredCategories[index].name
+        CategoriesViewModel.selectedCategory = filteredCategories[index]
     }
 }

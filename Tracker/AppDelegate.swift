@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import YandexMobileMetrica
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -36,8 +37,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 window.rootViewController = onboardingViewController
             }
             window.makeKeyAndVisible()
-            window.overrideUserInterfaceStyle = .light
         }
+        
+        guard let configuration = YMMYandexMetricaConfiguration(apiKey: Constants.yandexMetricaApiKey) else {
+            return true
+        }
+        YMMYandexMetrica.activate(with: configuration)
+        
+        UserDefaults.standard.set(1, forKey: "selectedFilter")
+        
+        let categoryManager = CategoryManager()
+        categoryManager.addPinnedCategoryNeeded()
+        
         return true
     }
     
@@ -67,13 +78,14 @@ extension UITabBarController {
         let tabBarController = UITabBarController()
         
         let trackerViewController = TrackersViewController()
-        trackerViewController.tabBarItem = UITabBarItem(title: "Трекеры", image: UIImage(named: "circleIcon"), tag: 0)
+        trackerViewController.tabBarItem = UITabBarItem(title: Localizable.tabBarTrackers, image: UIImage(named: "circleIcon"), tag: 0)
         let trackerNavigationController = UINavigationController(rootViewController: trackerViewController)
         
-        let statisticsViewController = UIViewController()
-        statisticsViewController.tabBarItem = UITabBarItem(title: "Статистика", image: UIImage(named: "hareIcon"), tag: 1)
+        let statisticsViewController = StatisticsViewController()
+        statisticsViewController.tabBarItem = UITabBarItem(title: Localizable.tabBarStatistics, image: UIImage(named: "hareIcon"), tag: 1)
+        let statisticsNavigationController = UINavigationController(rootViewController: statisticsViewController)
         
-        tabBarController.viewControllers = [trackerNavigationController, statisticsViewController]
+        tabBarController.viewControllers = [trackerNavigationController, statisticsNavigationController]
         return tabBarController
     }
 }
