@@ -371,8 +371,9 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
         trackerStore.addNewTrackerToCategory(tracker, categoryName: categoryName)
     }
     
-    private func deleteTracker(indexPath: IndexPath, trackerName: String) {
+    private func deleteTracker(indexPath: IndexPath, trackerName: String, finalRemoval: Bool) {
         let category = filteredTrackerCategories[indexPath.section]
+        let tracker = filteredTrackerCategories[indexPath.section].trackers[indexPath.row]
         var updatedTrackers = category.trackers
         
         updatedTrackers.remove(at: indexPath.row)
@@ -387,6 +388,17 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
             collectionView.deleteItems(at: [indexPath])
         }
         
+        // Хак: finalRemoval позволяет отличить операцию удаления от редактирования
+        
+        if finalRemoval {
+            var categories = TrackersViewController.categories
+            categories = categories.map { category in
+                let filteredTrackers = category.trackers.filter { $0.name != tracker.name }
+                return TrackerCategory(name: category.name, trackers: filteredTrackers)
+            }
+            TrackersViewController.categories = categories
+        }
+        
         do {
             try self.trackerStore.deleteTracker(withName: trackerName)
         } catch {
@@ -398,7 +410,7 @@ final class TrackersViewController: UIViewController, FiltersViewControllerDeleg
         let actionSheet = UIAlertController(title: Localizable.actionSheetTitle, message: nil, preferredStyle: .actionSheet)
         actionSheet.addAction(UIAlertAction(title: Localizable.actionSheetDelete, style: .destructive, handler: { [weak self] _ in
             guard let self else { return }
-            self.deleteTracker(indexPath: indexPath, trackerName: trackerName)
+            self.deleteTracker(indexPath: indexPath, trackerName: trackerName, finalRemoval: true)
         }))
         actionSheet.addAction(UIAlertAction(title: Localizable.actionSheetCancel, style: .cancel, handler: nil))
         present(actionSheet, animated: true)
@@ -534,11 +546,11 @@ extension TrackersViewController: UICollectionViewDelegate {
                 if isPinned {
                     trackerOriginalCategories = pinnedCategoryManager.loadOriginalCategories()
                     
-                    self.deleteTracker(indexPath: indexPath, trackerName: tracker.name)
+                    self.deleteTracker(indexPath: indexPath, trackerName: tracker.name, finalRemoval: false)
                     self.transferTrackerFromPinned(tracker: tracker, toCategory: trackerOriginalCategories[tracker.id] ?? String())
                 } else {
                     pinnedCategoryManager.saveOriginalCategory(for: tracker.id, categoryName: category.name)
-                    self.deleteTracker(indexPath: indexPath, trackerName: tracker.name)
+                    self.deleteTracker(indexPath: indexPath, trackerName: tracker.name, finalRemoval: false)
                     self.addTrackerInPinned(tracker: tracker, toCategory: "Закрепленные")
                 }
             }
